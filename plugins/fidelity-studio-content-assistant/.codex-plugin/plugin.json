@@ -1,0 +1,40 @@
+{
+  "name": "fidelity-studio-content-assistant",
+  "version": "0.2.0",
+  "description": "Use Codex with the Fidelity Studio Content Assistant for authenticated client website content.",
+  "author": {
+    "name": "Fidelity Studio",
+    "url": "https://github.com/fsmventures/fidelity-studio-content-assistant"
+  },
+  "homepage": "https://github.com/fsmventures/fidelity-studio-content-assistant",
+  "repository": "https://github.com/fsmventures/fidelity-studio-content-assistant",
+  "license": "MIT",
+  "keywords": [
+    "fidelity-studio",
+    "content",
+    "cms",
+    "mcp",
+    "bilingual"
+  ],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Fidelity Studio Content Assistant",
+    "shortDescription": "Draft, translate, preview, and publish client website content.",
+    "longDescription": "Adds the Fidelity Studio Content Assistant MCP endpoint for drafting, translating, previewing, and publishing authenticated client website content. Client-specific guidance is returned by the MCP server after sign-in, not bundled in this public plugin.",
+    "developerName": "Fidelity Studio",
+    "category": "Productivity",
+    "capabilities": [
+      "MCP",
+      "CMS",
+      "Content",
+      "Bilingual Publishing"
+    ],
+    "websiteURL": "https://github.com/fsmventures/fidelity-studio-content-assistant",
+    "brandColor": "#2F9B73",
+    "defaultPrompt": [
+      "Show me my content assistant project context.",
+      "List the content tools I can use.",
+      "Help me draft a website update."
+    ]
+  }
+}

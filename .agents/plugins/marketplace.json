@@ -1,0 +1,20 @@
+{
+  "name": "fidelity-studio-content-assistant",
+  "interface": {
+    "displayName": "Fidelity Studio Content Assistant"
+  },
+  "plugins": [
+    {
+      "name": "fidelity-studio-content-assistant",
+      "source": {
+        "source": "local",
+        "path": "./plugins/fidelity-studio-content-assistant"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
