@@ -13,7 +13,7 @@ Studio's Supabase-backed CMS configuration.
 - Codex plugin: `fidelity-studio-content-assistant`
 - MCP endpoint: `https://mcp.fidelitystudio.ch/mcp`
 - Auth model: OAuth through `https://cms.fidelitystudio.ch`
-- Generic skill: auth-first guardrails only; no client-specific content
+- Generic skill: OAuth login first, then MCP context; no client-specific content
 
 ## Install In Codex
 
@@ -56,10 +56,15 @@ Open a fresh Codex thread after installing or updating the plugin. Then start wi
 Authenticate with Fidelity Studio Content Assistant and show me my project context.
 ```
 
-The plugin skill tells Codex to authenticate and load MCP context first. The MCP server will return the authorized project, available tools, workflow
-rules, content paths, preview/live URLs, and client-specific guidance.
+The plugin skill tells Codex to authenticate and load MCP context first. If the MCP tools are not exposed yet, it should run:
 
-If Codex starts searching Craft, GitHub, local files, or the current workspace instead, the plugin tools were not loaded in that thread. Open a new Codex thread and select the installed `Fidelity Studio Content Assistant` plugin from the composer/plugin picker.
+```bash
+codex mcp login fidelity-studio-content-assistant
+```
+
+That command starts the Fidelity Studio CMS OAuth flow. After it reports success, open a fresh Codex thread so the authenticated MCP tools are loaded. The MCP server will then return the authorized project, available tools, workflow rules, content paths, preview/live URLs, and client-specific guidance.
+
+If Codex starts searching Craft, GitHub, web pages, local files, or the current workspace instead, the plugin tools were not loaded in that thread. Stop and run `codex mcp login fidelity-studio-content-assistant`; do not use those sources as a substitute.
 
 ## Architecture Boundary
 

@@ -1,7 +1,7 @@
 {
   "name": "fidelity-studio-content-assistant",
-  "version": "0.2.1",
-  "description": "Use Codex with the Fidelity Studio Content Assistant for authenticated client website content. Authenticates and loads MCP project context before client-specific work.",
+  "version": "0.2.2",
+  "description": "Use Codex with the Fidelity Studio Content Assistant for authenticated client website content. Runs Codex MCP login when OAuth is not yet connected, then loads MCP project context before client-specific work.",
   "author": {
     "name": "Fidelity Studio",
     "url": "https://github.com/fsmventures/fidelity-studio-content-assistant"
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "Fidelity Studio Content Assistant",
     "shortDescription": "Draft, translate, preview, and publish client website content.",
-    "longDescription": "Adds the Fidelity Studio Content Assistant MCP endpoint and generic auth-first guidance for drafting, translating, previewing, and publishing authenticated client website content. Client-specific guidance is returned by the MCP server after sign-in, not bundled in this public plugin.",
+    "longDescription": "Adds the Fidelity Studio Content Assistant MCP endpoint and generic auth-first guidance for drafting, translating, previewing, and publishing authenticated client website content. If Codex has not exposed the MCP tools yet, the bundled skill starts Codex MCP OAuth login instead of falling back to Craft, web search, GitHub, or local files.",
     "developerName": "Fidelity Studio",
     "category": "Productivity",
     "capabilities": [
@@ -32,9 +32,9 @@
     "websiteURL": "https://github.com/fsmventures/fidelity-studio-content-assistant",
     "brandColor": "#2F9B73",
     "defaultPrompt": [
-      "Authenticate with Fidelity Studio Content Assistant and show me my project context.",
-      "List the authenticated content tools I can use.",
-      "Help me draft a website update after loading my project context."
+      "Authenticate with Fidelity Studio Content Assistant.",
+      "Show me my authenticated project context.",
+      "Help me draft a website update after loading context."
     ]
   },
   "skills": "./skills/"
