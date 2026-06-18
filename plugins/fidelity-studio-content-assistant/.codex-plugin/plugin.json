@@ -1,7 +1,7 @@
 {
   "name": "fidelity-studio-content-assistant",
-  "version": "0.2.0",
-  "description": "Use Codex with the Fidelity Studio Content Assistant for authenticated client website content.",
+  "version": "0.2.1",
+  "description": "Use Codex with the Fidelity Studio Content Assistant for authenticated client website content. Authenticates and loads MCP project context before client-specific work.",
   "author": {
     "name": "Fidelity Studio",
     "url": "https://github.com/fsmventures/fidelity-studio-content-assistant"
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "Fidelity Studio Content Assistant",
     "shortDescription": "Draft, translate, preview, and publish client website content.",
-    "longDescription": "Adds the Fidelity Studio Content Assistant MCP endpoint for drafting, translating, previewing, and publishing authenticated client website content. Client-specific guidance is returned by the MCP server after sign-in, not bundled in this public plugin.",
+    "longDescription": "Adds the Fidelity Studio Content Assistant MCP endpoint and generic auth-first guidance for drafting, translating, previewing, and publishing authenticated client website content. Client-specific guidance is returned by the MCP server after sign-in, not bundled in this public plugin.",
     "developerName": "Fidelity Studio",
     "category": "Productivity",
     "capabilities": [
@@ -32,9 +32,10 @@
     "websiteURL": "https://github.com/fsmventures/fidelity-studio-content-assistant",
     "brandColor": "#2F9B73",
     "defaultPrompt": [
-      "Show me my content assistant project context.",
-      "List the content tools I can use.",
-      "Help me draft a website update."
+      "Authenticate with Fidelity Studio Content Assistant and show me my project context.",
+      "List the authenticated content tools I can use.",
+      "Help me draft a website update after loading my project context."
     ]
-  }
+  },
+  "skills": "./skills/"
 }
