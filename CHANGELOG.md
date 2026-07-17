@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.5 - 2026-07-17
+
+- Declare the generic Fidelity Studio MCP endpoint explicitly as the OAuth
+  resource for consistent authorization discovery in ChatGPT and Codex.
+
 ## 0.3.4 - 2026-07-17
 
 - Use ChatGPT Work's terminal capability for the paste-ready, no-Terminal
