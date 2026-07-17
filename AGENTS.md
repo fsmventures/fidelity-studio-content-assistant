@@ -13,7 +13,8 @@ It is not the CMS/MCP backend and it is not a client website repository.
 ## What Belongs Here
 
 - Generic Codex plugin metadata.
-- Generic MCP connection metadata for `https://mcp.fidelitystudio.ch/mcp`.
+- Generic MCP connection metadata for `https://mcp.fidelitystudio.ch/mcp` and
+  Resend's hosted MCP.
 - Generic auth-first skill instructions.
 - Public install documentation.
 
@@ -29,14 +30,12 @@ Client-specific knowledge belongs behind MCP authentication in Fidelity Studio's
 Supabase-backed CMS configuration. The assistant should get that knowledge by
 calling `get_project_context` after login.
 
-## Related Repositories
+## Related Systems
 
-- Private CMS/MCP backend:
-  `/Users/markus/01_Development/10-fidelity-studio/labs/fs-pages-cms`
-- Example client workspace:
-  `/Users/markus/01_Development/20-clients/pilates-zuerich`
-- Example client website repo:
-  `/Users/markus/01_Development/20-clients/pilates-zuerich/pilates-zuerich-website`
+- The private Fidelity Studio CMS/MCP backend owns OAuth, access checks,
+  project guidance, and website content operations.
+- Client website repositories own their content and media.
+- Authorized client Resend teams own newsletter data and delivery.
 
 ## Agent Workflow
 
@@ -44,11 +43,14 @@ When changing this repo:
 
 1. Keep the package client-agnostic.
 2. Keep the plugin endpoint pointed at `https://mcp.fidelitystudio.ch/mcp`.
-3. Keep the skill's first action as authentication plus MCP project context
+3. Keep Resend pointed at the official hosted OAuth MCP endpoint.
+4. Keep the skill's first action as authentication plus MCP project context
    loading.
-4. If MCP tools are missing in a Codex thread, instruct Codex to run
+5. If MCP tools are missing in a Codex thread, instruct Codex to run
    `codex mcp login fidelity-studio-content-assistant`.
-5. Do not add fallbacks that search Craft, GitHub, web pages, or local files for
+6. Require explicit confirmation before website publishing or newsletter
+   sending and scheduling.
+7. Do not add fallbacks that search Craft, GitHub, web pages, or local files for
    client-specific content.
 
 The CMS/MCP backend is responsible for OAuth, access checks, tool behavior, and

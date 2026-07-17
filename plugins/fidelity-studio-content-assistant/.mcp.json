@@ -4,6 +4,11 @@
       "type": "http",
       "url": "https://mcp.fidelitystudio.ch/mcp",
       "note": "OAuth-protected Fidelity Studio Content Assistant MCP endpoint. Sign in with the email account Fidelity Studio invited to the CMS. Client-specific guidance is returned by get_project_context after authentication."
+    },
+    "resend": {
+      "type": "http",
+      "url": "https://mcp.resend.com/mcp",
+      "note": "Official Resend hosted MCP endpoint. Sign in with the authorized client team or account for newsletter templates, contacts, audiences, broadcasts, test sends, and delivery operations."
     }
   }
 }
