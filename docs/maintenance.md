@@ -13,8 +13,13 @@ public documentation change.
 1. Update the package under
    `plugins/fidelity-studio-content-assistant`.
 2. Bump the semantic version in `.codex-plugin/plugin.json`.
-3. Validate the JSON files and review the public diff for client-specific data
-   or secrets.
+3. Run the release validator and review the public diff for client-specific
+   data or secrets:
+
+```bash
+node scripts/validate-plugin.mjs
+```
+
 4. Commit and push `main`.
 5. On a client machine, run:
 
@@ -58,10 +63,13 @@ Each client needs three independent pieces:
 3. Membership in the correct Resend team or account for newsletter work.
 
 Fidelity Studio access is project-scoped. Resend's hosted MCP uses the
-permissions of the connected Resend account, so connect only the intended
-client team. Direct Resend work in this plugin is draft-and-test-only.
-Production sends and schedules remain manual Resend-dashboard actions until
-Fidelity Studio provides a server-enforced newsletter gateway.
+provider-selected permissions of the connected account and may request broad
+access. Do not add a custom scope override to `.mcp.json` or the login command.
+Connect only the intended client team, or decline and keep newsletter workflows
+unavailable. Plugin guidance instructs direct Resend work to remain
+draft-and-test-only. Production sends and schedules remain manual
+Resend-dashboard actions until Fidelity Studio provides a server-enforced
+newsletter gateway.
 
 ## Release Verification
 
@@ -70,10 +78,15 @@ For every release:
 - validate `plugin.json`, `.mcp.json`, and `marketplace.json`
 - confirm the marketplace snapshot resolves the new version
 - install the version on a clean or test profile
+- verify the Fidelity Studio icon in the Plugins directory, Installed row, and
+  `@` composer menu in light and dark appearance
 - authenticate both MCP servers
 - verify project context
-- verify blog and team reads through Fidelity Studio
+- verify `list_blog_posts` and `list_team_members` through Fidelity Studio
 - verify newsletter reads and draft-only behavior through Resend
+- verify preview status against a known commit and harmless page paths
+- verify that a production request opens the server-owned Fidelity Studio CMS
+  approval page, then decline it and confirm that no workflow was dispatched
 - do not use a production publish or newsletter send as a smoke test
 
 ## Optional OpenAI Marketplace Submission

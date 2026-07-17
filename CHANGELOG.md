@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.4.0 - 2026-07-17
+
+- Remove the explicit OAuth resource override so Codex sends the Fidelity MCP
+  resource parameter only once.
+- Treat a new Work task as the normal way to mount newly installed or
+  authenticated tools; reserve a full app restart as a fallback.
+- Add operational connection checks for project context, blog and team
+  inventories, and harmless Resend reads.
+- Document Resend's provider-selected account permissions honestly instead of
+  asking Codex to force unsupported reduced scopes.
+- Guide website changes through verified preview URLs, explicit production
+  approval, deployment polling, and verified live URLs.
+- Require a separate, server-owned Fidelity Studio CMS approval page for every
+  production website deployment; the MCP client cannot approve its own request.
+- Require a one-time Fidelity reauthentication for upgrades so the separate
+  production-approval-request capability is actually granted.
+- Add support for listing blog posts without requiring a known slug.
+
 ## 0.3.5 - 2026-07-17
 
 - Declare the generic Fidelity Studio MCP endpoint explicitly as the OAuth
