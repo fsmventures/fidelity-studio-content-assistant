@@ -19,9 +19,14 @@ server returns the authorized project and its current guidance.
 
 ## Install
 
-Install the ChatGPT desktop app, then run the following one-time setup in
-Terminal. The computer must be able to reach this public GitHub repository, but
-the client does not need a GitHub account or repository permission.
+Clients should follow the
+[German client quick start](docs/client-guide-de.md): open ChatGPT Work in the
+desktop app after using Codex once for setup, paste the provided prompts,
+approve the clearly described installation actions, and let Codex complete the
+technical setup. Clients do not need to open Terminal, have a GitHub account,
+or understand the repository commands.
+
+For maintainers and manual fallback, the equivalent commands are:
 
 ```bash
 codex plugin marketplace add fsmventures/fidelity-studio-content-assistant --ref main

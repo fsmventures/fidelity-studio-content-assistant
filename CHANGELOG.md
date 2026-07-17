@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.3 - 2026-07-17
+
+- Replace the client-facing Terminal setup with a paste-ready Codex setup
+  inside the ChatGPT desktop app, followed by normal use in ChatGPT Work.
+- Restore proper German umlauts throughout the German client guide.
+- Clarify that portrait newsletter images are suitable in layouts such as
+  two-column sections, while landscape remains preferable for full-width media.
+
 ## 0.3.2 - 2026-07-17
 
 - Add the Fidelity Studio brand icon to the plugin composer and marketplace

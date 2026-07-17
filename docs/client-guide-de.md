@@ -1,122 +1,129 @@
 # Fidelity Studio Content Assistant
 
-Kurzanleitung fuer Newsletter und Website-Inhalte.
+Eine einfache Anleitung für Newsletter und Website-Inhalte. Du musst weder
+Terminal noch GitHub öffnen.
 
-## Vorbereitung
+## Was du brauchst
 
-Du brauchst:
+- die [ChatGPT Desktop-App](https://chatgpt.com/download/) auf deinem Mac oder
+  Windows-Computer
+- die E-Mail-Adresse, die Fidelity Studio für dich freigeschaltet hat
+- Zugang zum richtigen Resend-Team für Newsletter
 
-- die ChatGPT Desktop-App auf deinem Mac
-- eine Einladung von Fidelity Studio fuer den Website-Zugang
-- Zugang zum richtigen Resend-Team fuer Newsletter
+## 1. Den Assistenten einrichten
 
-Ein GitHub-Konto oder Zugriff auf den Website-Code ist nicht erforderlich. Der
-Mac muss fuer Installation und Updates lediglich die oeffentliche
-GitHub-Repository erreichen koennen.
+1. Öffne die ChatGPT Desktop-App.
+2. Wähle **Codex**. Codex übernimmt nur die technische Einrichtung.
+3. Starte eine neue Aufgabe.
+4. Füge den folgenden Text ein und sende ihn ab:
 
-## Installation
+```text
+Bitte richte den Fidelity Studio Content Assistant für mich ein.
 
-Oeffne die App `Terminal` und fuehre diese beiden Befehle aus:
+Dies ist nur eine Einrichtungsaufgabe. Bearbeite keine Projektdateien und installiere keine andere Software.
 
-```bash
+Prüfe zuerst, ob dies eine lokale Aufgabe in der ChatGPT Desktop-App ist und ob der vorhandene Codex-Befehl Plugins unterstützt. Falls nicht, stoppe und sage mir, dass ich ChatGPT aktualisieren soll.
+
+Führe danach genau diese Einrichtung selbst aus:
+
 codex plugin marketplace add fsmventures/fidelity-studio-content-assistant --ref main
 codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
-```
-
-Pruefe danach die Installation:
-
-```bash
 codex plugin list --marketplace fidelity-studio-content-assistant
-```
 
-Verbinde danach beide Konten:
+Starte danach nacheinander die Anmeldungen bei Fidelity Studio und Resend:
 
-```bash
 codex mcp login fidelity-studio-content-assistant
 codex mcp login resend
+
+Führe die notwendigen Befehle selbst aus. Ich möchte kein Terminal öffnen und keine Passwörter, Codes oder Zugangsschlüssel in den Chat kopieren.
+
+Falls eine Genehmigung oder Browser-Anmeldung erscheint, pausiere, erkläre mir kurz, was erlaubt wird, und sage mir genau, was ich anklicken soll. Bitte verlange keinen Vollzugriff, sondern nur die nötigen einzelnen Genehmigungen.
+
+Prüfe am Ende, ob das Plugin unter Plugins sichtbar und beide Verbindungen bereit sind. Sage mir danach, dass ich ChatGPT vollständig beenden, erneut öffnen und eine neue Work-Aufgabe starten soll.
 ```
 
-Bei Fidelity Studio meldest du dich mit der eingeladenen E-Mail-Adresse an. Bei
-Resend waehlst du das Team, das die Newsletter verwaltet.
+ChatGPT erledigt die technische Einrichtung. Bestätige nur die beschriebenen
+Einrichtungsbefehle und führe die Browser-Anmeldungen durch. Bei Fidelity Studio
+verwendest du genau die E-Mail-Adresse, die für dich freigeschaltet wurde. Bei
+Resend wählst du das Pilates-Zürich-Team.
 
-Schliesse ChatGPT nach der Anmeldung vollstaendig und oeffne die App erneut.
-Waehle Work oder Codex, oeffne Plugins und aktiviere Fidelity Studio Content
-Assistant. Starte danach eine neue Aufgabe. Im normalen Chat-Modus und in der
-Mobil-App stehen Plugins nicht zur Verfuegung.
+Beende ChatGPT danach vollständig, nicht nur das Fenster: auf dem Mac mit
+**ChatGPT → Beenden** oder `⌘Q`, unter Windows über **Beenden**. Öffne die App
+anschliessend erneut.
 
-## Erster Test
+## 2. Erster Start
+
+1. Öffne wieder **ChatGPT → Work** und starte eine neue Aufgabe.
+2. Tippe `@` und wähle **Fidelity Studio Content Assistant**.
+3. Füge diesen Text ein:
 
 ```text
 Zeige mir meinen Fidelity-Studio-Projektkontext und welche Newsletter-, Blog- und Team-Funktionen ich verwenden kann.
 ```
 
-Der Assistent sollte das richtige Projekt nennen und die verfuegbaren
-Arbeitsablaeufe zeigen.
+## Newsletter erstellen
 
-## Newsletter
-
-Du kannst eine E-Mail, einen Text oder Bilder direkt als Ausgangsmaterial
-einfuegen oder anhaengen:
+Du kannst eine E-Mail, einen Text und Bilder direkt in die Aufgabe einfügen oder
+anhängen:
 
 ```text
-Erstelle daraus einen Newsletter-Entwurf in Resend. Verwende noch keine Live-Empfaenger und versende nichts. Zeige mir zuerst Betreff, Absender, Sprache, Zielgruppe und Entwurf.
+Erstelle daraus einen Newsletter-Entwurf in Resend. Versende noch nichts. Zeige mir zuerst Betreff, Absender, Sprache, Zielgruppe und eine Vorschau.
 ```
 
-Fuer einen Test:
+Für ein grosses Bild über die ganze Breite eignet sich Querformat am besten.
+Hochformatbilder sind ebenfalls möglich, zum Beispiel nebeneinander in einem
+zweispaltigen Abschnitt. Der Assistent soll das passende Layout vorschlagen und
+keine Bilder ohne Rückfrage stark beschneiden.
+
+Für einen Test:
 
 ```text
 Sende diesen Entwurf als klar gekennzeichneten Test nur an [E-Mail-Adresse].
 ```
 
-Ein echter Versand oder eine Terminierung erfolgt erst, nachdem du den finalen
-Entwurf und die genaue Zielgruppe bestaetigt hast. Den produktiven Versand oder
-die Terminierung fuehrst du anschliessend selbst im Resend-Dashboard aus; der
-Assistent versendet nur klar gekennzeichnete Tests an ausdruecklich genannte
-Adressen.
+Der Assistent versendet nur klar gekennzeichnete Tests an ausdrücklich genannte
+Adressen. Den endgültigen Versand oder die Terminierung bestätigst du selbst im
+Resend-Dashboard.
 
-## Blogbeitrag
+## Blogbeitrag erstellen
 
 ```text
-Erstelle aus diesem Text einen deutschen und englischen Blogbeitrag als Entwurf. Verwende die vorhandenen Autorinnen und Kategorien und veroeffentliche noch nichts.
+Erstelle aus diesem Text einen deutschen und englischen Blogbeitrag als Entwurf. Verwende die vorhandenen Autorinnen und Kategorien und veröffentliche noch nichts.
 ```
 
-Nach der Vorschau kannst du die Veroeffentlichung ausdruecklich bestaetigen.
+Nach der Vorschau kannst du die Veröffentlichung ausdrücklich bestätigen.
 
-## Teammitglied
+## Teammitglied bearbeiten
 
 ```text
-Liste zuerst die aktuellen Teammitglieder auf. Bereite danach diese Aenderung fuer [Name] als Entwurf vor und veroeffentliche noch nichts: [Aenderung].
+Liste zuerst die aktuellen Teammitglieder auf. Bereite danach diese Änderung für [Name] als Entwurf vor und veröffentliche noch nichts: [Änderung].
 ```
 
-## Aktualisieren
+## Plugin aktualisieren
 
-Fidelity Studio kann neue Plugin-Versionen ueber Git bereitstellen. Fuer ein
-Update:
+Öffne in der ChatGPT Desktop-App eine neue **Codex**-Aufgabe und füge diesen
+Text ein:
 
-```bash
-codex plugin marketplace upgrade fidelity-studio-content-assistant
-codex plugin list --marketplace fidelity-studio-content-assistant
+```text
+Bitte aktualisiere den Fidelity Studio Content Assistant auf die neueste Version. Führe die Aktualisierung selbst aus, prüfe danach die installierte Version und sage mir, wann ich ChatGPT neu starten soll.
 ```
 
-Starte danach eine neue Aufgabe. Projektregeln und Schreibvorgaben werden
-automatisch live geladen und benoetigen normalerweise kein Plugin-Update.
-
-Falls weiterhin eine alte Version angezeigt wird:
-
-```bash
-codex plugin remove fidelity-studio-content-assistant@fidelity-studio-content-assistant
-codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
-```
+Projektregeln und Schreibvorgaben werden automatisch live geladen. Dafür ist
+normalerweise keine Plugin-Aktualisierung nötig.
 
 ## Wenn etwas nicht funktioniert
 
-Wenn keine Fidelity-Studio- oder Resend-Funktionen erscheinen, fuehre die beiden
-Login-Befehle erneut aus und starte danach eine neue Aufgabe.
+Öffne in der ChatGPT Desktop-App eine neue **Codex**-Aufgabe und füge diesen
+Text ein:
 
-Wenn das Plugin in der App nicht angezeigt wird, wiederhole die
-Installationsbefehle und pruefe, ob GitHub erreichbar ist. In einer verwalteten
-ChatGPT-Umgebung muss das Plugin eventuell zuerst freigegeben werden.
+```text
+Bitte prüfe meine Installation des Fidelity Studio Content Assistant und die Verbindungen zu Fidelity Studio und Resend. Behebe alles, was du selbst beheben kannst, und führe mich bei Anmeldungen oder Genehmigungen Schritt für Schritt durch den Vorgang.
+```
 
-Wenn der Zugriff verweigert wird, muss Fidelity Studio die verwendete
-E-Mail-Adresse fuer das Projekt freischalten. Fuer Resend muss die
-E-Mail-Adresse Mitglied des richtigen Teams sein.
+Falls der Zugriff verweigert wird, prüfe zuerst, ob du bei Fidelity Studio die
+freigeschaltete E-Mail-Adresse und bei Resend das richtige Team verwendest.
+
+Falls **Codex**, **Work** oder **Plugins** in der App nicht angezeigt wird,
+aktualisiere zuerst die ChatGPT Desktop-App. In einer verwalteten
+ChatGPT-Umgebung muss die zuständige Person das Plugin möglicherweise
+freigeben.
