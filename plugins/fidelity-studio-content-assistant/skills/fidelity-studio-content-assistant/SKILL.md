@@ -25,32 +25,64 @@ rules, review steps, and publishing or sending safeguards.
 ## If MCP Tools Are Missing In Codex
 
 If the Fidelity Studio Content Assistant MCP tools are not exposed in the
-current Codex task, do not search Craft, the web, GitHub, local files, or the
-current workspace.
+current Codex task, first ask the user to start a new Work task and invoke this
+plugin there. Newly installed or authenticated tools are mounted when a task is
+created. Do not tell the user to quit the whole app unless the tools are still
+missing in that new task.
 
-Instead, run this exact command from the shell to start Codex's MCP OAuth login:
+If the tools remain missing in the new task, do not search Craft, the web,
+GitHub, local files, or the current workspace as a substitute.
+
+Run this exact command once from the shell to start Codex's MCP OAuth login:
 
 ```bash
 codex mcp login fidelity-studio-content-assistant
 ```
 
-If the command prints an authorization URL, ask the user to open it and complete
-the Fidelity Studio CMS sign-in. If the command reports success, tell the user
-to start a fresh Codex task and invoke the plugin again so the newly
-authenticated MCP tools are loaded.
+Codex normally opens the authorization page automatically. Wait for that page
+and tell the user what to approve. Do not run `open`, launch a second browser
+window, repeat the login command, or start another MCP login while the callback
+listener is active. Offer the printed URL for manual opening only if Codex
+explicitly reports that browser launch failed.
+
+If the command reports success, tell the user to start a fresh Work task and
+invoke the plugin again so the authenticated MCP tools are mounted. A full app
+restart is only a fallback if the tools remain missing in that fresh task.
 
 Do not claim the client content is unavailable until this login step has been
 tried or the user declines it.
 
 For newsletter work, also require the Resend MCP tools. If they are missing,
-run:
+run this once, after the Fidelity login has finished:
 
 ```bash
 codex mcp login resend
 ```
 
-After successful Resend login, start a fresh task so both MCP servers are
-available.
+Do not pass a custom `--scopes` value or promise technical least privilege.
+Resend's hosted MCP currently requests the permissions selected by Resend,
+which may be broad account access. Explain that the user should connect only
+the intended client team or decline. If they decline, Fidelity website
+workflows remain available but newsletter workflows do not.
+
+After successful Resend login, start a fresh Work task so both MCP servers are
+mounted. Verify the connections operationally in that task:
+
+1. Call `get_project_context`.
+2. Call `list_blog_posts` and `list_team_members`.
+3. For newsletter access, perform harmless Resend reads for the connected team,
+   templates, broadcasts, and audiences.
+4. Report Fidelity and Resend readiness separately.
+
+Do not treat a successful login command, plugin listing, or an `auth_status`
+field alone as proof that the tools work. Never print access tokens.
+
+Version 0.4.0 introduces a separate `deploy:request` Fidelity capability. Users
+upgrading from an earlier version must run the Fidelity login once again, review
+the complete permission list on Fidelity Studio's consent page, and then start a
+new Work task. If authenticated context omits the production request tool or
+reports the capability missing, explain this one-time reauthentication instead
+of attempting the deployment.
 
 ## Source Of Truth
 
@@ -110,13 +142,39 @@ server-enforced newsletter delivery tool.
 
 ## Blog And Team Workflow
 
-Use the high-level Fidelity Studio MCP tools. Read the relevant blog or team
-context before writing. Keep new or updated content as draft unless the user
-explicitly asks to publish.
+Use the high-level Fidelity Studio MCP tools. Use `list_blog_posts` or
+`list_team_members` when the user asks for an inventory, and read the relevant
+blog or team context before writing.
 
-Before publishing or archiving website content, summarize the exact action and
-wait for explicit confirmation unless the authenticated project guidance or
-tool requires a stricter flow.
+Follow the authenticated project's state model:
+
+1. Create or update structured content as a draft.
+2. Use the returned commit and verification paths to poll
+   `get_project_deployment_status` for the preview environment.
+3. Give the user the verified preview links and invite refinements.
+4. After the user approves the content, perform the requested publish or
+   archive status change and verify the resulting preview commit again.
+5. Ask separately whether to deploy that exact reviewed commit to production
+   or hold it.
+6. Only after this separate choice, call `deploy_project_to_production` with
+   the exact request confirmation required by the tool. Generate one stable
+   idempotency key and reuse it unchanged for every retry. This creates a
+   request; it cannot dispatch production.
+7. Show the returned `cms.fidelitystudio.ch` approval URL to the user. Ask them
+   to open it, verify the project, summary, and commit, and choose whether to
+   publish. Only that authenticated server-owned page may dispatch production.
+8. Poll production deployment status with the returned deployment ID. Call a
+   page live only when the matching build marker and requested URLs are
+   verified. Then provide the canonical live links.
+
+Never describe a successful Git commit, content status change, approval request,
+candidate URL, or workflow dispatch as a verified deployment. If a deployment
+fails, keep the content and commit intact, report the failure, and do not claim
+it is live.
+If a dispatch result is ambiguous, poll the returned deployment ID and never
+retry while that request remains active. If Fidelity Studio closes it as
+unresolved with no matching GitHub run, show the current preview again and
+obtain a fresh user choice plus a new server-owned approval request.
 
 Keep plugin-level guidance generic. Client-specific knowledge belongs behind MCP
 authentication and must come from the server, not from this public package.

@@ -3,7 +3,6 @@
     "fidelity-studio-content-assistant": {
       "type": "http",
       "url": "https://mcp.fidelitystudio.ch/mcp",
-      "oauth_resource": "https://mcp.fidelitystudio.ch/mcp",
       "note": "OAuth-protected Fidelity Studio Content Assistant MCP endpoint. Sign in with the email account Fidelity Studio invited to the CMS. Client-specific guidance is returned by get_project_context after authentication."
     },
     "resend": {

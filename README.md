@@ -33,9 +33,10 @@ codex plugin marketplace add fsmventures/fidelity-studio-content-assistant --ref
 codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
 ```
 
-Restart ChatGPT desktop, choose Work or Codex, open Plugins, and select Fidelity
-Studio Content Assistant. Plugins are not available in ordinary Chat mode,
-mobile, or the IDE extension. Start a new task after installation.
+Choose Work, start a new task, open Plugins, and select Fidelity Studio Content
+Assistant. Plugins are not available in ordinary Chat mode, mobile, or the IDE
+extension. A full app restart is only a fallback if the tools are still absent
+in the new task.
 
 If Codex asks for marketplace details instead, use:
 
@@ -65,14 +66,21 @@ need GitHub access.
 
 For Resend, choose the client team or account that owns the newsletters. Resend
 access is account-level, so only connect an account the user is authorized to
-manage. The assistant uses Resend for inspection, drafts, edits, and explicitly
-named test recipients. Complete production sends and schedules manually in the
-Resend dashboard.
+manage. Resend's hosted OAuth may request broad provider-selected account
+permissions; do not force custom scopes or describe the connection as
+technically least-privileged. If the user declines, website workflows remain
+available but newsletter workflows do not. Plugin guidance instructs the
+assistant to use direct Resend access for inspection, drafts, edits, and
+explicitly named test recipients. Complete production sends and schedules
+manually in the Resend dashboard.
 
-After both logins succeed, start a fresh task and write:
+Run each login once and let Codex open its authorization page automatically. Do
+not launch a second browser window or start the next login while the first
+callback listener is active. After both logins succeed, start a fresh task and
+write:
 
 ```text
-Show me my Fidelity Studio project context and the newsletter, blog, and team-member workflows available to me.
+Load my Fidelity Studio project context, list all blog posts and team members, and use harmless Resend reads to verify the connected team, templates, broadcasts, and audiences. Change nothing and report Fidelity and Resend readiness separately.
 ```
 
 If the assistant starts searching local files, GitHub, Craft, or the web for
@@ -90,10 +98,13 @@ codex plugin list --marketplace fidelity-studio-content-assistant
 - Newsletters: use pasted or attached source material, create a Resend draft,
   review the exact audience, and send labelled tests only to explicitly named
   reviewers; complete live sends and schedules manually in Resend
-- Blog posts: load the authorized blog context, draft both required languages,
-  preview, then publish only after explicit approval
+- Blog posts: list or load the authorized content, draft both required
+  languages, verify the generated preview links, then deploy the reviewed commit
+  to production only after explicit approval on the server-owned Fidelity Studio
+  CMS page
 - Team members: list the current team first, draft the requested change, then
-  publish or archive only after explicit approval
+  verify it on preview and deploy the reviewed commit to production only after
+  explicit approval on the server-owned Fidelity Studio CMS page
 
 See the [German client quick start](docs/client-guide-de.md) for copy-ready
 prompts.
@@ -111,6 +122,17 @@ Start a new task after updating. Client-specific workflow and writing guidance
 is loaded live from Fidelity Studio, so those rules can change without a plugin
 reinstall.
 
+When upgrading from a version before `0.4.0`, run the Fidelity login once again
+to grant the new production-approval-request capability, then start another new
+Work task:
+
+```bash
+codex mcp login fidelity-studio-content-assistant
+```
+
+The authenticated project context shows whether production deployment is
+available. A cached plugin version or previous access token is not enough.
+
 If the listed version remains stale, refresh the installed copy explicitly:
 
 ```bash
@@ -125,12 +147,14 @@ See [maintenance and releases](docs/maintenance.md) for the release model.
 - Plugin source missing: rerun the marketplace command and check that GitHub is
   reachable.
 - Plugin blocked: ask the ChatGPT workspace administrator to allow the plugin.
-- OAuth browser does not open: run the matching `codex mcp login` command again.
+- OAuth browser does not open: use the printed authorization URL only when Codex
+  explicitly reports that automatic browser launch failed.
 - Fidelity access denied: use the exact email address invited by Fidelity
   Studio.
 - Resend data missing: reconnect and select the intended client team.
-- Tools missing or version stale: start a new task; if needed, run the update
-  commands above.
+- Tools missing or version stale: start a new task first; if needed, run the
+  update commands above. Restart the app only if a new task still lacks the
+  tools.
 
 ## Architecture Boundary
 
