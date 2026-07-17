@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 - 2026-07-17
+
+- Limit direct Resend use to inspection, drafts, updates, and explicitly named
+  test sends.
+- Require production newsletter sends and schedules to be completed manually
+  in the Resend dashboard until Fidelity Studio provides a server-enforced
+  newsletter gateway.
+
 ## 0.3.0 - 2026-07-17
 
 - Add Resend's hosted OAuth MCP for newsletter templates, audiences,

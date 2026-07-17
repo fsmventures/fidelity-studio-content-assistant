@@ -69,7 +69,10 @@ Sende diesen Entwurf als klar gekennzeichneten Test nur an [E-Mail-Adresse].
 ```
 
 Ein echter Versand oder eine Terminierung erfolgt erst, nachdem du den finalen
-Entwurf und die genaue Zielgruppe bestaetigt hast.
+Entwurf und die genaue Zielgruppe bestaetigt hast. Den produktiven Versand oder
+die Terminierung fuehrst du anschliessend selbst im Resend-Dashboard aus; der
+Assistent versendet nur klar gekennzeichnete Tests an ausdruecklich genannte
+Adressen.
 
 ## Blogbeitrag
 

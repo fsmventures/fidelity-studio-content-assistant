@@ -94,8 +94,8 @@ schedule, change an audience, or change subscription state.
 6. Send labelled tests only to addresses the user explicitly names.
 7. Show the final subject, sender, audience, language, recipient estimate, and
    timing.
-8. Send or schedule only after explicit confirmation in the current
-   conversation.
+8. Do not call a Resend production send or schedule tool. Direct the user to
+   complete that final action manually in the Resend dashboard.
 
 Do not add or remove contacts, alter subscription state, edit segments or
 topics, or change domains, API keys, webhooks, or team settings unless the user
@@ -104,14 +104,18 @@ explicitly asks for that exact action.
 Never use a transactional email send to bypass marketing consent, unsubscribe,
 suppression, topic, or preference behavior.
 
+Direct Resend access is account-level rather than Fidelity-project-scoped.
+Treat this integration as draft-and-test-only until Fidelity Studio exposes a
+server-enforced newsletter delivery tool.
+
 ## Blog And Team Workflow
 
 Use the high-level Fidelity Studio MCP tools. Read the relevant blog or team
 context before writing. Keep new or updated content as draft unless the user
 explicitly asks to publish.
 
-Before publishing, archiving, sending, or scheduling, summarize the exact action
-and wait for explicit confirmation unless the authenticated project guidance or
+Before publishing or archiving website content, summarize the exact action and
+wait for explicit confirmation unless the authenticated project guidance or
 tool requires a stricter flow.
 
 Keep plugin-level guidance generic. Client-specific knowledge belongs behind MCP

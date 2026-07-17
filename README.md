@@ -14,7 +14,7 @@ server returns the authorized project and its current guidance.
   publishing
 - Resend's hosted MCP for newsletter templates, broadcasts, audiences, and test
   sends
-- Auth-first workflow guidance with draft, review, and explicit send/publish
+- Auth-first workflow guidance with draft, review, and explicit publishing
   safeguards
 
 ## Install
@@ -60,7 +60,9 @@ need GitHub access.
 
 For Resend, choose the client team or account that owns the newsletters. Resend
 access is account-level, so only connect an account the user is authorized to
-manage.
+manage. The assistant uses Resend for inspection, drafts, edits, and explicitly
+named test recipients. Complete production sends and schedules manually in the
+Resend dashboard.
 
 After both logins succeed, start a fresh task and write:
 
@@ -81,8 +83,8 @@ codex plugin list --marketplace fidelity-studio-content-assistant
 ## Core Workflows
 
 - Newsletters: use pasted or attached source material, create a Resend draft,
-  review the exact audience, send labelled tests, and require explicit approval
-  before a live send or schedule
+  review the exact audience, and send labelled tests only to explicitly named
+  reviewers; complete live sends and schedules manually in Resend
 - Blog posts: load the authorized blog context, draft both required languages,
   preview, then publish only after explicit approval
 - Team members: list the current team first, draft the requested change, then

@@ -48,9 +48,10 @@ When changing this repo:
    loading.
 5. If MCP tools are missing in a Codex thread, instruct Codex to run
    `codex mcp login fidelity-studio-content-assistant`.
-6. Require explicit confirmation before website publishing or newsletter
-   sending and scheduling.
-7. Do not add fallbacks that search Craft, GitHub, web pages, or local files for
+6. Require explicit confirmation before website publishing.
+7. Keep direct Resend work draft-and-test-only. Production sends and schedules
+   must be completed manually in Resend.
+8. Do not add fallbacks that search Craft, GitHub, web pages, or local files for
    client-specific content.
 
 The CMS/MCP backend is responsible for OAuth, access checks, tool behavior, and

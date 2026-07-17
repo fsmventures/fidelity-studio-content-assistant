@@ -8,7 +8,7 @@
     "resend": {
       "type": "http",
       "url": "https://mcp.resend.com/mcp",
-      "note": "Official Resend hosted MCP endpoint. Sign in with the authorized client team or account for newsletter templates, contacts, audiences, broadcasts, test sends, and delivery operations."
+      "note": "Official Resend hosted MCP endpoint. Sign in with the authorized client team or account. This plugin uses it for inspection, drafts, updates, and explicitly named test recipients only; production sends and schedules are completed manually in Resend."
     }
   }
 }

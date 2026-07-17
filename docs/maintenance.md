@@ -59,7 +59,9 @@ Each client needs three independent pieces:
 
 Fidelity Studio access is project-scoped. Resend's hosted MCP uses the
 permissions of the connected Resend account, so connect only the intended
-client team.
+client team. Direct Resend work in this plugin is draft-and-test-only.
+Production sends and schedules remain manual Resend-dashboard actions until
+Fidelity Studio provides a server-enforced newsletter gateway.
 
 ## Release Verification
 

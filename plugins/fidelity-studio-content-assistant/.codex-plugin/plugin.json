@@ -1,7 +1,7 @@
 {
   "name": "fidelity-studio-content-assistant",
-  "version": "0.3.0",
-  "description": "Manage newsletters, blog posts, and team members through Fidelity Studio's scoped content tools and Resend's hosted newsletter tools.",
+  "version": "0.3.1",
+  "description": "Draft newsletters and manage blog posts and team members through Fidelity Studio's scoped content tools and Resend's hosted newsletter tools.",
   "author": {
     "name": "Fidelity Studio",
     "url": "https://github.com/fsmventures/fidelity-studio-content-assistant"
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "Fidelity Studio Content Assistant",
     "shortDescription": "Manage newsletters, blog posts, and team profiles.",
-    "longDescription": "Connects Fidelity Studio's authenticated website-content MCP and Resend's hosted newsletter MCP. The bundled skill loads scoped client guidance first, keeps work in draft and review stages, and requires explicit approval before publishing website content or sending a newsletter.",
+    "longDescription": "Connects Fidelity Studio's authenticated website-content MCP and Resend's hosted newsletter MCP. The bundled skill loads scoped client guidance first, keeps newsletters draft-and-test-only, and requires explicit approval before publishing website content. Production newsletter delivery stays manual in Resend.",
     "developerName": "Fidelity Studio",
     "category": "Productivity",
     "capabilities": [
