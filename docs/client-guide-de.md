@@ -58,6 +58,11 @@ Lesen, Entwürfe, Bilder und Änderungen. Eine Live-Veröffentlichung kann damit
 nur vorbereitet werden; die endgültige Freigabe erfolgt später für jeden
 einzelnen Vorgang auf einer separaten Fidelity-Studio-Seite.
 
+Klicke auf **Zugriff erlauben** nur einmal. Danach kehrt der Browser normalerweise
+automatisch zu ChatGPT/Codex zurück. Falls das nicht passiert, klicke auf der
+Bestätigungsseite einmal auf **Zurück zu ChatGPT/Codex**. Starte den Login nicht
+erneut.
+
 ## 2. Verbindung prüfen
 
 1. Starte nach der Einrichtung eine **neue Work-Aufgabe**. Du musst ChatGPT
