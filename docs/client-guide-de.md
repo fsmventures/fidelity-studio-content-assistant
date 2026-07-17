@@ -13,7 +13,7 @@ Terminal noch GitHub öffnen.
 ## 1. Den Assistenten einrichten
 
 1. Öffne die ChatGPT Desktop-App.
-2. Wähle **Codex**. Codex übernimmt nur die technische Einrichtung.
+2. Wähle **ChatGPT** und wechsle zu **Work**.
 3. Starte eine neue Aufgabe.
 4. Füge den folgenden Text ein und sende ihn ab:
 
@@ -22,9 +22,7 @@ Bitte richte den Fidelity Studio Content Assistant für mich ein.
 
 Dies ist nur eine Einrichtungsaufgabe. Bearbeite keine Projektdateien und installiere keine andere Software.
 
-Prüfe zuerst, ob dies eine lokale Aufgabe in der ChatGPT Desktop-App ist und ob der vorhandene Codex-Befehl Plugins unterstützt. Falls nicht, stoppe und sage mir, dass ich ChatGPT aktualisieren soll.
-
-Führe danach genau diese Einrichtung selbst aus:
+Führe die folgenden Terminalbefehle selbst im gemeinsamen Arbeitsbereich aus. Ich möchte kein Terminal öffnen.
 
 codex plugin marketplace add fsmventures/fidelity-studio-content-assistant --ref main
 codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
@@ -35,9 +33,11 @@ Starte danach nacheinander die Anmeldungen bei Fidelity Studio und Resend:
 codex mcp login fidelity-studio-content-assistant
 codex mcp login resend
 
-Führe die notwendigen Befehle selbst aus. Ich möchte kein Terminal öffnen und keine Passwörter, Codes oder Zugangsschlüssel in den Chat kopieren.
+Ich möchte keine Passwörter, Codes oder Zugangsschlüssel in den Chat kopieren.
 
 Falls eine Genehmigung oder Browser-Anmeldung erscheint, pausiere, erkläre mir kurz, was erlaubt wird, und sage mir genau, was ich anklicken soll. Bitte verlange keinen Vollzugriff, sondern nur die nötigen einzelnen Genehmigungen.
+
+Falls ein Befehl nicht verfügbar ist oder die Installation nicht dauerhaft gespeichert werden kann, stoppe und erkläre mir genau, was nicht funktioniert. Bitte fordere mich nicht auf, selbst ein Terminal zu öffnen.
 
 Prüfe am Ende, ob das Plugin unter Plugins sichtbar und beide Verbindungen bereit sind. Sage mir danach, dass ich ChatGPT vollständig beenden, erneut öffnen und eine neue Work-Aufgabe starten soll.
 ```
@@ -101,8 +101,8 @@ Liste zuerst die aktuellen Teammitglieder auf. Bereite danach diese Änderung f�
 
 ## Plugin aktualisieren
 
-Öffne in der ChatGPT Desktop-App eine neue **Codex**-Aufgabe und füge diesen
-Text ein:
+Öffne in der ChatGPT Desktop-App eine neue **Work**-Aufgabe und füge diesen Text
+ein:
 
 ```text
 Bitte aktualisiere den Fidelity Studio Content Assistant auf die neueste Version. Führe die Aktualisierung selbst aus, prüfe danach die installierte Version und sage mir, wann ich ChatGPT neu starten soll.
@@ -113,8 +113,8 @@ normalerweise keine Plugin-Aktualisierung nötig.
 
 ## Wenn etwas nicht funktioniert
 
-Öffne in der ChatGPT Desktop-App eine neue **Codex**-Aufgabe und füge diesen
-Text ein:
+Öffne in der ChatGPT Desktop-App eine neue **Work**-Aufgabe und füge diesen Text
+ein:
 
 ```text
 Bitte prüfe meine Installation des Fidelity Studio Content Assistant und die Verbindungen zu Fidelity Studio und Resend. Behebe alles, was du selbst beheben kannst, und führe mich bei Anmeldungen oder Genehmigungen Schritt für Schritt durch den Vorgang.

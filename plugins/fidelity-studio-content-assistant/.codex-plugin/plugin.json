@@ -1,6 +1,6 @@
 {
   "name": "fidelity-studio-content-assistant",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Draft newsletters and manage blog posts and team members through Fidelity Studio's scoped content tools and Resend's hosted newsletter tools.",
   "author": {
     "name": "Fidelity Studio",

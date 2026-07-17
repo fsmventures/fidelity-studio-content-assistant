@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.4 - 2026-07-17
+
+- Use ChatGPT Work's terminal capability for the paste-ready, no-Terminal
+  client installation flow.
+- Make the setup prompt verify that the plugin persisted and report a precise
+  blocker instead of handing terminal work back to the client.
+
 ## 0.3.3 - 2026-07-17
 
 - Replace the client-facing Terminal setup with a paste-ready Codex setup

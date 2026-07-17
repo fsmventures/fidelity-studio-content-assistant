@@ -21,10 +21,10 @@ server returns the authorized project and its current guidance.
 
 Clients should follow the
 [German client quick start](docs/client-guide-de.md): open ChatGPT Work in the
-desktop app after using Codex once for setup, paste the provided prompts,
-approve the clearly described installation actions, and let Codex complete the
-technical setup. Clients do not need to open Terminal, have a GitHub account,
-or understand the repository commands.
+desktop app, paste the provided setup prompt, approve the clearly described
+installation actions, and let Work run and verify the technical setup. Clients
+do not need to open Terminal, have a GitHub account, or understand the
+repository commands.
 
 For maintainers and manual fallback, the equivalent commands are:
 
