@@ -97,13 +97,19 @@ Fidelity Studio publishes plugin updates through this Git marketplace:
 
 ```bash
 codex plugin marketplace upgrade fidelity-studio-content-assistant
-codex plugin remove fidelity-studio-content-assistant@fidelity-studio-content-assistant
-codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
+codex plugin list --marketplace fidelity-studio-content-assistant
 ```
 
 Start a new task after updating. Client-specific workflow and writing guidance
 is loaded live from Fidelity Studio, so those rules can change without a plugin
 reinstall.
+
+If the listed version remains stale, refresh the installed copy explicitly:
+
+```bash
+codex plugin remove fidelity-studio-content-assistant@fidelity-studio-content-assistant
+codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
+```
 
 See [maintenance and releases](docs/maintenance.md) for the release model.
 

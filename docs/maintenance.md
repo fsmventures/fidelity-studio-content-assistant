@@ -20,8 +20,7 @@ public documentation change.
 
 ```bash
 codex plugin marketplace upgrade fidelity-studio-content-assistant
-codex plugin remove fidelity-studio-content-assistant@fidelity-studio-content-assistant
-codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
+codex plugin list --marketplace fidelity-studio-content-assistant
 ```
 
 6. Start a new ChatGPT desktop task and verify both MCP connections.
@@ -29,8 +28,15 @@ codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assis
 The Git marketplace makes Fidelity Studio the update publisher. Clients do not
 install from a copied folder, and Fidelity Studio does not need to send a new
 package for every release. Git pushes do not silently replace every installed
-cache; the client still needs the refresh/reinstall commands above and a new
-task.
+cache; the client still needs to refresh the marketplace and start a new task.
+
+If the installed version remains stale after the marketplace refresh, reinstall
+the cached copy:
+
+```bash
+codex plugin remove fidelity-studio-content-assistant@fidelity-studio-content-assistant
+codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
+```
 
 ### Live Client Guidance
 

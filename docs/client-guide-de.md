@@ -92,12 +92,18 @@ Update:
 
 ```bash
 codex plugin marketplace upgrade fidelity-studio-content-assistant
-codex plugin remove fidelity-studio-content-assistant@fidelity-studio-content-assistant
-codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
+codex plugin list --marketplace fidelity-studio-content-assistant
 ```
 
 Starte danach eine neue Aufgabe. Projektregeln und Schreibvorgaben werden
 automatisch live geladen und benoetigen normalerweise kein Plugin-Update.
+
+Falls weiterhin eine alte Version angezeigt wird:
+
+```bash
+codex plugin remove fidelity-studio-content-assistant@fidelity-studio-content-assistant
+codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
+```
 
 ## Wenn etwas nicht funktioniert
 
