@@ -1,6 +1,6 @@
 {
   "name": "fidelity-studio-content-assistant",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Draft newsletters and manage blog posts and team members through Fidelity Studio's scoped content tools and Resend's hosted newsletter tools.",
   "author": {
     "name": "Fidelity Studio",
@@ -33,6 +33,9 @@
     ],
     "websiteURL": "https://github.com/fsmventures/fidelity-studio-content-assistant",
     "brandColor": "#2F9B73",
+    "composerIcon": "./assets/fidelity-studio-icon.png",
+    "logo": "./assets/fidelity-studio-icon.png",
+    "logoDark": "./assets/fidelity-studio-icon.png",
     "defaultPrompt": [
       "Authenticate with Fidelity Studio Content Assistant.",
       "Show me my authenticated project context and available workflows.",

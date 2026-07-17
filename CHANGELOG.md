@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.2 - 2026-07-17
+
+- Add the Fidelity Studio brand icon to the plugin composer and marketplace
+  presentation.
+
 ## 0.3.1 - 2026-07-17
 
 - Limit direct Resend use to inspection, drafts, updates, and explicitly named
