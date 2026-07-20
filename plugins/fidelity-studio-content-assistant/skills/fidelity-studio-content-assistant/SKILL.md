@@ -52,8 +52,14 @@ restart is only a fallback if the tools remain missing in that fresh task.
 Do not claim the client content is unavailable until this login step has been
 tried or the user declines it.
 
-For newsletter work, also require the Resend MCP tools. If they are missing,
-run this once, after the Fidelity login has finished:
+Do not authenticate Resend during the initial plugin setup. After the Fidelity
+login has finished, start a fresh Work task and successfully call
+`get_project_context` first. Inspect the returned context for an explicit
+newsletter declaration. Only require Resend when that authenticated project
+context says newsletters are enabled and names Resend as the provider.
+
+If the project requires Resend and its MCP tools are missing or an operational
+read reports that authentication is required, run this once:
 
 ```bash
 codex mcp login resend
@@ -65,17 +71,32 @@ which may be broad account access. Explain that the user should connect only
 the intended client team or decline. If they decline, Fidelity website
 workflows remain available but newsletter workflows do not.
 
-After successful Resend login, start a fresh Work task so both MCP servers are
-mounted. Verify the connections operationally in that task:
+If the authenticated context does not explicitly require Resend, do not start
+its login and do not ask for newsletter-account access. Report that the website
+workflows are ready and Resend is not required for this project.
+
+After successful Resend login, start another fresh Work task so both MCP
+servers are mounted. Verify the required connections operationally in that
+task:
 
 1. Call `get_project_context`.
 2. Call `list_blog_posts` and `list_team_members`.
-3. For newsletter access, perform harmless Resend reads for the connected team,
-   templates, broadcasts, and audiences.
-4. Report Fidelity and Resend readiness separately.
+3. Reconfirm that the context enables newsletters with provider Resend.
+4. Only then, perform harmless Resend reads for the connected team, templates,
+   broadcasts, and audiences.
+5. Report Fidelity and each context-required integration separately.
 
 Do not treat a successful login command, plugin listing, or an `auth_status`
 field alone as proof that the tools work. Never print access tokens.
+
+On Windows, if the packaged `codex.exe` under `WindowsApps` fails with access
+denied before an MCP login can start, do not ask the user to switch approval or
+sandbox mode. Do not install Node/npm only to obtain Codex, and do not change
+PowerShell execution policy. Use the public plugin's Windows bootstrap, which
+installs and verifies the official standalone Codex CLI outside `WindowsApps`
+and verifies Git before the repository-backed marketplace is used. Start only
+one OAuth login at a time. Let Codex open the browser automatically and offer
+the printed URL manually only when automatic opening explicitly fails.
 
 Version 0.4.0 introduces a separate `deploy:request` Fidelity capability. Users
 upgrading from an earlier version must run the Fidelity login once again, review

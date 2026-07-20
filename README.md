@@ -12,8 +12,8 @@ server returns the authorized project and its current guidance.
 
 - Fidelity Studio MCP for scoped blog posts, team members, media, previews, and
   publishing
-- Resend's hosted MCP for newsletter templates, broadcasts, audiences, and test
-  sends
+- Resend's hosted MCP registration for projects whose authenticated Fidelity
+  context declares newsletter provider Resend
 - Auth-first workflow guidance with draft, review, and explicit publishing
   safeguards
 
@@ -25,6 +25,14 @@ desktop app, paste the provided setup prompt, approve the clearly described
 installation actions, and let Work run and verify the technical setup. Clients
 do not need to open Terminal, have a GitHub account, or understand the
 repository commands.
+
+On Windows, the setup first runs the reusable
+[`scripts/setup-windows.ps1`](scripts/setup-windows.ps1) bootstrap. It rejects
+the protected `WindowsApps` Codex executable, installs the official standalone
+Codex CLI when required, verifies Git for the repository-backed marketplace,
+and idempotently refreshes the marketplace and plugin. It does not install
+Node/npm for Codex, change PowerShell execution policy, or use approval/sandbox
+settings as a substitute for fixing an executable access-control failure.
 
 For maintainers and manual fallback, the equivalent commands are:
 
@@ -52,17 +60,25 @@ Sparse paths are optional. If requested, use:
 plugins/fidelity-studio-content-assistant
 ```
 
-## Connect Accounts
+## Connect Accounts In Context
 
-Sign in to both services when prompted:
+Sign in to Fidelity Studio first:
 
 ```bash
 codex mcp login fidelity-studio-content-assistant
-codex mcp login resend
 ```
 
 For Fidelity Studio, use the email address invited to the CMS. Clients do not
 need GitHub access.
+
+After that login finishes, start a fresh Work task, load
+`get_project_context`, and verify the website tools operationally. Only if the
+authenticated project context explicitly declares newsletters with provider
+Resend should the assistant start this second login:
+
+```bash
+codex mcp login resend
+```
 
 For Resend, choose the client team or account that owns the newsletters. Resend
 access is account-level, so only connect an account the user is authorized to
@@ -76,12 +92,20 @@ manually in the Resend dashboard.
 
 Run each login once and let Codex open its authorization page automatically. Do
 not launch a second browser window or start the next login while the first
-callback listener is active. After both logins succeed, start a fresh task and
-write:
+callback listener is active. Offer the printed URL manually only if Codex
+reports that automatic browser opening failed. A project without an explicit
+Resend newsletter declaration is ready for website work after Fidelity Studio
+verification; do not request Resend access for it.
+
+After Fidelity succeeds, start a fresh task and write:
 
 ```text
-Load my Fidelity Studio project context, list all blog posts and team members, and use harmless Resend reads to verify the connected team, templates, broadcasts, and audiences. Change nothing and report Fidelity and Resend readiness separately.
+Load my Fidelity Studio project context and list all blog posts and team members. Check whether the authenticated context explicitly enables newsletters with provider Resend. Only then, use harmless Resend reads to verify the connected team, templates, broadcasts, and audiences; if Resend is not yet authenticated, start exactly one login and tell me to repeat this verification in a fresh Work task. If the context does not require Resend, report website-only readiness without starting its login. Change nothing and report each required service separately.
 ```
+
+Do not trust an `auth_status` value or successful login command as operational
+proof. Verify `get_project_context`, blog and team inventory calls, and – when
+the project requires Resend – harmless provider reads in the fresh task.
 
 If the assistant starts searching local files, GitHub, Craft, or the web for
 client content, stop the task and reconnect the Fidelity Studio MCP. Authenticated
@@ -145,7 +169,11 @@ See [maintenance and releases](docs/maintenance.md) for the release model.
 ## Troubleshooting
 
 - Plugin source missing: rerun the marketplace command and check that GitHub is
-  reachable.
+  reachable. On Windows, verify `git.exe` before retrying because the current
+  owner/repository marketplace requires Git.
+- Windows `codex.exe` access denied: do not change approval mode, sandbox mode,
+  or PowerShell execution policy. Run the Windows bootstrap so it installs and
+  verifies the official standalone Codex CLI outside `WindowsApps`.
 - Plugin blocked: ask the ChatGPT workspace administrator to allow the plugin.
 - OAuth browser does not open: use the printed authorization URL only when Codex
   explicitly reports that automatic browser launch failed.

@@ -28,7 +28,9 @@ codex plugin marketplace upgrade fidelity-studio-content-assistant
 codex plugin list --marketplace fidelity-studio-content-assistant
 ```
 
-6. Start a new ChatGPT desktop task and verify both MCP connections.
+6. Start a new ChatGPT desktop task and verify Fidelity Studio first. Verify
+   Resend only when the authenticated project context declares newsletter
+   provider Resend.
 
 The Git marketplace makes Fidelity Studio the update publisher. Clients do not
 install from a copied folder, and Fidelity Studio does not need to send a new
@@ -56,11 +58,17 @@ this public repository.
 
 ## Client Onboarding
 
-Each client needs three independent pieces:
+Each client needs two baseline pieces and one context-dependent integration:
 
 1. ChatGPT desktop with this plugin installed.
 2. A Fidelity Studio CMS invitation for the email used during MCP OAuth.
-3. Membership in the correct Resend team or account for newsletter work.
+3. Only when `get_project_context` explicitly enables newsletters with provider
+   Resend: membership in the correct Resend team or account.
+
+Authenticate Fidelity Studio first, start a fresh Work task, and load the
+project context before deciding whether to request Resend authentication. This
+keeps the public package client-agnostic while avoiding unnecessary provider
+access for website-only clients.
 
 Fidelity Studio access is project-scoped. Resend's hosted MCP uses the
 provider-selected permissions of the connected account and may request broad
@@ -78,12 +86,18 @@ For every release:
 - validate `plugin.json`, `.mcp.json`, and `marketplace.json`
 - confirm the marketplace snapshot resolves the new version
 - install the version on a clean or test profile
+- on Windows, test both an accessible standalone Codex CLI and a protected
+  `WindowsApps` candidate; verify that the bootstrap resolves the executable
+  outside `WindowsApps`, detects or installs Git for Windows, and never installs
+  Node/npm or changes PowerShell execution policy
 - verify the Fidelity Studio icon in the Plugins directory, Installed row, and
   `@` composer menu in light and dark appearance
-- authenticate both MCP servers
-- verify project context
+- authenticate Fidelity Studio first and start a fresh Work task
+- verify project context before deciding whether Resend applies
 - verify `list_blog_posts` and `list_team_members` through Fidelity Studio
-- verify newsletter reads and draft-only behavior through Resend
+- for a Resend-enabled test project, authenticate Resend separately, start
+  another fresh Work task, and verify newsletter reads and draft-only behavior
+- for a website-only test project, verify that setup does not request Resend
 - verify preview status against a known commit and harmless page paths
 - verify that a production request opens the server-owned Fidelity Studio CMS
   approval page, then decline it and confirm that no workflow was dispatched

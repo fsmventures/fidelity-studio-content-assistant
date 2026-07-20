@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.4.1 - 2026-07-20
+
+- Authenticate Fidelity Studio first and load the authorized project context
+  before deciding whether a client project needs Resend.
+- Request Resend authentication only when the loaded context explicitly enables
+  newsletters with provider Resend; keep website-only clients ready without it.
+- Add an idempotent Windows bootstrap that avoids the protected `WindowsApps`
+  Codex executable, uses the official standalone Codex installer, and verifies
+  the exact executable path.
+- Detect or install Git for Windows before using the repository-backed plugin
+  marketplace and refresh the current process path after installation.
+- Refresh existing marketplaces and plugin caches safely, verify the installed
+  version and MCP registrations, and preserve one-login-at-a-time OAuth steps.
+- Document that approval mode, sandbox elevation, Node/npm, and PowerShell
+  execution-policy changes are not fixes for an executable access-control
+  failure.
+
 ## 0.4.0 - 2026-07-17
 
 - Remove the explicit OAuth resource override so Codex sends the Fidelity MCP

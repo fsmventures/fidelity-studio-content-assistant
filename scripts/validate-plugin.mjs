@@ -16,6 +16,7 @@ const pluginPath =
 const mcpPath = "plugins/fidelity-studio-content-assistant/.mcp.json";
 const marketplacePath = ".agents/plugins/marketplace.json";
 const guidePath = "docs/client-guide-de.md";
+const windowsSetupPath = "scripts/setup-windows.ps1";
 const skillPath =
   "plugins/fidelity-studio-content-assistant/skills/fidelity-studio-content-assistant/SKILL.md";
 
@@ -23,10 +24,11 @@ const plugin = json(pluginPath);
 const mcp = json(mcpPath);
 const marketplace = json(marketplacePath);
 const guide = read(guidePath);
+const windowsSetup = read(windowsSetupPath);
 const skill = read(skillPath);
 
-if (plugin.version !== "0.4.0") {
-  fail(`Expected plugin version 0.4.0, received ${plugin.version}.`);
+if (plugin.version !== "0.4.1") {
+  fail(`Expected plugin version 0.4.1, received ${plugin.version}.`);
 }
 if (
   mcp.mcpServers?.["fidelity-studio-content-assistant"]?.oauth_resource
@@ -55,8 +57,35 @@ if (/\bmarkus[^\s@]*@[^\s]+/i.test(guide)) {
 if (!guide.includes("neue Work-Aufgabe")) {
   fail("The guide must make a new Work task the normal tool-mounting step.");
 }
+if (
+  !guide.includes("get_project_context")
+  || !guide.includes("Anbieter ausdrücklich Resend")
+) {
+  fail("The guide must load authenticated project context before requiring Resend.");
+}
+if (
+  !windowsSetup.includes("https://chatgpt.com/codex/install.ps1")
+  || !windowsSetup.includes("\\WindowsApps\\")
+  || !windowsSetup.includes("Git.Git")
+  || !windowsSetup.includes("plugin marketplace upgrade")
+  || !windowsSetup.includes("mcp list --json")
+) {
+  fail("The Windows bootstrap is missing a required Codex, Git, upgrade, or verification guard.");
+}
+if (/Set-ExecutionPolicy|npm\s+install|npm\.cmd|winget[^\n]+Node/i.test(windowsSetup)) {
+  fail("The Windows bootstrap must not change execution policy or install Node/npm for Codex.");
+}
+if (!windowsSetup.includes("Approval mode or sandbox elevation does not repair this file ACL")) {
+  fail("The Windows bootstrap must not present approval or sandbox mode as an ACL repair.");
+}
 if (!skill.includes("list_blog_posts")) {
   fail("The skill must cover blog inventory reads.");
+}
+if (
+  !skill.includes("Only require Resend")
+  || !skill.includes("get_project_context` first")
+) {
+  fail("The skill must make Resend conditional on authenticated project context.");
 }
 if (!skill.includes("idempotency key")) {
   fail("The skill must preserve production deployment idempotency.");

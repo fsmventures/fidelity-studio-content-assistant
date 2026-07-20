@@ -8,7 +8,8 @@ Terminal noch GitHub öffnen.
 - die [ChatGPT Desktop-App](https://chatgpt.com/download/) auf deinem Mac oder
   Windows-Computer
 - die E-Mail-Adresse, die Fidelity Studio für dich freigeschaltet hat
-- Zugang zum richtigen Resend-Team für Newsletter
+- nur falls dein Projekt Newsletter über Resend verwendet: Zugang zum richtigen
+  Resend-Team
 
 ## 1. Den Assistenten einrichten
 
@@ -20,38 +21,44 @@ Terminal noch GitHub öffnen.
 ```text
 Bitte richte den Fidelity Studio Content Assistant für mich ein.
 
-Dies ist nur eine Einrichtungsaufgabe. Bearbeite keine Projektdateien und installiere keine andere Software. Führe die nötigen Terminalbefehle selbst im gemeinsamen Arbeitsbereich aus. Ich möchte kein Terminal öffnen.
+Dies ist nur eine Einrichtungsaufgabe. Bearbeite keine Projektdateien. Führe die nötigen Befehle selbst im gemeinsamen Arbeitsbereich aus; ich möchte kein Terminal öffnen.
 
-1. Installiere den Assistenten dauerhaft:
+1. Prüfe zuerst das Betriebssystem. Unter Windows führe das wiederholbar nutzbare Fidelity-Setup direkt in 64-Bit-Windows-PowerShell aus:
 
-codex plugin marketplace add fsmventures/fidelity-studio-content-assistant --ref main
-codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
-codex plugin list --marketplace fidelity-studio-content-assistant
+irm https://raw.githubusercontent.com/fsmventures/fidelity-studio-content-assistant/main/scripts/setup-windows.ps1 | iex
 
-2. Starte zuerst genau einmal diese Anmeldung und warte, bis sie vollständig abgeschlossen ist:
+Das Skript darf bei Bedarf nur die offizielle eigenständige Codex CLI und Git for Windows über winget installieren. Installiere Node.js oder npm nicht nur für Codex und ändere die PowerShell-Ausführungsrichtlinie nicht. Eine WindowsApps-Zugriffssperre wird nicht durch «Für mich genehmigen», Vollzugriff oder einen anderen Sandbox-Modus behoben.
+
+Unter macOS oder Linux prüfe zuerst, ob codex und Git ausführbar sind. Füge den Marketplace nur hinzu, wenn er fehlt; andernfalls aktualisiere ihn. Installiere oder aktualisiere danach den Assistenten und prüfe Version sowie MCP-Registrierungen mit JSON-Ausgaben. Verwende diese Codex-Befehle als Grundlage:
+
+codex plugin marketplace add fsmventures/fidelity-studio-content-assistant --ref main --json
+codex plugin marketplace upgrade fidelity-studio-content-assistant --json
+codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant --json
+codex plugin list --marketplace fidelity-studio-content-assistant --json
+codex mcp list --json
+
+Falls ein vorhandener Plugin-Cache trotz Marketplace-Aktualisierung veraltet bleibt, entferne nur dieses Plugin und installiere es erneut. Prüfe danach erneut die tatsächlich installierte Version.
+
+2. Starte danach genau einmal die Fidelity-Studio-Anmeldung und warte, bis sie vollständig abgeschlossen ist:
 
 codex mcp login fidelity-studio-content-assistant
 
 Codex öffnet die Anmeldeseite normalerweise selbst. Verwende keinen zusätzlichen open-Befehl, öffne kein zweites Browserfenster und wiederhole den Login nicht, solange der erste Vorgang läuft. Falls Codex ausdrücklich meldet, dass der Browser nicht geöffnet werden konnte, zeige mir den Link zum manuellen Öffnen.
 
-3. Starte erst danach genau einmal:
-
-codex mcp login resend
-
-Versuche nicht, die von Resend vorgegebenen Berechtigungen mit eigenen Scopes zu verändern. Erkläre mir verständlich, dass Resend möglicherweise breiten Zugriff auf das ausgewählte Konto verlangt. Ich entscheide dann, ob ich das richtige Kunden-Team verbinde oder die Anmeldung abbreche. Wenn ich abbreche, sollen die Website-Funktionen trotzdem verfügbar bleiben.
+3. Starte Resend jetzt noch nicht. Der nächste Schritt muss zuerst in einer neuen Work-Aufgabe den authentifizierten Fidelity-Studio-Projektkontext laden. Nur wenn dieser Projektkontext ausdrücklich Newsletter mit Anbieter Resend deklariert, darf dort genau eine Resend-Anmeldung gestartet werden.
 
 Ich kopiere keine Passwörter, Codes, Zugangsschlüssel oder Tokens in den Chat. Falls eine Genehmigung oder Browser-Anmeldung erscheint, pausiere, erkläre mir kurz, was erlaubt wird, und sage mir genau, was ich anklicken soll.
 
-Falls ein Befehl nicht verfügbar ist oder die Installation nicht dauerhaft gespeichert werden kann, stoppe und erkläre mir genau, was nicht funktioniert. Bitte fordere mich nicht auf, selbst ein Terminal zu öffnen.
+Falls unter Windows codex.exe aus WindowsApps mit «Zugriff verweigert» fehlschlägt, verwende das offizielle eigenständige Codex-Installationsskript aus Schritt 1 und prüfe den exakt aufgelösten Pfad ausserhalb von WindowsApps. Falls Git fehlt, installiere Git for Windows über winget, aktualisiere den PATH des laufenden Prozesses und prüfe git --version, bevor du den Marketplace erneut versuchst. Falls dies nicht funktioniert, stoppe mit dem genauen Pfad und Fehler. Bitte fordere mich nicht auf, selbst ein Terminal zu öffnen.
 
 Prüfe am Ende die installierte Plugin-Version. Sage mir danach, dass ich eine neue Work-Aufgabe starten soll. Ein vollständiger Neustart der App ist nur nötig, wenn die Werkzeuge auch in der neuen Aufgabe fehlen.
 ```
 
 ChatGPT erledigt die technische Einrichtung. Bestätige nur die beschriebenen
-Installationsschritte und führe die Browser-Anmeldungen durch. Bei Fidelity
-Studio verwendest du genau die E-Mail-Adresse, die für dich freigeschaltet
-wurde. Bei Resend wählst du das Kunden-Team, das dir Fidelity Studio genannt
-hat.
+Installationsschritte und führe die Fidelity-Studio-Anmeldung durch. Verwende
+dabei genau die E-Mail-Adresse, die für dich freigeschaltet wurde. Ob Resend für
+dieses Projekt benötigt wird, entscheidet erst der authentifizierte
+Projektkontext im nächsten Schritt.
 
 Die Fidelity-Anmeldung zeigt dir verständlich alle angeforderten Rechte für
 Lesen, Entwürfe, Bilder und Änderungen. Eine Live-Veröffentlichung kann damit
@@ -75,14 +82,21 @@ Bitte prüfe meine Verbindungen, ohne etwas zu verändern:
 
 1. Lade meinen Fidelity-Studio-Projektkontext.
 2. Liste alle vorhandenen Blogbeiträge und Teammitglieder auf.
-3. Prüfe bei Resend mit reinen Leseabfragen das verbundene Team sowie vorhandene Templates, Broadcasts und Zielgruppen.
-4. Berichte getrennt, ob Fidelity Studio und Resend einsatzbereit sind.
+3. Prüfe im geladenen Projektkontext, ob Newsletter aktiviert sind und als Anbieter ausdrücklich Resend genannt wird.
+4. Nur falls beides zutrifft: Prüfe mit reinen Resend-Leseabfragen das verbundene Team sowie vorhandene Templates, Broadcasts und Zielgruppen. Falls die Resend-Werkzeuge fehlen oder noch nicht authentifiziert sind, starte genau einmal codex mcp login resend, warte auf den automatisch geöffneten Browser und sage mir danach, dass ich eine neue Work-Aufgabe starten und diese Prüfung wiederholen soll. Öffne kein zweites Browserfenster und starte keinen zweiten Login.
+5. Falls der Projektkontext Resend nicht ausdrücklich verlangt, starte keine Resend-Anmeldung und melde «Website-Funktionen einsatzbereit; Resend für dieses Projekt nicht erforderlich».
+6. Berichte Fidelity Studio und – nur falls erforderlich – Resend getrennt. Verlasse dich nicht allein auf auth_status, sondern auf die echten Leseabfragen.
 
 Zeige keine Tokens oder Zugangsdaten an.
 ```
 
 Damit wird nicht nur geprüft, ob eine Anmeldung gespeichert ist, sondern ob die
-Funktionen wirklich erreichbar sind.
+Funktionen wirklich erreichbar sind. Falls Resend benötigt und neu verbunden
+wurde, starte danach eine weitere neue Work-Aufgabe und führe denselben
+Prüftext nochmals aus. Bei Resend wählst du das Kunden-Team, das dir Fidelity
+Studio genannt hat. Resend kann dabei die vom Anbieter festgelegten, breiten
+Kontorechte verlangen; verwende keine eigenen Scopes. Wenn du die Anmeldung
+ablehnst, bleiben die Website-Funktionen verfügbar.
 
 ## Newsletter erstellen
 
@@ -184,7 +198,7 @@ Falls die Werkzeuge auch dort fehlen, füge in einer neuen Work-Aufgabe diesen
 Text ein:
 
 ```text
-Bitte prüfe meine Installation des Fidelity Studio Content Assistant und die Verbindungen zu Fidelity Studio und Resend. Behebe alles, was du selbst beheben kannst. Starte jeden Login höchstens einmal und führe mich bei Anmeldungen oder Genehmigungen Schritt für Schritt durch den Vorgang. Öffne keine doppelten Browserfenster. Prüfe die Verbindungen danach mit echten, ungefährlichen Leseabfragen in einer neuen Work-Aufgabe.
+Bitte prüfe meine Installation des Fidelity Studio Content Assistant und zuerst die Verbindung zu Fidelity Studio. Behebe alles, was du selbst beheben kannst. Unter Windows verwende das offizielle eigenständige Codex-Installationsskript, falls WindowsApps codex.exe blockiert, und prüfe Git vor dem repository-basierten Marketplace. Installiere Node.js oder npm nicht nur für Codex und ändere weder PowerShell-Ausführungsrichtlinie noch Sandbox-Modus als vermeintliche Reparatur für «Zugriff verweigert». Starte jeden Login höchstens einmal und führe mich bei Anmeldungen oder Genehmigungen Schritt für Schritt durch den Vorgang. Öffne keine doppelten Browserfenster. Prüfe Fidelity danach in einer neuen Work-Aufgabe mit echten, ungefährlichen Leseabfragen. Lade zuerst get_project_context und verbinde Resend nur dann, wenn der Projektkontext Newsletter mit Anbieter Resend ausdrücklich verlangt.
 ```
 
 Erst wenn die Werkzeuge auch in dieser neuen Aufgabe fehlen, beende ChatGPT
