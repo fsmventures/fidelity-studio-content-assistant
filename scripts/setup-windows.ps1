@@ -13,6 +13,7 @@ Set-StrictMode -Version Latest
 $MarketplaceName = "fidelity-studio-content-assistant"
 $MarketplaceSource = "fsmventures/fidelity-studio-content-assistant"
 $PluginSelector = "fidelity-studio-content-assistant@fidelity-studio-content-assistant"
+$ExpectedPluginVersion = "0.4.1"
 $StandaloneCodex = Join-Path $env:LOCALAPPDATA "Programs\OpenAI\Codex\bin\codex.exe"
 
 function Write-Step {
@@ -120,9 +121,18 @@ if (-not $gitCommand) {
     $gitCommand = Get-Command git.exe -ErrorAction SilentlyContinue | Select-Object -First 1
 
     if (-not $gitCommand) {
-        $defaultGit = Join-Path $env:ProgramFiles "Git\cmd\git.exe"
-        if (Test-Path -LiteralPath $defaultGit -PathType Leaf) {
-            $gitDirectory = Split-Path -Parent $defaultGit
+        $gitCandidates = @(
+            (Join-Path $env:ProgramFiles "Git\cmd\git.exe"),
+            (Join-Path $env:LOCALAPPDATA "Programs\Git\cmd\git.exe")
+        )
+        if (${env:ProgramFiles(x86)}) {
+            $gitCandidates += Join-Path ${env:ProgramFiles(x86)} "Git\cmd\git.exe"
+        }
+        $installedGit = $gitCandidates | Where-Object {
+            Test-Path -LiteralPath $_ -PathType Leaf
+        } | Select-Object -First 1
+        if ($installedGit) {
+            $gitDirectory = Split-Path -Parent $installedGit
             $env:Path = "$gitDirectory$([IO.Path]::PathSeparator)$env:Path"
             $gitCommand = Get-Command git.exe -ErrorAction SilentlyContinue | Select-Object -First 1
         }
@@ -178,6 +188,9 @@ $plugin = @($verifiedPlugin.installed) | Where-Object {
 if (-not $plugin) {
     throw "The Fidelity Studio plugin is not installed and enabled after setup."
 }
+if ($plugin.version -ne $ExpectedPluginVersion) {
+    throw "Expected plugin version $ExpectedPluginVersion, but Codex reports $($plugin.version). Stop here and report the stale plugin cache."
+}
 
 $mcpRaw = & $resolvedCodex mcp list --json
 if ($LASTEXITCODE -ne 0) {
@@ -192,7 +205,7 @@ foreach ($serverName in @("fidelity-studio-content-assistant", "resend")) {
 }
 
 Write-Host "`nSetup completed." -ForegroundColor Green
-Write-Host "Plugin version: $($plugin.version)"
+Write-Host "Plugin version: $($plugin.version) (verified)"
 Write-Host "Codex CLI: $resolvedCodex"
 Write-Host "Start exactly one Fidelity Studio login next:"
 Write-Host "  `"$resolvedCodex`" mcp login fidelity-studio-content-assistant"

@@ -69,6 +69,7 @@ if (
   || !windowsSetup.includes("Git.Git")
   || !windowsSetup.includes("plugin marketplace upgrade")
   || !windowsSetup.includes("mcp list --json")
+  || !windowsSetup.includes('$ExpectedPluginVersion = "0.4.1"')
 ) {
   fail("The Windows bootstrap is missing a required Codex, Git, upgrade, or verification guard.");
 }
