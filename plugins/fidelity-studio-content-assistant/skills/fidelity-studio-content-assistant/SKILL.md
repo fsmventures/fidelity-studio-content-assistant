@@ -161,6 +161,30 @@ Direct Resend access is account-level rather than Fidelity-project-scoped.
 Treat this integration as draft-and-test-only until Fidelity Studio exposes a
 server-enforced newsletter delivery tool.
 
+## Pick The Workflow From The Project Backend
+
+Read `project.backend` in `get_project_context` before any write:
+
+- `emdash` → follow the EmDash workflow below and the `workflow` list in the
+  context. Ignore the preview and deployment steps further down: these sites
+  have no preview build and no deployment tools, so polling them would fail.
+- anything else → follow the Blog And Team Workflow below.
+
+## EmDash Workflow
+
+1. Read the collection fields in the context, then `list_entries` and
+   `get_entry` before changing an entry.
+2. Create and edit drafts. Drafts never appear on the public site; only
+   signed-in editors can preview them in the EmDash admin. Never invent a
+   preview link.
+3. `publish_entry` makes the entry live at once, with no later approval step.
+   Before calling it, show the user the entry, locale, and changed fields, and
+   wait for their explicit confirmation in the current conversation. Set
+   `confirmed` only then.
+4. Always pass the `rev` from the latest `get_entry`. On a conflict, read the
+   entry again and redo the change: someone else edited it, and a blind retry
+   would overwrite their work.
+
 ## Blog And Team Workflow
 
 Use the high-level Fidelity Studio MCP tools. Use `list_blog_posts` or
