@@ -79,6 +79,12 @@ if (/Set-ExecutionPolicy|npm\s+install|npm\.cmd|winget[^\n]+Node/i.test(windowsS
 if (!windowsSetup.includes("Approval mode or sandbox elevation does not repair this file ACL")) {
   fail("The Windows bootstrap must not present approval or sandbox mode as an ACL repair.");
 }
+for (const [name, instructions] of [["skill", skill], ["English quick start", read("README.md")], ["German quick start", guide]]) {
+  for (const tool of ["get_project_context", "list_entries", "list_blog_posts", "list_team_members"]) {
+    if (!instructions.includes(tool)) fail(`${name} must cover project-specific verification with ${tool}.`);
+  }
+}
+if (skill.includes("anything else → follow the Blog And Team Workflow")) fail("Unknown website workflows must follow authenticated tools.");
 if (!skill.includes("list_blog_posts")) {
   fail("The skill must cover blog inventory reads.");
 }

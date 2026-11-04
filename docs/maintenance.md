@@ -94,7 +94,7 @@ For every release:
   `@` composer menu in light and dark appearance
 - authenticate Fidelity Studio first and start a fresh Work task
 - verify project context before deciding whether Resend applies
-- verify `list_blog_posts` and `list_team_members` through Fidelity Studio
+- verify an advertised collection with `list_entries`, or use the advertised `list_blog_posts` and `list_team_members` inventories for blog/team projects
 - for a Resend-enabled test project, authenticate Resend separately, start
   another fresh Work task, and verify newsletter reads and draft-only behavior
 - for a website-only test project, verify that setup does not request Resend

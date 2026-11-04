@@ -1,7 +1,7 @@
 {
   "name": "fidelity-studio-content-assistant",
   "version": "0.4.1",
-  "description": "Draft newsletters and manage blog posts and team members through Fidelity Studio's scoped content tools and Resend's hosted newsletter tools.",
+  "description": "Edit authorized website projects, pages, blog posts and team profiles, and draft newsletters where the project enables Resend.",
   "author": {
     "name": "Fidelity Studio",
     "url": "https://github.com/fsmventures/fidelity-studio-content-assistant"
@@ -19,8 +19,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Fidelity Studio Content Assistant",
-    "shortDescription": "Manage newsletters, blog posts, and team profiles.",
-    "longDescription": "Connects Fidelity Studio's authenticated website-content MCP and Resend's hosted newsletter MCP. The bundled skill loads scoped client guidance first, verifies website changes on preview before production, keeps direct newsletter work draft-and-test-only, and leaves production newsletter delivery manual in Resend.",
+    "shortDescription": "Edit website content and draft newsletters.",
+    "longDescription": "Connects Fidelity Studio's authenticated website-content MCP and Resend's hosted newsletter MCP. The bundled skill loads scoped client guidance first, follows each project’s review and publishing workflow, keeps direct newsletter work draft-and-test-only, and leaves production newsletter delivery manual in Resend.",
     "developerName": "Fidelity Studio",
     "category": "Productivity",
     "capabilities": [
@@ -39,7 +39,7 @@
     "defaultPrompt": [
       "Authenticate with Fidelity Studio Content Assistant.",
       "Show me my authenticated project context and available workflows.",
-      "Help me draft a newsletter, blog post, or team-member update."
+      "Help me draft a website update using the workflows available to my project."
     ]
   },
   "skills": "./skills/"

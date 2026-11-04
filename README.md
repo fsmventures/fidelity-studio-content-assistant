@@ -100,7 +100,7 @@ verification; do not request Resend access for it.
 After Fidelity succeeds, start a fresh task and write:
 
 ```text
-Load my Fidelity Studio project context and list all blog posts and team members. Check whether the authenticated context explicitly enables newsletters with provider Resend. Only then, use harmless Resend reads to verify the connected team, templates, broadcasts, and audiences; if Resend is not yet authenticated, start exactly one login and tell me to repeat this verification in a fresh Work task. If the context does not require Resend, report website-only readiness without starting its login. Change nothing and report each required service separately.
+Call get_project_context and verify website access with a read my project offers. If list_entries is available, list the declared projects collection or another declared collection. Otherwise, call list_blog_posts and list_team_members when offered. Check whether the authenticated context explicitly enables newsletters with provider Resend. Only then, use harmless Resend reads to verify the connected team, templates, broadcasts, and audiences; if Resend is not yet authenticated, start exactly one login and tell me to repeat this verification in a fresh Work task. If the context does not require Resend, report website-only readiness without starting its login. Change nothing and report each required service separately.
 ```
 
 Do not trust an `auth_status` value or successful login command as operational

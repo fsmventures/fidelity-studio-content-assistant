@@ -1,13 +1,13 @@
 ---
 name: fidelity-studio-content-assistant
-description: Use Fidelity Studio and Resend MCP tools for authenticated client newsletters, blog posts, and team-member workflows. Always load authorized Fidelity Studio project context before client-specific work.
+description: Use Fidelity Studio and Resend MCP tools for authenticated client authorized website projects, pages, blog posts, team profiles, and newsletters. Always load authorized Fidelity Studio project context before client-specific work.
 ---
 
 # Fidelity Studio Content Assistant
 
 Use this skill whenever the user mentions the Fidelity Studio Content Assistant
 plugin or asks to draft, inspect, test, send, translate, preview, publish, or
-update a client newsletter, blog post, team member, or related media.
+update website projects, pages, blog posts, team profiles, newsletters, or their media.
 
 ## First Action: Authenticate And Load Context
 
@@ -19,8 +19,23 @@ Start with the MCP tool that returns project/context information, such as
 `get_project_context`, `show_project_context`, or the closest available
 context/list-projects tool exposed by the MCP server.
 
-Use the returned guidance to determine allowed workflows, languages, content
-rules, review steps, and publishing or sending safeguards.
+Use the returned `tools` list for the current actor, the declared collections,
+and the project workflow. A tool advertised by the plugin or available to a
+different editor does not establish this editor’s access.
+
+Verify website access with an operational read in the authenticated context:
+
+- When `list_entries` is available, choose a collection actually declared in
+  the response. Use `projects` if declared, otherwise a declared active
+  collection relevant to the request. Call `list_entries` for that collection.
+- Otherwise call `list_blog_posts` and `list_team_members` when both are
+  available. If only one is available, call that one.
+- If neither inventory applies, use a relevant read-only inventory explicitly
+  returned by the context. If there is none, report that project sign-in was
+  verified and content inventory access could not be checked.
+
+An empty successful inventory verifies read access. During setup, report what
+was checked without reproducing private record details or attempting a write.
 
 ## If MCP Tools Are Missing In Codex
 
@@ -72,15 +87,14 @@ the intended client team or decline. If they decline, Fidelity website
 workflows remain available but newsletter workflows do not.
 
 If the authenticated context does not explicitly require Resend, do not start
-its login and do not ask for newsletter-account access. Report that the website
-workflows are ready and Resend is not required for this project.
+its login and do not ask for newsletter-account access. Report the result of the website inventory check and that Resend is not required.
 
 After successful Resend login, start another fresh Work task so both MCP
 servers are mounted. Verify the required connections operationally in that
 task:
 
 1. Call `get_project_context`.
-2. Call `list_blog_posts` and `list_team_members`.
+2. Repeat the operational read selected from the returned `tools` and collections above.
 3. Reconfirm that the context enables newsletters with provider Resend.
 4. Only then, perform harmless Resend reads for the connected team, templates,
    broadcasts, and audiences.
@@ -168,7 +182,17 @@ Read `project.backend` in `get_project_context` before any write:
 - `emdash` → follow the EmDash workflow below and the `workflow` list in the
   context. Ignore the preview and deployment steps further down: these sites
   have no preview build and no deployment tools, so polling them would fail.
-- anything else → follow the Blog And Team Workflow below.
+- When the context declares an isolated content branch, collection tools and
+  manual reviewed deployment, follow its field schemas and allowed operations.
+  Read the entry before updating it and use its current SHA. If exposed,
+  `upload_project_photo` handles a supplied photograph and `create_project_draft`
+  creates a draft. Use each upload’s returned reference in the intended field
+  and keep gallery order as requested. Before marking a draft published,
+  show the changes and obtain explicit confirmation. Report the branch save
+  and any separately verified preview or live deployment as distinct events.
+- When blog or team tools are advertised, follow the Blog And Team Workflow
+  below for those tools. Apply deployment steps only when the authenticated
+  project offers them. For other tool sets, follow their declared workflow.
 
 ## EmDash Workflow
 
