@@ -131,6 +131,8 @@ Wenn dein Projekt diese Funktionen anbietet, kannst du Bilder in der Work-Aufgab
 Lege ein neues Projekt als Entwurf an. Verwende Bild 1 für «Vorher» und Bild 2 für «Nachher». Zeige die übrigen Bilder in der Reihenfolge meiner Anhänge. Zeig mir anschliessend den Entwurf zur Prüfung.
 ```
 
+Ein lokales Foto kannst du direkt in der Work-Aufgabe auswählen und beschreiben. Der Assistent prüft zuerst, für welche Website du angemeldet bist. Der lokale Hilfsprozess unterstützt JPEG, PNG und WebP bis 3 MiB pro Foto. Falls deine Installation diese Funktion noch nicht anbietet oder dein Foto grösser ist, öffne den Entwurf in Pages CMS. Lade das Foto im Bildfeld oder in der Galerie hoch, wähle es aus und speichere den Entwurf. Der Assistent kann danach die gespeicherten Bilder lesen und ihre Reihenfolge anpassen.
+
 Der Assistent verwendet den Veröffentlichungsablauf aus deinem Projektkontext. Er nennt dir einen Vorschau-Link, sobald er die Vorschau geprüft hat.
 
 ## Blogbeiträge

@@ -109,3 +109,7 @@ The public Git marketplace is the direct distribution and update channel. An
 official OpenAI marketplace submission can be pursued separately for broader
 discovery, but it is not required for Fidelity Studio to onboard and update
 clients.
+
+### Verify local desktop photo transfers
+
+Run `node --test scripts/test-local-photo.mjs` on a machine with `codex` on PATH. The test starts the installed Codex app server and a loopback-only MCP fixture, sends the public plugin icon through the helper, and compares its digest and bytes. It checks the isolated diagnostics for raw or base64 fragments and denies a different project before opening the file. A real client OAuth account and Windows execution are separate handover checks.

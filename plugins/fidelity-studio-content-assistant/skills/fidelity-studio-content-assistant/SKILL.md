@@ -194,6 +194,16 @@ Read `project.backend` in `get_project_context` before any write:
   below for those tools. Apply deployment steps only when the authenticated
   project offers them. For other tool sets, follow their declared workflow.
 
+## Photos attached in desktop Work
+
+Use only a photo the user attached or explicitly named for the requested website. Read `get_project_context` in this Work task first. Use a host-supplied file reference with `upload_project_photo` when one is available. A local path by itself is not a hosted file reference.
+
+For a local file, check that the authenticated tool list includes `upload_local_project_photo`. Run the bundled `../../scripts/upload-local-photo.mjs` from this skill directory with Node.js. Use the installed desktop workspace Node runtime if available. Pass `--project` with the exact authenticated `project.id`, `--file` with the selected absolute path, `--alt` with the image description, and `--destination projects` or `--destination pages` for the intended field. Pass these as separate arguments. Run the helper for each selected photo in the user's order. Use the returned `image` fields to prepare one content edit.
+
+The helper uses the existing Codex MCP sign-in on its pinned service, checks the project again and uses a direct app-server call. Never read the image bytes into the conversation, generate base64 in a tool transcript, copy a token, or publish a temporary URL. A successful upload stores media. Read the project, attach the returned references, and verify the saved fields before reporting that the project changed.
+
+The local helper accepts still JPEG, PNG and WebP files up to 3 MiB. Its direct RPC was tested with Codex CLI 0.166 on macOS. If the CLI, bundled Node runtime or authorized local-photo tool is unavailable, or a file exceeds the limit, use the website’s Pages CMS media picker. Ask the editor to upload/select the photo in the intended draft gallery or page image field and save it. Read that entry to obtain its stored image reference. Do not substitute a guessed repository path.
+
 ## EmDash Workflow
 
 1. Read the collection fields in the context, then `list_entries` and

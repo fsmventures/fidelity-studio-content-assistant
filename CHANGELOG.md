@@ -2,6 +2,8 @@
 
 ## 0.4.2 (unreleased)
 
+- Transfer explicitly selected local photos through the signed-in desktop MCP connection when the project offers that operation.
+
 - Verify website access using the authenticated editor’s available collection, blog or team tools.
 - Follow the project’s publishing policy for portfolio drafts, photographs and static pages.
 
