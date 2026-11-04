@@ -7,11 +7,11 @@ import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
+import { prepareLocalPhoto, sourceLimit, PhotoError } from './prepare-local-photo.mjs';
 
 const server = 'fidelity-studio-content-assistant';
 const url = 'https://mcp.fidelitystudio.ch/mcp';
 const tool = 'upload_local_project_photo';
-const maxBytes = 3 * 1024 * 1024;
 class HelperError extends Error {}
 
 function receipt(result) {
@@ -72,7 +72,7 @@ async function readPhoto(path) {
   const handle = await open(path, constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0) | (constants.O_NONBLOCK ?? 0));
   try {
     const info = await handle.stat();
-    if (!info.isFile() || info.size < 12 || info.size > maxBytes) throw new HelperError('Select a still JPEG, PNG or WebP photo up to 3 MiB.');
+    if (!info.isFile() || info.size < 12 || info.size > sourceLimit) throw new HelperError('Select a supported still photo up to 50 MiB.');
     const bytes = Buffer.alloc(info.size + 1);
     let total = 0;
     while (total < bytes.length) {
@@ -81,11 +81,10 @@ async function readPhoto(path) {
       total += bytesRead;
     }
     if (total !== info.size || (await handle.stat()).mtimeMs !== info.mtimeMs) throw new HelperError('The selected photo changed during reading. Select it again.');
-    const jpg = bytes.subarray(0, 3).equals(Buffer.from([0xff, 0xd8, 0xff]));
-    const png = bytes.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10]));
-    const webp = bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP';
-    if (!jpg && !png && !webp) throw new HelperError('The selected file is not a supported photograph.');
-    return bytes.subarray(0, total);
+    const original = bytes.subarray(0, total);
+    let prepared;
+    try { prepared = await prepareLocalPhoto(original); return prepared; }
+    finally { if (prepared !== original) bytes.fill(0); }
   } finally { await handle.close(); }
 }
 
@@ -125,7 +124,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     if (!options.file) throw new HelperError('Provide the selected photo with --file.');
     console.log(JSON.stringify(await uploadLocalPhoto(options)));
   } catch (error) {
-    console.error(error instanceof HelperError ? error.message : 'Local photo transfer failed. Use the Pages CMS media library, then ask the assistant to attach the saved reference.');
+    console.error((error instanceof HelperError || error instanceof PhotoError) ? error.message : 'Local photo transfer failed. Use the Pages CMS media library, then ask the assistant to attach the saved reference.');
     process.exitCode = 1;
   }
 }

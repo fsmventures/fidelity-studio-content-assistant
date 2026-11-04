@@ -113,3 +113,5 @@ clients.
 ### Verify local desktop photo transfers
 
 Run `node --test scripts/test-local-photo.mjs` on a machine with `codex` on PATH. The test starts the installed Codex app server and a loopback-only MCP fixture, sends the public plugin icon through the helper, and compares its digest and bytes. It checks the isolated diagnostics for raw or base64 fragments and denies a different project before opening the file. A real client OAuth account and Windows execution are separate handover checks.
+
+Run `scripts/test-photo-preparation.mjs` with the bundled workspace Node executable so the adjacent Sharp package is available. This covers byte-preserving small transfers, source limits, EXIF orientation, metadata removal, and the 3 MiB output ceiling. The production source limits are 50 MiB and 80 megapixels. JPEG, PNG and WebP use the bundled raster processor. macOS decodes HEIC stills with Apple ImageIO over pipes. Other systems require HEIC decoding in their bundled raster runtime.
