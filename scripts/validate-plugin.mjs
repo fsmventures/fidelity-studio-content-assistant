@@ -27,8 +27,8 @@ const guide = read(guidePath);
 const windowsSetup = read(windowsSetupPath);
 const skill = read(skillPath);
 
-if (plugin.version !== "0.4.1") {
-  fail(`Expected plugin version 0.4.1, received ${plugin.version}.`);
+if (plugin.version !== "0.4.2") {
+  fail(`Expected plugin version 0.4.2, received ${plugin.version}.`);
 }
 if (
   mcp.mcpServers?.["fidelity-studio-content-assistant"]?.oauth_resource
@@ -69,7 +69,7 @@ if (
   || !windowsSetup.includes("Git.Git")
   || !windowsSetup.includes("plugin marketplace upgrade")
   || !windowsSetup.includes("mcp list --json")
-  || !windowsSetup.includes('$ExpectedPluginVersion = "0.4.1"')
+  || !windowsSetup.includes('$ExpectedPluginVersion = "0.4.2"')
 ) {
   fail("The Windows bootstrap is missing a required Codex, Git, upgrade, or verification guard.");
 }

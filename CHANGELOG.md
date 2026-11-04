@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.2 (unreleased)
+
+- Verify website access using the authenticated editor’s available collection, blog or team tools.
+- Follow the project’s publishing policy for portfolio drafts, photographs and static pages.
+
 ## 0.4.1 - 2026-07-20
 
 - Authenticate Fidelity Studio first and load the authorized project context
