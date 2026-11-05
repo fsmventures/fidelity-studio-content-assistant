@@ -94,7 +94,7 @@ For every release:
   `@` composer menu in light and dark appearance
 - authenticate Fidelity Studio first and start a fresh Work task
 - verify project context before deciding whether Resend applies
-- verify `list_blog_posts` and `list_team_members` through Fidelity Studio
+- verify an advertised collection with `list_entries`, or use the advertised `list_blog_posts` and `list_team_members` inventories for blog/team projects
 - for a Resend-enabled test project, authenticate Resend separately, start
   another fresh Work task, and verify newsletter reads and draft-only behavior
 - for a website-only test project, verify that setup does not request Resend
@@ -109,3 +109,9 @@ The public Git marketplace is the direct distribution and update channel. An
 official OpenAI marketplace submission can be pursued separately for broader
 discovery, but it is not required for Fidelity Studio to onboard and update
 clients.
+
+### Verify local desktop photo transfers
+
+Run `node --test scripts/test-local-photo.mjs` on a machine with `codex` on PATH. The test starts the installed Codex app server and a loopback-only MCP fixture, sends the public plugin icon through the helper, and compares its digest and bytes. It checks the isolated diagnostics for raw or base64 fragments and denies a different project before opening the file. A real client OAuth account and Windows execution are separate handover checks.
+
+Run `scripts/test-photo-preparation.mjs` with the bundled workspace Node executable so the adjacent Sharp package is available. This covers byte-preserving small transfers, source limits, EXIF orientation, metadata removal, and the 3 MiB output ceiling. The production source limits are 50 MiB and 80 megapixels. JPEG, PNG and WebP use the bundled raster processor. macOS decodes HEIC stills with Apple ImageIO over pipes. Other systems require HEIC decoding in their bundled raster runtime.

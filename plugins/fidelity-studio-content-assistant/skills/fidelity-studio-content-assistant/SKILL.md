@@ -1,13 +1,13 @@
 ---
 name: fidelity-studio-content-assistant
-description: Use Fidelity Studio and Resend MCP tools for authenticated client newsletters, blog posts, and team-member workflows. Always load authorized Fidelity Studio project context before client-specific work.
+description: Use Fidelity Studio and Resend MCP tools for authenticated client authorized website projects, pages, blog posts, team profiles, and newsletters. Always load authorized Fidelity Studio project context before client-specific work.
 ---
 
 # Fidelity Studio Content Assistant
 
 Use this skill whenever the user mentions the Fidelity Studio Content Assistant
 plugin or asks to draft, inspect, test, send, translate, preview, publish, or
-update a client newsletter, blog post, team member, or related media.
+update website projects, pages, blog posts, team profiles, newsletters, or their media.
 
 ## First Action: Authenticate And Load Context
 
@@ -19,8 +19,23 @@ Start with the MCP tool that returns project/context information, such as
 `get_project_context`, `show_project_context`, or the closest available
 context/list-projects tool exposed by the MCP server.
 
-Use the returned guidance to determine allowed workflows, languages, content
-rules, review steps, and publishing or sending safeguards.
+Use the returned `tools` list for the current actor, the declared collections,
+and the project workflow. A tool advertised by the plugin or available to a
+different editor does not establish this editor’s access.
+
+Verify website access with an operational read in the authenticated context:
+
+- When `list_entries` is available, choose a collection actually declared in
+  the response. Use `projects` if declared, otherwise a declared active
+  collection relevant to the request. Call `list_entries` for that collection.
+- Otherwise call `list_blog_posts` and `list_team_members` when both are
+  available. If only one is available, call that one.
+- If neither inventory applies, use a relevant read-only inventory explicitly
+  returned by the context. If there is none, report that project sign-in was
+  verified and content inventory access could not be checked.
+
+An empty successful inventory verifies read access. During setup, report what
+was checked without reproducing private record details or attempting a write.
 
 ## If MCP Tools Are Missing In Codex
 
@@ -72,15 +87,14 @@ the intended client team or decline. If they decline, Fidelity website
 workflows remain available but newsletter workflows do not.
 
 If the authenticated context does not explicitly require Resend, do not start
-its login and do not ask for newsletter-account access. Report that the website
-workflows are ready and Resend is not required for this project.
+its login and do not ask for newsletter-account access. Report the result of the website inventory check and that Resend is not required.
 
 After successful Resend login, start another fresh Work task so both MCP
 servers are mounted. Verify the required connections operationally in that
 task:
 
 1. Call `get_project_context`.
-2. Call `list_blog_posts` and `list_team_members`.
+2. Repeat the operational read selected from the returned `tools` and collections above.
 3. Reconfirm that the context enables newsletters with provider Resend.
 4. Only then, perform harmless Resend reads for the connected team, templates,
    broadcasts, and audiences.
@@ -160,6 +174,50 @@ suppression, topic, or preference behavior.
 Direct Resend access is account-level rather than Fidelity-project-scoped.
 Treat this integration as draft-and-test-only until Fidelity Studio exposes a
 server-enforced newsletter delivery tool.
+
+## Pick The Workflow From The Project Backend
+
+Read `project.backend` in `get_project_context` before any write:
+
+- `emdash` → follow the EmDash workflow below and the `workflow` list in the
+  context. Ignore the preview and deployment steps further down: these sites
+  have no preview build and no deployment tools, so polling them would fail.
+- When the context declares an isolated content branch, collection tools and
+  manual reviewed deployment, follow its field schemas and allowed operations.
+  Read the entry before updating it and use its current SHA. If exposed,
+  `upload_project_photo` handles a supplied photograph and `create_project_draft`
+  creates a draft. Use each upload’s returned reference in the intended field
+  and keep gallery order as requested. Before marking a draft published,
+  show the changes and obtain explicit confirmation. Report the branch save
+  and any separately verified preview or live deployment as distinct events.
+- When blog or team tools are advertised, follow the Blog And Team Workflow
+  below for those tools. Apply deployment steps only when the authenticated
+  project offers them. For other tool sets, follow their declared workflow.
+
+## Photos attached in desktop Work
+
+Use only a photo the user attached or explicitly named for the requested website. Read `get_project_context` in this Work task first. Use a host-supplied file reference with `upload_project_photo` when one is available. A local path by itself is not a hosted file reference.
+
+For a local file, check that the authenticated tool list includes `upload_local_project_photo`. Run the bundled `../../scripts/upload-local-photo.mjs` from this skill directory with the desktop workspace Node executable returned by `load_workspace_dependencies`. Its adjacent Sharp package supplies local image processing without a package installation. A standalone Node installation can still transfer already-fitting JPEG, PNG and WebP files. Pass `--project` with the exact authenticated `project.id`, `--file` with the selected absolute path, `--alt` with the image description, and `--destination projects` or `--destination pages` for the intended field. Pass these as separate arguments. Run the helper for each selected photo in the user's order. Use the returned `image` fields to prepare one content edit.
+
+The helper uses the existing Codex MCP sign-in on its pinned service, checks the project again and uses a direct app-server call. Never read the image bytes into the conversation, generate base64 in a tool transcript, copy a token, or publish a temporary URL. A successful upload stores media. Read the project, attach the returned references, and verify the saved fields before reporting that the project changed.
+
+The helper accepts single still photos up to 50 MiB and 80 megapixels. With the bundled raster runtime it prepares oversized JPEG, PNG and WebP originals in memory and decodes HEIC/HEIF using Apple ImageIO on macOS. On other platforms HEIC requires a working decoder in that runtime. Smaller JPEG, PNG and WebP files that fit the 3 MiB transport and server pixel limit preserve their bytes through local transfer. The server strips source metadata before storage. Larger photos are oriented, converted to sRGB and reduced to at most 2560 pixels on the longest edge. If needed the helper lowers compression quality or size to fit 3 MiB. Windows execution has not been verified. If the codec, CLI, runtime or tool is unavailable, or a file exceeds the source limits, use the website’s Pages CMS media picker. Ask the editor to upload/select the photo in the intended draft gallery or page image field and save it. Read that entry to obtain its stored image reference. Do not substitute a guessed repository path.
+
+## EmDash Workflow
+
+1. Read the collection fields in the context, then `list_entries` and
+   `get_entry` before changing an entry.
+2. Create and edit drafts. Drafts never appear on the public site; only
+   signed-in editors can preview them in the EmDash admin. Never invent a
+   preview link.
+3. `publish_entry` makes the entry live at once, with no later approval step.
+   Before calling it, show the user the entry, locale, and changed fields, and
+   wait for their explicit confirmation in the current conversation. Set
+   `confirmed` only then.
+4. Always pass the `rev` from the latest `get_entry`. On a conflict, read the
+   entry again and redo the change: someone else edited it, and a blind retry
+   would overwrite their work.
 
 ## Blog And Team Workflow
 

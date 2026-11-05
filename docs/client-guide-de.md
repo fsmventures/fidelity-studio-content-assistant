@@ -81,7 +81,7 @@ erneut.
 Bitte prüfe meine Verbindungen, ohne etwas zu verändern:
 
 1. Lade meinen Fidelity-Studio-Projektkontext.
-2. Liste alle vorhandenen Blogbeiträge und Teammitglieder auf.
+2. Verwende die Lesewerkzeuge aus dem Projektkontext. Wenn `list_entries` angeboten wird, rufe es für die dort aufgeführte Sammlung `projects` oder eine andere dort aufgeführte Sammlung auf. Andernfalls prüfe Blogbeiträge mit `list_blog_posts` und Teammitglieder mit `list_team_members`, sofern die Werkzeuge angeboten werden. Nenne mir nur, welche Abfragen erfolgreich waren.
 3. Prüfe im geladenen Projektkontext, ob Newsletter aktiviert sind und als Anbieter ausdrücklich Resend genannt wird.
 4. Nur falls beides zutrifft: Prüfe mit reinen Resend-Leseabfragen das verbundene Team sowie vorhandene Templates, Broadcasts und Zielgruppen. Falls die Resend-Werkzeuge fehlen oder noch nicht authentifiziert sind, starte genau einmal codex mcp login resend, warte auf den automatisch geöffneten Browser und sage mir danach, dass ich eine neue Work-Aufgabe starten und diese Prüfung wiederholen soll. Öffne kein zweites Browserfenster und starte keinen zweiten Login.
 5. Falls der Projektkontext Resend nicht ausdrücklich verlangt, starte keine Resend-Anmeldung und melde «Website-Funktionen einsatzbereit; Resend für dieses Projekt nicht erforderlich».
@@ -122,6 +122,18 @@ Der Assistent ist angewiesen, direkte Resend-Nutzung auf Entwürfe und klar
 gekennzeichnete Tests an ausdrücklich genannte Adressen zu beschränken. Den
 endgültigen Versand oder die Terminierung bestätigst du selbst im
 Resend-Dashboard.
+
+## Projekte und Bilder
+
+Wenn dein Projekt diese Funktionen anbietet, kannst du Bilder in der Work-Aufgabe anhängen. Zum Beispiel:
+
+```text
+Lege ein neues Projekt als Entwurf an. Verwende Bild 1 für «Vorher» und Bild 2 für «Nachher». Zeige die übrigen Bilder in der Reihenfolge meiner Anhänge. Zeig mir anschliessend den Entwurf zur Prüfung.
+```
+
+Ein lokales Foto kannst du direkt in der Work-Aufgabe auswählen und beschreiben. Der Assistent prüft zuerst, für welche Website du angemeldet bist. Einzelne Fotos können bis zu 50 MiB gross sein und bis zu 80 Megapixel haben. Grössere JPEG-, PNG- und WebP-Fotos werden vor der Übertragung auf deinem Gerät für die Website verkleinert. Auf dem Mac kann der Assistent auch einzelne iPhone-Fotos im HEIC-Format verarbeiten. Dein Original bleibt erhalten. Die gespeicherte Webfassung enthält keine ursprünglichen EXIF-Daten wie den Aufnahmeort. Unter Windows hängt HEIC vom vorhandenen Bilddecoder ab. Falls das Format oder deine Installation diese Funktion noch nicht unterstützt, öffne den Entwurf in Pages CMS. Lade das Foto im Bildfeld oder in der Galerie hoch, wähle es aus und speichere den Entwurf. Der Assistent kann danach die gespeicherten Bilder lesen und ihre Reihenfolge anpassen.
+
+Der Assistent verwendet den Veröffentlichungsablauf aus deinem Projektkontext. Er nennt dir einen Vorschau-Link, sobald er die Vorschau geprüft hat.
 
 ## Blogbeiträge
 

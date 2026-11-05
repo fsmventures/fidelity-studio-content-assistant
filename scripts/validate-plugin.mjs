@@ -27,8 +27,8 @@ const guide = read(guidePath);
 const windowsSetup = read(windowsSetupPath);
 const skill = read(skillPath);
 
-if (plugin.version !== "0.4.1") {
-  fail(`Expected plugin version 0.4.1, received ${plugin.version}.`);
+if (plugin.version !== "0.4.2") {
+  fail(`Expected plugin version 0.4.2, received ${plugin.version}.`);
 }
 if (
   mcp.mcpServers?.["fidelity-studio-content-assistant"]?.oauth_resource
@@ -69,7 +69,7 @@ if (
   || !windowsSetup.includes("Git.Git")
   || !windowsSetup.includes("plugin marketplace upgrade")
   || !windowsSetup.includes("mcp list --json")
-  || !windowsSetup.includes('$ExpectedPluginVersion = "0.4.1"')
+  || !windowsSetup.includes('$ExpectedPluginVersion = "0.4.2"')
 ) {
   fail("The Windows bootstrap is missing a required Codex, Git, upgrade, or verification guard.");
 }
@@ -79,6 +79,12 @@ if (/Set-ExecutionPolicy|npm\s+install|npm\.cmd|winget[^\n]+Node/i.test(windowsS
 if (!windowsSetup.includes("Approval mode or sandbox elevation does not repair this file ACL")) {
   fail("The Windows bootstrap must not present approval or sandbox mode as an ACL repair.");
 }
+for (const [name, instructions] of [["skill", skill], ["English quick start", read("README.md")], ["German quick start", guide]]) {
+  for (const tool of ["get_project_context", "list_entries", "list_blog_posts", "list_team_members"]) {
+    if (!instructions.includes(tool)) fail(`${name} must cover project-specific verification with ${tool}.`);
+  }
+}
+if (skill.includes("anything else → follow the Blog And Team Workflow")) fail("Unknown website workflows must follow authenticated tools.");
 if (!skill.includes("list_blog_posts")) {
   fail("The skill must cover blog inventory reads.");
 }
