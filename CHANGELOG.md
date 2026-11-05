@@ -1,9 +1,8 @@
 # Changelog
 
-## 0.4.2 (unreleased)
+## 0.4.2 - 2026-11-05
 
 - Transfer selected local photos through the signed-in desktop MCP connection. Optimize larger camera originals in memory and support HEIC stills on macOS.
-
 - Verify website access using the authenticated editor’s available collection, blog or team tools.
 - Follow the project’s publishing policy for portfolio drafts, photographs and static pages.
 
