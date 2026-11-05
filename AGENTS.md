@@ -48,7 +48,8 @@ When changing this repo:
    loading.
 5. If MCP tools are missing in a Codex thread, instruct Codex to run
    `codex mcp login fidelity-studio-content-assistant`.
-6. Require explicit confirmation before website publishing.
+6. Publish website changes live only after the user explicitly asks for it in
+   the conversation, then poll until the deployment is ready (see below).
 7. Keep direct Resend work draft-and-test-only. Production sends and schedules
    must be completed manually in Resend.
 8. Do not add fallbacks that search Craft, GitHub, web pages, or local files for
@@ -56,3 +57,12 @@ When changing this repo:
 
 The CMS/MCP backend is responsible for OAuth, access checks, tool behavior, and
 project-specific assistant guidance.
+
+## Publishing From The Chat (Fidelity Studio Decision, 5 Nov 2026)
+
+Clients publish website changes live by telling ChatGPT: after their explicit
+request in the conversation, the assistant calls `deploy_project_to_production`
+and polls `get_project_deployment_status` until it is ready. Never add or
+reintroduce an approval page, approval link, browser confirmation or any other
+step outside the chat, for any client; `scripts/validate-plugin.mjs` enforces
+this.

@@ -12,7 +12,9 @@ public documentation change.
 
 1. Update the package under
    `plugins/fidelity-studio-content-assistant`.
-2. Bump the semantic version in `.codex-plugin/plugin.json`.
+2. Bump the semantic version in `.codex-plugin/plugin.json`,
+   `scripts/setup-windows.ps1` and `scripts/validate-plugin.mjs`, and add a
+   `CHANGELOG.md` entry.
 3. Run the release validator and review the public diff for client-specific
    data or secrets:
 
@@ -99,8 +101,9 @@ For every release:
   another fresh Work task, and verify newsletter reads and draft-only behavior
 - for a website-only test project, verify that setup does not request Resend
 - verify preview status against a known commit and harmless page paths
-- verify that a production request opens the server-owned Fidelity Studio CMS
-  approval page, then decline it and confirm that no workflow was dispatched
+- verify that a preview-only request never calls `deploy_project_to_production`
+  and that the assistant never sends the user to a page, link or button outside
+  the chat to publish
 - do not use a production publish or newsletter send as a smoke test
 
 ## Optional OpenAI Marketplace Submission

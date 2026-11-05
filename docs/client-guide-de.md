@@ -60,10 +60,9 @@ dabei genau die E-Mail-Adresse, die für dich freigeschaltet wurde. Ob Resend f�
 dieses Projekt benötigt wird, entscheidet erst der authentifizierte
 Projektkontext im nächsten Schritt.
 
-Die Fidelity-Anmeldung zeigt dir verständlich alle angeforderten Rechte für
-Lesen, Entwürfe, Bilder und Änderungen. Eine Live-Veröffentlichung kann damit
-nur vorbereitet werden; die endgültige Freigabe erfolgt später für jeden
-einzelnen Vorgang auf einer separaten Fidelity-Studio-Seite.
+Die Fidelity-Anmeldung zeigt dir verständlich alle angeforderten Rechte, zum
+Beispiel für Lesen, Entwürfe, Bilder und Änderungen. Live veröffentlicht der
+Assistent trotzdem nur, wenn du ihn im Chat ausdrücklich darum bittest.
 
 Klicke auf **Zugriff erlauben** nur einmal. Danach kehrt der Browser normalerweise
 automatisch zu ChatGPT/Codex zurück. Falls das nicht passiert, klicke auf der
@@ -152,17 +151,21 @@ Erstelle aus diesem Text einen deutschen und englischen Blogbeitrag als Entwurf.
 Wenn der Text bereit ist:
 
 ```text
-Stelle diesen Beitrag zuerst auf der Vorschau-Website bereit und gib mir die geprüften Vorschau-Links. Veröffentliche ihn noch nicht auf der Live-Website. Frage mich nach meiner Freigabe, nachdem ich die Vorschau geprüft habe.
+Stelle diesen Beitrag zuerst auf der Vorschau-Website bereit und gib mir die geprüften Vorschau-Links. Veröffentliche ihn noch nicht auf der Live-Website. Frage mich, ob du ihn live veröffentlichen sollst, sobald ich die Vorschau geprüft habe.
 ```
 
 Der Assistent wartet, bis die Vorschau technisch bereit ist. Du kannst danach
-Änderungen verlangen, die Veröffentlichung zurückstellen oder die genaue
-Vorschau für die Live-Website freigeben. Erst nach deiner ausdrücklichen
-Bestätigung gibt dir ChatGPT einen Link zu `cms.fidelitystudio.ch`. Dort meldest
-du dich an und siehst Projekt, Änderung und den genauen geprüften Stand. Erst
-wenn du auf dieser Fidelity-Studio-Seite **Jetzt live veröffentlichen**
-bestätigst, startet die Produktion. Der Assistent prüft sie danach und gibt dir
-die echten Live-Links.
+Änderungen verlangen, die Veröffentlichung zurückstellen oder genau diese
+Vorschau live veröffentlichen lassen. Schreibe dazu einfach im Chat:
+
+```text
+Die Vorschau passt. Veröffentliche genau diesen Stand jetzt auf der Live-Website.
+```
+
+Der Assistent fasst kurz zusammen, was live geht, und startet die
+Veröffentlichung sofort. Du musst keine weitere Seite öffnen und nichts
+zusätzlich anklicken. Sobald die Live-Website bereit ist, prüft der Assistent
+sie und gibt dir die echten Live-Links.
 
 ## Teammitglieder
 
@@ -170,10 +173,9 @@ die echten Live-Links.
 Liste zuerst die aktuellen Teammitglieder auf. Bereite danach diese Änderung für [Name] als Entwurf vor und veröffentliche noch nichts: [Änderung].
 ```
 
-Auch Teamänderungen werden zuerst auf der Vorschau-Website geprüft. Der
-Assistent fragt separat, bevor er genau diese Version auf der Live-Website
-veröffentlicht. Die Live-Veröffentlichung startet erst nach deiner Bestätigung
-auf der separaten Fidelity-Studio-Seite.
+Auch Teamänderungen werden zuerst auf der Vorschau-Website geprüft. Live
+veröffentlicht der Assistent genau diese Version erst, wenn du ihn im Chat
+darum bittest. Danach gibt er dir die geprüften Live-Links.
 
 ## Plugin aktualisieren
 
@@ -186,7 +188,7 @@ Wenn ich von einer Version vor 0.4.0 aktualisiere, starte danach genau einmal:
 
 codex mcp login fidelity-studio-content-assistant
 
-Warte auf das automatisch geöffnete Browserfenster und öffne kein zweites. Diese einmalige neue Anmeldung wird benötigt, damit der Assistent eine Live-Veröffentlichung zur separaten Freigabe auf der Fidelity-Studio-Seite vorbereiten kann.
+Warte auf das automatisch geöffnete Browserfenster und öffne kein zweites. Diese einmalige neue Anmeldung wird benötigt, damit der Assistent Änderungen auf meinen Wunsch im Chat live veröffentlichen kann.
 
 Sage mir anschliessend, dass ich eine neue Work-Aufgabe mit dem Plugin starten und den Verbindungstest ausführen soll. Ein vollständiger Neustart der App ist nur nötig, wenn die Werkzeuge dort weiterhin fehlen.
 ```

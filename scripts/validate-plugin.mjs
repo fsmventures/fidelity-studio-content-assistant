@@ -26,9 +26,13 @@ const marketplace = json(marketplacePath);
 const guide = read(guidePath);
 const windowsSetup = read(windowsSetupPath);
 const skill = read(skillPath);
+const expectedVersion = "0.4.3";
 
-if (plugin.version !== "0.4.2") {
-  fail(`Expected plugin version 0.4.2, received ${plugin.version}.`);
+if (plugin.version !== expectedVersion) {
+  fail(`Expected plugin version ${expectedVersion}, received ${plugin.version}.`);
+}
+if (!read("CHANGELOG.md").includes(`## ${expectedVersion} - `)) {
+  fail(`CHANGELOG.md must have an entry for ${expectedVersion}.`);
 }
 if (
   mcp.mcpServers?.["fidelity-studio-content-assistant"]?.oauth_resource
@@ -69,7 +73,7 @@ if (
   || !windowsSetup.includes("Git.Git")
   || !windowsSetup.includes("plugin marketplace upgrade")
   || !windowsSetup.includes("mcp list --json")
-  || !windowsSetup.includes('$ExpectedPluginVersion = "0.4.2"')
+  || !windowsSetup.includes(`$ExpectedPluginVersion = "${expectedVersion}"`)
 ) {
   fail("The Windows bootstrap is missing a required Codex, Git, upgrade, or verification guard.");
 }
@@ -97,14 +101,43 @@ if (
 if (!skill.includes("idempotency key")) {
   fail("The skill must preserve production deployment idempotency.");
 }
-if (
-  !skill.includes("cms.fidelitystudio.ch")
-  || !skill.includes("server-owned page")
-) {
-  fail("The skill must require server-owned Fidelity Studio production approval.");
+// Fidelity Studio decision, 5 Nov 2026: clients publish live by asking in the
+// chat. No approval page, link or click outside the chat, for any client.
+for (const phrase of [
+  "deploy_project_to_production",
+  "REQUEST_PRODUCTION_APPROVAL",
+  "get_project_deployment_status",
+  "deployment ID",
+  "ready=true",
+  "current conversation",
+  "Publishing happens entirely in this chat.",
+]) {
+  if (!skill.includes(phrase)) {
+    fail(`The skill must publish via deploy_project_to_production after an explicit request in the chat and poll until ready (missing "${phrase}").`);
+  }
+}
+const approvalStep = [
+  /approval[\s-]+(url|page|link|request)/i,
+  /server-owned/i,
+  /cms\.fidelitystudio\.ch/i,
+  /jetzt live veröffentlichen/i,
+  /\bfreigabe/i,
+];
+for (const [name, text] of [
+  ["skill", skill],
+  ["README.md", read("README.md")],
+  ["German guide", guide],
+  ["docs/maintenance.md", read("docs/maintenance.md")],
+  ["plugin manifest", read(pluginPath)],
+  [".mcp.json", read(mcpPath)],
+]) {
+  const match = approvalStep.find((pattern) => pattern.test(text));
+  if (match) {
+    fail(`${name} must not describe an approval page, link or step outside the chat (matched ${match}).`);
+  }
 }
 if (skill.includes("deploy:production")) {
-  fail("The plugin must not describe the request-only scope as production authority.");
+  fail("The skill must not name a deploy:production scope; the Fidelity Studio server defines the publishing capability.");
 }
 
 console.log("Plugin validation passed.");
