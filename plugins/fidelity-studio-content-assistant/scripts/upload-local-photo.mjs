@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { createHash } from 'node:crypto';
 import { spawn } from 'node:child_process';
-import { constants } from 'node:fs';
+import { constants, realpathSync } from 'node:fs';
 import { lstat, mkdtemp, open, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
@@ -90,6 +90,7 @@ async function readPhoto(path) {
 
 export async function uploadLocalPhoto({ project, file, alt, destination = 'projects' }, connect = withCodexRpc) {
   if (typeof project !== 'string' || !project || project.length > 128 || typeof alt !== 'string' || !alt.trim() || alt.length > 1000 || !['projects','pages'].includes(destination)) throw new HelperError('Provide the authenticated project ID, photo description and a valid destination.');
+  alt = alt.trim(); // Match the server's input normalization before comparing the stored receipt.
   return connect(async call => {
     const context = receipt(await call('get_project_context', {}));
     if (context?.project?.id !== project) throw new HelperError('The signed-in website does not match this project. No photo was read.');
@@ -113,7 +114,12 @@ export async function uploadLocalPhoto({ project, file, alt, destination = 'proj
   });
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+function invokedAsMain() {
+  try { return Boolean(process.argv[1]) && realpathSync(resolve(process.argv[1])) === fileURLToPath(import.meta.url); }
+  catch { return false; } // Importing from stdin has no filesystem entry point.
+}
+
+if (invokedAsMain()) {
   try {
     const options = {}; const args = process.argv.slice(2);
     for (let i = 0; i < args.length; i += 2) {

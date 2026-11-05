@@ -2,7 +2,9 @@ import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir, mkdtemp, symlink, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
@@ -72,4 +74,35 @@ test('installed Codex transports a real local PNG through direct MCP without a m
     assert.deepEqual(calls, ['get_project_context','upload_local_project_photo']);assert.ok(diagnostics.length > 0);
     assert.equal(Object.hasOwn(result,'extra'), false);assert.equal(JSON.stringify(result).includes(expected.toString('base64').slice(128,320)), false);
   } finally { fixture.closeAllConnections(); await new Promise(resolve => fixture.close(resolve)); }
+});
+
+
+test('CLI entry point runs through a symlinked script path', async () => {
+  const scratch = await mkdtemp(join(tmpdir(), 'fs-photo-cli-test-'));
+  try {
+    const link = join(scratch, 'helper.mjs');
+    await symlink(fileURLToPath(new URL('../plugins/fidelity-studio-content-assistant/scripts/upload-local-photo.mjs', import.meta.url)), link);
+    const result = spawnSync(process.execPath, [link], { encoding: 'utf8' });
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /Provide the selected photo with --file/);
+  } finally { await rm(scratch, { recursive: true, force: true }); }
+});
+
+test('upload alt text matches server trimming and preserves umlauts', async () => {
+  const alt = '  Ein Stuhl mit grünen Füssen  ';
+  const path = `src/assets/cms/photo-${'b'.repeat(64)}.webp`;
+  const connect = run => run(async (name, args) => {
+    if (name === 'get_project_context') return text({ project: { id: options.project }, tools: ['upload_local_project_photo'] });
+    assert.equal(args.alt, alt.trim());
+    return text({ path, image: { src: path, alt: args.alt.trim(), width: 64, height: 64 }, sha: 'a'.repeat(40) });
+  });
+  assert.equal((await uploadLocalPhoto({ ...options, alt }, connect)).image.alt, alt.trim());
+});
+
+
+test('helper can be imported from stdin without running the CLI', () => {
+  const moduleUrl = new URL('../plugins/fidelity-studio-content-assistant/scripts/upload-local-photo.mjs', import.meta.url).href;
+  const result = spawnSync(process.execPath, ['--input-type=module', '-'], { input: `await import(${JSON.stringify(moduleUrl)}); console.log('imported');`, encoding: 'utf8' });
+  assert.equal(result.status, 0);
+  assert.equal(result.stdout.trim(), 'imported');
 });
