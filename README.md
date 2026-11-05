@@ -123,12 +123,18 @@ codex plugin list --marketplace fidelity-studio-content-assistant
   review the exact audience, and send labelled tests only to explicitly named
   reviewers; complete live sends and schedules manually in Resend
 - Blog posts: list or load the authorized content, draft both required
-  languages, verify the generated preview links, then deploy the reviewed commit
-  to production only after explicit approval on the server-owned Fidelity Studio
-  CMS page
-- Team members: list the current team first, draft the requested change, then
-  verify it on preview and deploy the reviewed commit to production only after
-  explicit approval on the server-owned Fidelity Studio CMS page
+  languages, verify the generated preview links, then publish the reviewed
+  commit live when the user asks for it in the chat
+- Team members: list the current team first, draft the requested change,
+  verify it on preview, then publish the reviewed commit live when the user
+  asks for it in the chat
+
+Live publishing happens entirely in the conversation. When the user asks to
+publish, the assistant summarizes what goes live, calls
+`deploy_project_to_production` with the exact reviewed preview commit, polls
+`get_project_deployment_status` until the site reports ready, and only then
+shares the verified live links. There is no separate page, link or extra click
+outside the chat.
 
 See the [German client quick start](docs/client-guide-de.md) for copy-ready
 prompts.
@@ -147,8 +153,7 @@ is loaded live from Fidelity Studio, so those rules can change without a plugin
 reinstall.
 
 When upgrading from a version before `0.4.0`, run the Fidelity login once again
-to grant the new production-approval-request capability, then start another new
-Work task:
+to grant the live publishing capability, then start another new Work task:
 
 ```bash
 codex mcp login fidelity-studio-content-assistant

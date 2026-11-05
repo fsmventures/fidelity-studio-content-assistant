@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.3 - 2026-11-05
+
+- Publish website changes live from the chat. When the user asks to publish,
+  the assistant summarizes what goes live, calls `deploy_project_to_production`
+  with the exact reviewed preview commit, polls `get_project_deployment_status`
+  until the site is ready and then shares the verified live links.
+- Remove the separate Fidelity Studio approval page from the skill, the guides
+  and the release checks. Publishing never needs a page, link or click outside
+  the chat. Requires the Fidelity Studio CMS version that starts the live
+  publish directly.
+- Validate that the skill publishes from the chat and that no instruction or
+  guide points to an approval page or link.
+
 ## 0.4.2 - 2026-11-05
 
 - Transfer selected local photos through the signed-in desktop MCP connection. Optimize larger camera originals in memory and support HEIC stills on macOS.
