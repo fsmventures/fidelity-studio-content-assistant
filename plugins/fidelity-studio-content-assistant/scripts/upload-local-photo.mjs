@@ -11,7 +11,10 @@ import { prepareLocalPhoto, sourceLimit, PhotoError } from './prepare-local-phot
 
 const server = 'fidelity-studio-content-assistant';
 const url = 'https://mcp.fidelitystudio.ch/mcp';
-const tool = 'upload_local_project_photo';
+// Sites on the shared Pages backend offer upload_image; Einzigwerk keeps its own transport.
+const sharedTool = 'upload_image';
+const legacyTool = 'upload_local_project_photo';
+const photoMeta = 'ch.fidelitystudio/photo-base64';
 class HelperError extends Error {}
 
 function receipt(result) {
@@ -88,18 +91,34 @@ async function readPhoto(path) {
   } finally { await handle.close(); }
 }
 
-export async function uploadLocalPhoto({ project, file, alt, destination = 'projects' }, connect = withCodexRpc) {
+export async function uploadLocalPhoto({ project, file, alt, destination = 'projects', collection, field }, connect = withCodexRpc) {
   if (typeof project !== 'string' || !project || project.length > 128 || typeof alt !== 'string' || !alt.trim() || alt.length > 1000 || !['projects','pages'].includes(destination)) throw new HelperError('Provide the authenticated project ID, photo description and a valid destination.');
+  const target = collection === undefined && field === undefined ? undefined : { collection, field };
+  if (target && !(typeof collection === 'string' && /^[A-Za-z0-9_-]{1,100}$/.test(collection) && typeof field === 'string' && /^[A-Za-z0-9_.-]{1,200}$/.test(field))) throw new HelperError('Pass --collection and --field together, as named in the project context.');
   alt = alt.trim(); // Match the server's input normalization before comparing the stored receipt.
   return connect(async call => {
     const context = receipt(await call('get_project_context', {}));
     if (context?.project?.id !== project) throw new HelperError('The signed-in website does not match this project. No photo was read.');
-    if (!Array.isArray(context?.tools) || !context.tools.includes(tool)) throw new HelperError('The current website access does not offer local photo uploads.');
+    const tools = Array.isArray(context?.tools) ? context.tools : [];
+    const tool = tools.includes(sharedTool) ? sharedTool : tools.includes(legacyTool) ? legacyTool : null;
+    if (!tool) throw new HelperError('The current website access does not offer local photo uploads.');
     const bytes = await readPhoto(file);
     const sourceSha256 = createHash('sha256').update(bytes).digest('hex');
+    if (tool === sharedTool) {
+      let shared;
+      // Bytes travel in _meta, never in logged tool arguments.
+      try { shared = receipt(await call(sharedTool, { sourceSha256, alt, ...(target ? { target } : {}) }, { [photoMeta]: bytes.toString('base64') })); }
+      finally { bytes.fill(0); }
+      if (typeof shared?.value !== 'string' || !shared.value || shared.value.length > 500 || typeof shared?.path !== 'string' || !shared.path) throw new HelperError('The assistant returned an unexpected upload receipt. Check the website media before retrying.');
+      const image = { src: shared.value, alt };
+      if ([shared.width, shared.height].every(n => Number.isInteger(n) && n > 0 && n <= 10000)) Object.assign(image, { width: shared.width, height: shared.height });
+      // Only reconstructed fields the editor needs. Never echo raw tool errors, metadata or input bytes.
+      return { image, sha: typeof shared.sha === 'string' ? shared.sha : null, reused: shared.reused === true };
+    }
+    if (target) throw new HelperError('This website stores uploads by --destination, not by --collection and --field.');
     let result;
     try {
-      result = receipt(await call(tool, { expectedProjectId: project, sourceSha256, destination, alt }, { 'ch.fidelitystudio/photo-base64': bytes.toString('base64') }));
+      result = receipt(await call(legacyTool, { expectedProjectId: project, sourceSha256, destination, alt }, { [photoMeta]: bytes.toString('base64') }));
     } finally { bytes.fill(0); }
     const root = destination === 'pages' ? 'static' : 'cms';
     const canonical = new RegExp(`^src/assets/${root}/photo-[a-f0-9]{64}\\.webp$`);
@@ -124,7 +143,7 @@ if (invokedAsMain()) {
     const options = {}; const args = process.argv.slice(2);
     for (let i = 0; i < args.length; i += 2) {
       const key = args[i];
-      if (!['--project', '--file', '--alt', '--destination'].includes(key) || !args[i + 1] || Object.hasOwn(options, key.slice(2))) throw new HelperError('Expected --project ID --file PATH --alt DESCRIPTION [--destination projects|pages].');
+      if (!['--project', '--file', '--alt', '--destination', '--collection', '--field'].includes(key) || !args[i + 1] || Object.hasOwn(options, key.slice(2))) throw new HelperError('Expected --project ID --file PATH --alt DESCRIPTION [--collection NAME --field PATH | --destination projects|pages].');
       options[key.slice(2)] = args[i + 1];
     }
     if (!options.file) throw new HelperError('Provide the selected photo with --file.');

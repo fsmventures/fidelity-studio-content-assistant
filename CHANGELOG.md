@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0 - 2026-11-06
+
+- Work the same way on every website that uses Fidelity Studio's shared Pages
+  backend: the skill follows the project's own collections and fields with
+  `list_entries`, `get_entry`, `create_entry`, `update_entry` and
+  `upload_image`, saves to the preview, and publishes live only when asked.
+- The local photo helper uploads to any website offering `upload_image`. Pass
+  `--collection` and `--field` so the photo is saved in a format that field
+  accepts. The image bytes still travel only in MCP `_meta`, never in logged
+  tool arguments. Websites with their own photo tool keep `--destination`.
+
 ## 0.4.3 - 2026-11-05
 
 - Publish website changes live from the chat. When the user asks to publish,

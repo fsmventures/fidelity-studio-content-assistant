@@ -23,6 +23,34 @@ test('a mismatched project or lacking media access fails before opening the file
   }
 });
 
+test('shared Pages sites receive the photo through upload_image with the bytes only in _meta', async () => {
+  const expected = await readFile(file);
+  const hash = createHash('sha256').update(expected).digest('hex');
+  const calls = [];
+  const connect = run => run(async (name, args, meta) => {
+    calls.push(name);
+    if (name === 'get_project_context') return text({ project: { id: options.project }, tools: ['get_project_context', 'list_entries', 'upload_image'] });
+    assert.equal(name, 'upload_image');
+    assert.deepEqual(Object.keys(args).sort(), ['alt', 'sourceSha256', 'target']);
+    assert.equal(args.sourceSha256, hash);
+    assert.deepEqual(args.target, { collection: 'team-members', field: 'normalImage.src' });
+    assert.equal(JSON.stringify(args).includes(expected.toString('base64').slice(64, 192)), false);
+    assert.ok(Buffer.from(meta['ch.fidelitystudio/photo-base64'], 'base64').equals(expected));
+    return text({ value: '/media/testbild-0123456789abcdef.png', path: 'public/media/testbild-0123456789abcdef.png', width: 64, height: 64, sha: 'b'.repeat(40), reused: false, extra: 'private-test-response-field' });
+  });
+  const result = await uploadLocalPhoto({ ...options, collection: 'team-members', field: 'normalImage.src' }, connect);
+  assert.deepEqual(calls, ['get_project_context', 'upload_image']);
+  assert.deepEqual(result, { image: { src: '/media/testbild-0123456789abcdef.png', alt: options.alt, width: 64, height: 64 }, sha: 'b'.repeat(40), reused: false });
+});
+
+test('a half target or a target for an Einzigwerk-style site fails without uploading', async () => {
+  await assert.rejects(uploadLocalPhoto({ ...options, collection: 'team-members' }, () => assert.fail('no connection expected')), /--collection and --field together/);
+  const calls = [];
+  const connect = run => run(async name => { calls.push(name); return text({ project: { id: options.project }, tools: ['upload_local_project_photo'] }); });
+  await assert.rejects(uploadLocalPhoto({ ...options, collection: 'projects', field: 'gallery' }, connect), /--destination/);
+  assert.deepEqual(calls, ['get_project_context']);
+});
+
 test('installed Codex transports a real local PNG through direct MCP without a model turn', { timeout: 65000 }, async () => {
   const expected = await readFile(file);
   const hash = createHash('sha256').update(expected).digest('hex');
