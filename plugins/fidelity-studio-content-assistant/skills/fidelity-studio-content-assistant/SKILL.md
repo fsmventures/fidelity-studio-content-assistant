@@ -190,15 +190,25 @@ Read `project.backend` in `get_project_context` before any write:
   and keep gallery order as requested. Before marking a draft published,
   show the changes and obtain explicit confirmation. Report the branch save
   and any separately verified preview or live deployment as distinct events.
+- When the context lists `upload_image` and the entry tools (`list_entries`,
+  `get_entry`, `create_entry`, `update_entry`), the website uses the shared
+  Pages workflow, which is the same for every such website. Follow the
+  context's collections, field definitions and `workflow`. Read an entry
+  before changing it and pass its exact `sha` as `expectedSha`. Every save
+  lands on the preview: report a change only after
+  `get_project_deployment_status` verifies that preview commit, and give the
+  preview link from the context. Publish live with
+  `deploy_project_to_production` only when the user explicitly asks in this
+  conversation, then poll until the live site is verified.
 - When blog or team tools are advertised, follow the Blog And Team Workflow
   below for those tools. Apply deployment steps only when the authenticated
   project offers them. For other tool sets, follow their declared workflow.
 
 ## Photos attached in desktop Work
 
-Use only a photo the user attached or explicitly named for the requested website. Read `get_project_context` in this Work task first. Use a host-supplied file reference with `upload_project_photo` when one is available. A local path by itself is not a hosted file reference.
+Use only a photo the user attached or explicitly named for the requested website. Read `get_project_context` in this Work task first. Use a host-supplied file reference with `upload_image` (its `file` parameter) or `upload_project_photo`, whichever the context offers. A local path by itself is not a hosted file reference.
 
-For a local file, check that the authenticated tool list includes `upload_local_project_photo`. Run the bundled `../../scripts/upload-local-photo.mjs` from this skill directory with the desktop workspace Node executable returned by `load_workspace_dependencies`. Its adjacent Sharp package supplies local image processing without a package installation. A standalone Node installation can still transfer already-fitting JPEG, PNG and WebP files. Pass `--project` with the exact authenticated `project.id`, `--file` with the selected absolute path, `--alt` with the image description, and `--destination projects` or `--destination pages` for the intended field. Pass these as separate arguments. Run the helper for each selected photo in the user's order. Use the returned `image` fields to prepare one content edit.
+For a local file, check that the authenticated tool list includes `upload_image` or `upload_local_project_photo`. Run the bundled `../../scripts/upload-local-photo.mjs` from this skill directory with the desktop workspace Node executable returned by `load_workspace_dependencies`. Its adjacent Sharp package supplies local image processing without a package installation. A standalone Node installation can still transfer already-fitting JPEG, PNG and WebP files. Pass `--project` with the exact authenticated `project.id`, `--file` with the selected absolute path and `--alt` with the image description. For a website that offers `upload_image`, also pass `--collection` and `--field` with the content name and image field path from the context (for example `team-members` and `normalImage.src`), so the photo is saved in a format that field accepts. For a website that offers `upload_local_project_photo`, pass `--destination projects` or `--destination pages` instead. Pass these as separate arguments. Put the returned `image.src` exactly as given into the field. Run the helper for each selected photo in the user's order. Use the returned `image` fields to prepare one content edit.
 
 The helper uses the existing Codex MCP sign-in on its pinned service, checks the project again and uses a direct app-server call. Never read the image bytes into the conversation, generate base64 in a tool transcript, copy a token, or publish a temporary URL. A successful upload stores media. Read the project, attach the returned references, and verify the saved fields before reporting that the project changed.
 

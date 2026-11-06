@@ -26,7 +26,7 @@ const marketplace = json(marketplacePath);
 const guide = read(guidePath);
 const windowsSetup = read(windowsSetupPath);
 const skill = read(skillPath);
-const expectedVersion = "0.4.3";
+const expectedVersion = "0.5.0";
 
 if (plugin.version !== expectedVersion) {
   fail(`Expected plugin version ${expectedVersion}, received ${plugin.version}.`);
