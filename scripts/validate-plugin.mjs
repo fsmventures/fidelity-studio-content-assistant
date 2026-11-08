@@ -51,6 +51,25 @@ for (const key of ["composerIcon", "logo", "logoDark"]) {
   if (!existsSync(absolutePath)) fail(`${key} does not resolve to an existing file.`);
 }
 
+const setupPath = "docs/setup.md";
+const setup = read(setupPath);
+const setupUrl = "https://mcp.fidelitystudio.ch/setup.md";
+if (!guide.includes(setupUrl) || !read("README.md").includes(setupUrl)) {
+  fail(`The guide and README must give clients the short setup sentence with ${setupUrl}.`);
+}
+if (setup.includes("ß")) fail("docs/setup.md must not contain ß.");
+for (const phrase of [
+  "scripts/setup-windows.ps1",
+  "codex plugin marketplace add fsmventures/fidelity-studio-content-assistant --ref main --json",
+  "codex plugin marketplace upgrade fidelity-studio-content-assistant --json",
+  "codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant --json",
+  "codex mcp list --json",
+  "codex mcp login fidelity-studio-content-assistant",
+  "get_project_context",
+  "new Work task",
+]) {
+  if (!setup.includes(phrase)) fail(`docs/setup.md is missing "${phrase}".`);
+}
 if (guide.includes("ß")) fail("The Swiss German guide must not contain ß.");
 if (/\b(fuer|ueber|oeffnen|pruefen|zurueck|vollstaendig)\b/i.test(guide)) {
   fail("The German guide contains an avoidable umlaut transliteration.");
@@ -127,6 +146,7 @@ for (const [name, text] of [
   ["skill", skill],
   ["README.md", read("README.md")],
   ["German guide", guide],
+  ["docs/setup.md", setup],
   ["docs/maintenance.md", read("docs/maintenance.md")],
   ["plugin manifest", read(pluginPath)],
   [".mcp.json", read(mcpPath)],

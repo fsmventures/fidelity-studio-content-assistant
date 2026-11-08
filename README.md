@@ -21,8 +21,15 @@ server returns the authorized project and its current guidance.
 
 Clients should follow the
 [German client quick start](docs/client-guide-de.md): open ChatGPT Work in the
-desktop app, paste the provided setup prompt, approve the clearly described
-installation actions, and let Work run and verify the technical setup. Clients
+desktop app and send one sentence:
+
+```text
+Richte den Fidelity Studio Content Assistant für mich ein: lies https://mcp.fidelitystudio.ch/setup.md
+```
+
+That URL serves [`docs/setup.md`](docs/setup.md) from this repository, the
+single agent-facing setup guide. Work installs the plugin, signs the client in
+once and verifies the setup; the client approves the clearly described steps. Clients
 do not need to open Terminal, have a GitHub account, or understand the
 repository commands.
 
