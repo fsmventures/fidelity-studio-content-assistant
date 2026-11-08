@@ -16,42 +16,10 @@ Terminal noch GitHub öffnen.
 1. Öffne die ChatGPT Desktop-App.
 2. Wähle **ChatGPT** und wechsle zu **Work**.
 3. Starte eine neue Aufgabe.
-4. Füge den folgenden Text ein und sende ihn ab:
+4. Füge diesen Satz ein und sende ihn ab:
 
 ```text
-Bitte richte den Fidelity Studio Content Assistant für mich ein.
-
-Dies ist nur eine Einrichtungsaufgabe. Bearbeite keine Projektdateien. Führe die nötigen Befehle selbst im gemeinsamen Arbeitsbereich aus; ich möchte kein Terminal öffnen.
-
-1. Prüfe zuerst das Betriebssystem. Unter Windows führe das wiederholbar nutzbare Fidelity-Setup direkt in 64-Bit-Windows-PowerShell aus:
-
-irm https://raw.githubusercontent.com/fsmventures/fidelity-studio-content-assistant/main/scripts/setup-windows.ps1 | iex
-
-Das Skript darf bei Bedarf nur die offizielle eigenständige Codex CLI und Git for Windows über winget installieren. Installiere Node.js oder npm nicht nur für Codex und ändere die PowerShell-Ausführungsrichtlinie nicht. Eine WindowsApps-Zugriffssperre wird nicht durch «Für mich genehmigen», Vollzugriff oder einen anderen Sandbox-Modus behoben.
-
-Unter macOS oder Linux prüfe zuerst, ob codex und Git ausführbar sind. Füge den Marketplace nur hinzu, wenn er fehlt; andernfalls aktualisiere ihn. Installiere oder aktualisiere danach den Assistenten und prüfe Version sowie MCP-Registrierungen mit JSON-Ausgaben. Verwende diese Codex-Befehle als Grundlage:
-
-codex plugin marketplace add fsmventures/fidelity-studio-content-assistant --ref main --json
-codex plugin marketplace upgrade fidelity-studio-content-assistant --json
-codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant --json
-codex plugin list --marketplace fidelity-studio-content-assistant --json
-codex mcp list --json
-
-Falls ein vorhandener Plugin-Cache trotz Marketplace-Aktualisierung veraltet bleibt, entferne nur dieses Plugin und installiere es erneut. Prüfe danach erneut die tatsächlich installierte Version.
-
-2. Starte danach genau einmal die Fidelity-Studio-Anmeldung und warte, bis sie vollständig abgeschlossen ist:
-
-codex mcp login fidelity-studio-content-assistant
-
-Codex öffnet die Anmeldeseite normalerweise selbst. Verwende keinen zusätzlichen open-Befehl, öffne kein zweites Browserfenster und wiederhole den Login nicht, solange der erste Vorgang läuft. Falls Codex ausdrücklich meldet, dass der Browser nicht geöffnet werden konnte, zeige mir den Link zum manuellen Öffnen.
-
-3. Starte Resend jetzt noch nicht. Der nächste Schritt muss zuerst in einer neuen Work-Aufgabe den authentifizierten Fidelity-Studio-Projektkontext laden. Nur wenn dieser Projektkontext ausdrücklich Newsletter mit Anbieter Resend deklariert, darf dort genau eine Resend-Anmeldung gestartet werden.
-
-Ich kopiere keine Passwörter, Codes, Zugangsschlüssel oder Tokens in den Chat. Falls eine Genehmigung oder Browser-Anmeldung erscheint, pausiere, erkläre mir kurz, was erlaubt wird, und sage mir genau, was ich anklicken soll.
-
-Falls unter Windows codex.exe aus WindowsApps mit «Zugriff verweigert» fehlschlägt, verwende das offizielle eigenständige Codex-Installationsskript aus Schritt 1 und prüfe den exakt aufgelösten Pfad ausserhalb von WindowsApps. Falls Git fehlt, installiere Git for Windows über winget, aktualisiere den PATH des laufenden Prozesses und prüfe git --version, bevor du den Marketplace erneut versuchst. Falls dies nicht funktioniert, stoppe mit dem genauen Pfad und Fehler. Bitte fordere mich nicht auf, selbst ein Terminal zu öffnen.
-
-Prüfe am Ende die installierte Plugin-Version. Sage mir danach, dass ich eine neue Work-Aufgabe starten soll. Ein vollständiger Neustart der App ist nur nötig, wenn die Werkzeuge auch in der neuen Aufgabe fehlen.
+Richte den Fidelity Studio Content Assistant für mich ein: lies https://mcp.fidelitystudio.ch/setup.md
 ```
 
 ChatGPT erledigt die technische Einrichtung. Bestätige nur die beschriebenen
