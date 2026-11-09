@@ -171,7 +171,7 @@ Check the installed plugin version. Then tell the person, in their language:
 
 In German, for example: «Starte jetzt in der ChatGPT-Desktop-App eine neue
 Work-Aufgabe, wieder auf deinem Computer (On your computer). Fehlen die
-Fidelity-Studio-Werkzeuge dort noch, beende die App ganz: Mac: ⌘Q. Windows:
+Fidelity-Studio-Tools dort noch, beende die App ganz: Mac: ⌘Q. Windows:
 Schliesse das ChatGPT-Fenster; siehst du unten rechts in der Taskleiste ein
 ChatGPT-Symbol, klicke es mit der rechten Maustaste an und wähle «Beenden».
 Öffne die App dann wieder und starte nochmals eine neue Work-Aufgabe.»
