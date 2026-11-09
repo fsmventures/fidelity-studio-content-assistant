@@ -26,7 +26,7 @@ const marketplace = json(marketplacePath);
 const guide = read(guidePath);
 const windowsSetup = read(windowsSetupPath);
 const skill = read(skillPath);
-const expectedVersion = "0.5.0";
+const expectedVersion = "0.5.1";
 
 if (plugin.version !== expectedVersion) {
   fail(`Expected plugin version ${expectedVersion}, received ${plugin.version}.`);
@@ -77,8 +77,50 @@ if (/\b(fuer|ueber|oeffnen|pruefen|zurueck|vollstaendig)\b/i.test(guide)) {
 if (/\bmarkus[^\s@]*@[^\s]+/i.test(guide)) {
   fail("The public guide must not contain a maintainer email address.");
 }
-if (!guide.includes("neue Work-Aufgabe")) {
-  fail("The guide must make a new Work task the normal tool-mounting step.");
+// Markus, 9 Nov 2026: after setup, an update or a new login, start a new Work
+// task first. Only if the tools are still missing there, quit the app
+// completely, reopen it and start one new Work task. The assistant asks for a
+// new task at most once (the old skill looped in a Mac mini test).
+const finishAt = setup.indexOf("## 4. Finish");
+const finish = finishAt < 0 ? "" : setup.slice(finishAt);
+const newTaskAt = finish.indexOf("new Work task");
+const fallbackAt = finish.search(/still missing in that new task, quit the\s+app completely/i);
+if (newTaskAt < 0 || fallbackAt < 0 || newTaskAt > fallbackAt) {
+  fail("docs/setup.md step 4 must start a new Work task first and quit and reopen the app only if the tools are still missing there.");
+}
+const guideNewTaskAt = guide.indexOf("Starte nach der Einrichtung eine **neue Work-Aufgabe**.");
+const guideFallbackAt = guide.search(
+  /Fehlen die Fidelity-Studio-Werkzeuge dort noch, beende die App ganz \(⌘Q\),\s+öffne sie wieder und starte nochmals eine neue Work-Aufgabe\./,
+);
+if (guideNewTaskAt < 0 || guideFallbackAt < 0 || guideNewTaskAt > guideFallbackAt) {
+  fail("The guide must start a new Work task first and restart the app only if the tools are still missing there.");
+}
+if (
+  !/Never ask for a\s+new task twice\./.test(skill)
+  || !/already the new task[\s\S]{0,200}do not ask for\s+another new task/.test(skill)
+  || !skill.includes("quit the app completely")
+) {
+  fail("The skill must ask for a new task at most once and ask for a full app restart when the current task is already the new one.");
+}
+const wrongRestartRule = [
+  /mounted when a\s+(new\s+)?task\s+is\s+(created|started)/i,
+  /normalerweise nicht beenden/i,
+  /reicht nach einer\s+Installation oder Anmeldung normalerweise/i,
+  /Erst wenn die Werkzeuge auch in dieser neuen Aufgabe fehlen/i,
+];
+for (const [name, text] of [
+  ["skill", skill],
+  ["README.md", read("README.md")],
+  ["AGENTS.md", read("AGENTS.md")],
+  ["German guide", guide],
+  ["docs/setup.md", setup],
+  ["docs/maintenance.md", read("docs/maintenance.md")],
+  ["Windows bootstrap", windowsSetup],
+]) {
+  const match = wrongRestartRule.find((pattern) => pattern.test(text));
+  if (match) {
+    fail(`${name} must not say a new task always loads new tools, that a restart is never needed, or ask for a second new task before the restart (matched ${match}).`);
+  }
 }
 if (
   !guide.includes("get_project_context")

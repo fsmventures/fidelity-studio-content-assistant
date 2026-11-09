@@ -50,8 +50,10 @@ codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assis
 
 Choose Work, start a new task, open Plugins, and select Fidelity Studio Content
 Assistant. Plugins are not available in ordinary Chat mode, mobile, or the IDE
-extension. A full app restart is only a fallback if the tools are still absent
-in the new task.
+extension. If the tools are still missing in that new task, quit the app
+completely (Mac: ⌘Q; Windows: also quit it in the system tray), reopen it and
+start one new task: an install or sign-in made from the shell sometimes loads
+only after a restart.
 
 If Codex asks for marketplace details instead, use:
 
@@ -78,7 +80,7 @@ codex mcp login fidelity-studio-content-assistant
 For Fidelity Studio, use the email address invited to the CMS. Clients do not
 need GitHub access.
 
-After that login finishes, start a fresh Work task, load
+After that login finishes, start a new Work task, load
 `get_project_context`, and verify the website tools operationally. Only if the
 authenticated project context explicitly declares newsletters with provider
 Resend should the assistant start this second login:
@@ -104,10 +106,10 @@ reports that automatic browser opening failed. A project without an explicit
 Resend newsletter declaration is ready for website work after Fidelity Studio
 verification; do not request Resend access for it.
 
-After Fidelity succeeds, start a fresh task and write:
+After Fidelity succeeds, start a new Work task and write:
 
 ```text
-Call get_project_context and verify website access with a read my project offers. If list_entries is available, list the declared projects collection or another declared collection. Otherwise, call list_blog_posts and list_team_members when offered. Check whether the authenticated context explicitly enables newsletters with provider Resend. Only then, use harmless Resend reads to verify the connected team, templates, broadcasts, and audiences; if Resend is not yet authenticated, start exactly one login and tell me to repeat this verification in a fresh Work task. If the context does not require Resend, report website-only readiness without starting its login. Change nothing and report each required service separately.
+Call get_project_context and verify website access with a read my project offers. If list_entries is available, list the declared projects collection or another declared collection. Otherwise, call list_blog_posts and list_team_members when offered. Check whether the authenticated context explicitly enables newsletters with provider Resend. Only then, use harmless Resend reads to verify the connected team, templates, broadcasts, and audiences; if Resend is not yet authenticated, start exactly one login and tell me to repeat this verification in a new Work task, and to quit and reopen the app if the tools are still missing there. If the context does not require Resend, report website-only readiness without starting its login. Change nothing and report each required service separately.
 ```
 
 Do not trust an `auth_status` value or successful login command as operational
@@ -155,7 +157,8 @@ codex plugin marketplace upgrade fidelity-studio-content-assistant
 codex plugin list --marketplace fidelity-studio-content-assistant
 ```
 
-Start a new task after updating. Client-specific workflow and writing guidance
+Start a new Work task after updating. If the tools are still missing there,
+quit the app completely, reopen it and start one new task. Client-specific workflow and writing guidance
 is loaded live from Fidelity Studio, so those rules can change without a plugin
 reinstall.
 
@@ -193,8 +196,9 @@ See [maintenance and releases](docs/maintenance.md) for the release model.
   Studio.
 - Resend data missing: reconnect and select the intended client team.
 - Tools missing or version stale: start a new task first; if needed, run the
-  update commands above. Restart the app only if a new task still lacks the
-  tools.
+  update commands above. If a new task still lacks the tools, quit the app
+  completely, reopen it and start one new task. Do not keep starting new
+  tasks.
 
 ## Architecture Boundary
 

@@ -46,8 +46,12 @@ When changing this repo:
 3. Keep Resend pointed at the official hosted OAuth MCP endpoint.
 4. Keep the skill's first action as authentication plus MCP project context
    loading.
-5. If MCP tools are missing in a Codex thread, instruct Codex to run
-   `codex mcp login fidelity-studio-content-assistant`.
+5. If MCP tools are missing in a Codex task, follow the skill: after an
+   install, update or sign-in, the user starts a new Work task. If the tools
+   are still missing in that new task, the user quits the app completely,
+   reopens it and starts one new Work task. Ask for a new task at most once.
+   Run `codex mcp login fidelity-studio-content-assistant` only when the
+   sign-in is missing.
 6. Publish website changes live only after the user explicitly asks for it in
    the conversation, then poll until the deployment is ready (see below).
 7. Keep direct Resend work draft-and-test-only. Production sends and schedules

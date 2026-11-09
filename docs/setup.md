@@ -90,7 +90,12 @@ there, once.
 Check the installed plugin version. Then tell the person, in their language:
 
 1. Setup is done.
-2. Start a new Work task (a full restart of the app is only needed if the
-   tools are still missing there).
-3. Type `@`, choose **Fidelity Studio Content Assistant** and ask it to check
-   the connection without changing anything.
+2. Start a new Work task, type `@`, choose **Fidelity Studio Content
+   Assistant** and ask it to check the connection without changing anything.
+3. If the Fidelity Studio tools are still missing in that new task, quit the
+   app completely (Mac: ⌘Q; Windows: also quit it in the system tray), reopen
+   it and start one new Work task.
+
+In German, for example: «Starte jetzt eine neue Work-Aufgabe. Fehlen die
+Fidelity-Studio-Werkzeuge dort noch, beende die App ganz (⌘Q), öffne sie wieder
+und starte nochmals eine neue Work-Aufgabe.»
