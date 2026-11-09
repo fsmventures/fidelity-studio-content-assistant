@@ -39,9 +39,12 @@ was checked without reproducing private record details or attempting a write.
 
 ## If MCP Tools Are Missing In Codex
 
-The open app may not load an install, update or sign-in made from the shell
-(`codex plugin add`, `codex mcp login`) until the user quits it completely and
-reopens it. A new Work task alone does not reliably load these tools.
+After an install, update or sign-in, the user starts a new Work task. A new
+task usually loads the new tools, but not always: an install or sign-in made
+from the shell (`codex plugin add`, `codex mcp login`) happens outside the open
+app, and sometimes the app loads it only after the user quits it completely and
+reopens it. So the order is one new Work task first, and a full restart only if
+the tools are still missing there.
 
 If the Fidelity Studio Content Assistant MCP tools are not exposed in the
 current Codex task, do not search Craft, the web, GitHub, local files, or the
@@ -50,21 +53,22 @@ current workspace as a substitute. Check the saved sign-in once with
 first step that fits. Never ask for a new task twice.
 
 1. `fidelity-studio-content-assistant` reports `not_logged_in`: run the login
-   below once, then follow its restart instruction.
-2. The plugin was installed or signed in earlier in this same task: ask for
-   one new Work task. If that install or sign-in ran from the shell, ask the
-   user to quit the app completely and reopen it first.
+   below once, then follow its instruction for after the login.
+2. The plugin was installed, updated or signed in earlier in this same task:
+   ask for one new Work task. Tell the user that if the tools are still
+   missing there, they quit the app completely, reopen it and start one new
+   Work task.
 3. The user says they already quit and reopened the app, and the sign-in is
    saved: do not ask for another restart or another new task. Tell them
    Fidelity Studio needs to check the installation, and share what
    `codex plugin list --marketplace fidelity-studio-content-assistant --json`
    and `codex mcp list --json` show for this plugin, without tokens.
-4. Otherwise this task is already a new task (the user's first message invokes
-   this plugin, or they say they just started one): do not ask for another new
-   task. Tell the user to quit the app completely (Mac: ⌘Q; Windows: quit it
-   fully, including from the system tray), reopen it and start one new Work
-   task. Ask them to say in that task if the tools are still missing after the
-   restart.
+4. Otherwise this task is already the new task (the user's first message
+   invokes this plugin, or they say they just started one): do not ask for
+   another new task. Tell the user to quit the app completely (Mac: ⌘Q;
+   Windows: quit it fully, including from the system tray), reopen it and
+   start one new Work task. Ask them to say in that task if the tools are
+   still missing after the restart.
 
 Run this exact command once from the shell to start Codex's MCP OAuth login:
 
@@ -78,16 +82,17 @@ window, repeat the login command, or start another MCP login while the callback
 listener is active. Offer the printed URL for manual opening only if Codex
 explicitly reports that browser launch failed.
 
-The login runs outside the open app, so the open app does not see it. If the
-command reports success, tell the user to quit the app completely and reopen
-it, then start a new Work task and invoke the plugin again.
+If the command reports success, tell the user to start a new Work task and
+invoke the plugin again. The login runs outside the open app, so tell them
+too: if the tools are still missing in that new task, quit the app completely,
+reopen it and start one new Work task.
 
 Do not claim the client content is unavailable until this login step has been
 tried or the user declines it.
 
 Do not authenticate Resend during the initial plugin setup. After the Fidelity
-login has finished and the user has reopened the app, successfully call
-`get_project_context` first in a new Work task. Inspect the returned context
+login has finished, successfully call `get_project_context` first in a new
+Work task. Inspect the returned context
 for an explicit newsletter declaration. Only require Resend when that authenticated project
 context says newsletters are enabled and names Resend as the provider.
 
@@ -107,9 +112,10 @@ workflows remain available but newsletter workflows do not.
 If the authenticated context does not explicitly require Resend, do not start
 its login and do not ask for newsletter-account access. Report the result of the website inventory check and that Resend is not required.
 
-After a successful Resend login, tell the user to quit the app completely and
-reopen it, then start a new Work task so both MCP servers are loaded. Verify
-the required connections operationally in that task:
+After a successful Resend login, tell the user to start a new Work task so
+both MCP servers are loaded, and to quit the app completely and reopen it if
+the tools are still missing there. Verify the required connections
+operationally in that task:
 
 1. Call `get_project_context`.
 2. Repeat the operational read selected from the returned `tools` and collections above.
@@ -133,10 +139,9 @@ the printed URL manually only when automatic opening explicitly fails.
 Version 0.4.0 introduced the `deploy:request` Fidelity capability that live
 publishing needs. Users upgrading from an earlier version must run the Fidelity
 login once again, review the complete permission list on Fidelity Studio's
-consent page, quit the app completely, reopen it and then start a new Work
-task. If authenticated context omits `deploy_project_to_production` or reports
-the capability missing, explain this one-time reauthentication instead of
-attempting the deployment.
+consent page, and then start a new Work task. If authenticated context omits
+`deploy_project_to_production` or reports the capability missing, explain this
+one-time reauthentication instead of attempting the deployment.
 
 ## Source Of Truth
 

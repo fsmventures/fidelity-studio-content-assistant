@@ -39,10 +39,10 @@ erneut.
 
 ## 2. Verbindung prüfen
 
-1. Beende die App ganz (⌘Q) und öffne sie wieder. Unter Windows beendest du
-   sie auch im Infobereich der Taskleiste. Die offene App sieht die neue
-   Anmeldung erst nach diesem Neustart.
-2. Starte dann eine **neue Work-Aufgabe**.
+1. Starte nach der Einrichtung eine **neue Work-Aufgabe**.
+2. Fehlen die Fidelity-Studio-Werkzeuge dort noch, beende die App ganz (⌘Q),
+   öffne sie wieder und starte nochmals eine neue Work-Aufgabe. Unter Windows
+   beendest du die App auch im Infobereich der Taskleiste.
 3. Tippe `@` und wähle **Fidelity Studio Content Assistant**.
 4. Füge diesen Text ein:
 
@@ -52,7 +52,7 @@ Bitte prüfe meine Verbindungen, ohne etwas zu verändern:
 1. Lade meinen Fidelity-Studio-Projektkontext.
 2. Verwende die Lesewerkzeuge aus dem Projektkontext. Wenn `list_entries` angeboten wird, rufe es für die dort aufgeführte Sammlung `projects` oder eine andere dort aufgeführte Sammlung auf. Andernfalls prüfe Blogbeiträge mit `list_blog_posts` und Teammitglieder mit `list_team_members`, sofern die Werkzeuge angeboten werden. Nenne mir nur, welche Abfragen erfolgreich waren.
 3. Prüfe im geladenen Projektkontext, ob Newsletter aktiviert sind und als Anbieter ausdrücklich Resend genannt wird.
-4. Nur falls beides zutrifft: Prüfe mit reinen Resend-Leseabfragen das verbundene Team sowie vorhandene Templates, Broadcasts und Zielgruppen. Falls die Resend-Werkzeuge fehlen oder noch nicht authentifiziert sind, starte genau einmal codex mcp login resend, warte auf den automatisch geöffneten Browser und sage mir danach, dass ich die App ganz beenden (⌘Q), wieder öffnen und diese Prüfung in einer neuen Work-Aufgabe wiederholen soll. Öffne kein zweites Browserfenster und starte keinen zweiten Login.
+4. Nur falls beides zutrifft: Prüfe mit reinen Resend-Leseabfragen das verbundene Team sowie vorhandene Templates, Broadcasts und Zielgruppen. Falls die Resend-Werkzeuge fehlen oder noch nicht authentifiziert sind, starte genau einmal codex mcp login resend, warte auf den automatisch geöffneten Browser und sage mir danach, dass ich diese Prüfung in einer neuen Work-Aufgabe wiederholen soll. Fehlen die Werkzeuge dort noch, soll ich die App ganz beenden (⌘Q), wieder öffnen und nochmals eine neue Work-Aufgabe starten. Öffne kein zweites Browserfenster und starte keinen zweiten Login.
 5. Falls der Projektkontext Resend nicht ausdrücklich verlangt, starte keine Resend-Anmeldung und melde «Website-Funktionen einsatzbereit; Resend für dieses Projekt nicht erforderlich».
 6. Berichte Fidelity Studio und – nur falls erforderlich – Resend getrennt. Verlasse dich nicht allein auf auth_status, sondern auf die echten Leseabfragen.
 
@@ -61,8 +61,9 @@ Zeige keine Tokens oder Zugangsdaten an.
 
 Damit wird nicht nur geprüft, ob eine Anmeldung gespeichert ist, sondern ob die
 Funktionen wirklich erreichbar sind. Falls Resend benötigt und neu verbunden
-wurde, beende die App danach nochmals ganz (⌘Q) und öffne sie wieder. Starte
-dann eine neue Work-Aufgabe und führe denselben Prüftext nochmals aus. Bei Resend wählst du das Kunden-Team, das dir Fidelity
+wurde, starte danach eine neue Work-Aufgabe und führe denselben Prüftext
+nochmals aus. Fehlen die Werkzeuge dort noch, beende die App ganz (⌘Q), öffne
+sie wieder und starte nochmals eine neue Work-Aufgabe. Bei Resend wählst du das Kunden-Team, das dir Fidelity
 Studio genannt hat. Resend kann dabei die vom Anbieter festgelegten, breiten
 Kontorechte verlangen; verwende keine eigenen Scopes. Wenn du die Anmeldung
 ablehnst, bleiben die Website-Funktionen verfügbar.
@@ -160,25 +161,25 @@ codex mcp login fidelity-studio-content-assistant
 
 Warte auf das automatisch geöffnete Browserfenster und öffne kein zweites. Diese einmalige neue Anmeldung wird benötigt, damit der Assistent Änderungen auf meinen Wunsch im Chat live veröffentlichen kann.
 
-Sage mir anschliessend, dass ich die App ganz beenden (⌘Q) und wieder öffnen soll. Danach starte ich eine neue Work-Aufgabe mit dem Plugin und führe den Verbindungstest aus.
+Sage mir anschliessend, dass ich eine neue Work-Aufgabe mit dem Plugin starten und den Verbindungstest ausführen soll. Fehlen die Werkzeuge dort noch, beende ich die App ganz (⌘Q), öffne sie wieder und starte nochmals eine neue Work-Aufgabe.
 ```
 
 Projektregeln und Schreibvorgaben werden nach der Anmeldung live von Fidelity
 Studio geladen. Änderungen an Farben, Sprachen, Website-Adressen oder Abläufen
 benötigen deshalb normalerweise keine Plugin-Aktualisierung.
 
-Beende die App nach dem Update ganz (⌘Q) und öffne sie wieder. Starte dann
-eine neue Work-Aufgabe und verwende nochmals den Prüftext aus **Verbindung
-prüfen**. Prüfe im Projektkontext zusätzlich, ob die
+Starte nach dem Update eine neue Work-Aufgabe und verwende nochmals den
+Prüftext aus **Verbindung prüfen**. Fehlen die Werkzeuge dort noch, beende die
+App ganz (⌘Q), öffne sie wieder und starte nochmals eine neue Work-Aufgabe. Prüfe im Projektkontext zusätzlich, ob die
 Produktionsveröffentlichung verfügbar ist. Die Versionsnummer allein beweist
 noch nicht, dass beide Verbindungen und die neue Berechtigung funktionieren.
 
 ## Wenn etwas nicht funktioniert
 
-Fehlen die Werkzeuge, beende die App ganz (⌘Q) und öffne sie wieder. Starte
-dann eine **neue Work-Aufgabe** und wähle das Plugin erneut. Nach einer
-Installation, Aktualisierung oder Anmeldung reicht eine neue Aufgabe ohne
-Neustart nicht immer.
+Fehlen die Werkzeuge in einer bereits geöffneten Aufgabe, starte eine **neue
+Work-Aufgabe** und wähle das Plugin erneut. Fehlen sie auch dort, beende die
+App ganz (⌘Q), öffne sie wieder und starte nochmals eine neue Work-Aufgabe.
+Starte nicht mehrere neue Aufgaben nacheinander.
 
 Falls die Werkzeuge auch nach dem Neustart fehlen, füge in dieser Aufgabe
 diesen Text ein:
