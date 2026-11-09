@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.2 - 2026-11-09
+
+- German texts say «Tools» instead of «Werkzeuge»: the German guide, the setup
+  prompts and the assistant's own replies. The skill names the rule and the
+  validator rejects «Werkzeug» in the guides.
+
 ## 0.5.1 - 2026-11-09
 
 - Fix a loop after setup. When the tools are missing in a task that is already
