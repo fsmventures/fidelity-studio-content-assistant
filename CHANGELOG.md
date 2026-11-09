@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.5.1 - 2026-11-09
+
+- Fix a loop after setup. When the tools are missing in a task that is already
+  new, the assistant no longer asks for another new task. It asks the user to
+  quit the app completely and reopen it, then start one new Work task, and it
+  never asks for a new task twice.
+- After an install, update or sign-in run from the shell, ask for a full app
+  restart before the new task: the open app does not see it. Remove the claim
+  that a new task loads newly installed or signed-in tools.
+- Check the saved sign-in with `codex mcp list --json` before asking for a
+  restart, so a missing sign-in is fixed first.
+- The setup guide now ends with quitting and reopening the app before the first
+  Work task. Validate that order and reject the old "restart only as a
+  fallback" wording.
+
 ## 0.5.0 - 2026-11-06
 
 - Work the same way on every website that uses Fidelity Studio's shared Pages

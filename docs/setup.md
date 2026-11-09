@@ -90,7 +90,10 @@ there, once.
 Check the installed plugin version. Then tell the person, in their language:
 
 1. Setup is done.
-2. Start a new Work task (a full restart of the app is only needed if the
-   tools are still missing there).
-3. Type `@`, choose **Fidelity Studio Content Assistant** and ask it to check
-   the connection without changing anything.
+2. Quit the app completely and reopen it (Mac: ⌘Q; Windows: also quit it in
+   the system tray). The open app does not see the new sign-in until then.
+3. Then start a new Work task, type `@`, choose **Fidelity Studio Content
+   Assistant** and ask it to check the connection without changing anything.
+
+In German, for example: «Beende die App ganz (⌘Q) und öffne sie wieder. Starte
+dann eine neue Work-Aufgabe.»

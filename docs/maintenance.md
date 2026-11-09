@@ -30,14 +30,15 @@ codex plugin marketplace upgrade fidelity-studio-content-assistant
 codex plugin list --marketplace fidelity-studio-content-assistant
 ```
 
-6. Start a new ChatGPT desktop task and verify Fidelity Studio first. Verify
-   Resend only when the authenticated project context declares newsletter
+6. Quit the ChatGPT desktop app completely, reopen it, start a new Work task
+   and verify Fidelity Studio first. Verify Resend only when the authenticated project context declares newsletter
    provider Resend.
 
 The Git marketplace makes Fidelity Studio the update publisher. Clients do not
 install from a copied folder, and Fidelity Studio does not need to send a new
 package for every release. Git pushes do not silently replace every installed
-cache; the client still needs to refresh the marketplace and start a new task.
+cache; the client still needs to refresh the marketplace, quit the app
+completely, reopen it and start a new task.
 
 If the installed version remains stale after the marketplace refresh, reinstall
 the cached copy:
@@ -67,10 +68,10 @@ Each client needs two baseline pieces and one context-dependent integration:
 3. Only when `get_project_context` explicitly enables newsletters with provider
    Resend: membership in the correct Resend team or account.
 
-Authenticate Fidelity Studio first, start a fresh Work task, and load the
-project context before deciding whether to request Resend authentication. This
-keeps the public package client-agnostic while avoiding unnecessary provider
-access for website-only clients.
+Authenticate Fidelity Studio first, quit the app completely and reopen it,
+start a new Work task, and load the project context before deciding whether to
+request Resend authentication. This keeps the public package client-agnostic
+while avoiding unnecessary provider access for website-only clients.
 
 Fidelity Studio access is project-scoped. Resend's hosted MCP uses the
 provider-selected permissions of the connected account and may request broad
@@ -94,11 +95,15 @@ For every release:
   Node/npm or changes PowerShell execution policy
 - verify the Fidelity Studio icon in the Plugins directory, Installed row, and
   `@` composer menu in light and dark appearance
-- authenticate Fidelity Studio first and start a fresh Work task
+- authenticate Fidelity Studio first, quit and reopen the app, and start a new
+  Work task
+- when the tools are missing in a task that is already new, verify that the
+  assistant asks for a full app restart and never for a second new task
 - verify project context before deciding whether Resend applies
 - verify an advertised collection with `list_entries`, or use the advertised `list_blog_posts` and `list_team_members` inventories for blog/team projects
-- for a Resend-enabled test project, authenticate Resend separately, start
-  another fresh Work task, and verify newsletter reads and draft-only behavior
+- for a Resend-enabled test project, authenticate Resend separately, quit
+  and reopen the app, start a new Work task, and verify newsletter reads and
+  draft-only behavior
 - for a website-only test project, verify that setup does not request Resend
 - verify preview status against a known commit and harmless page paths
 - verify that a preview-only request never calls `deploy_project_to_production`

@@ -26,7 +26,7 @@ const marketplace = json(marketplacePath);
 const guide = read(guidePath);
 const windowsSetup = read(windowsSetupPath);
 const skill = read(skillPath);
-const expectedVersion = "0.5.0";
+const expectedVersion = "0.5.1";
 
 if (plugin.version !== expectedVersion) {
   fail(`Expected plugin version ${expectedVersion}, received ${plugin.version}.`);
@@ -77,8 +77,43 @@ if (/\b(fuer|ueber|oeffnen|pruefen|zurueck|vollstaendig)\b/i.test(guide)) {
 if (/\bmarkus[^\s@]*@[^\s]+/i.test(guide)) {
   fail("The public guide must not contain a maintainer email address.");
 }
-if (!guide.includes("neue Work-Aufgabe")) {
-  fail("The guide must make a new Work task the normal tool-mounting step.");
+// A new Work task alone does not load an install or sign-in made from the
+// shell (Mac mini test, 9 Nov 2026). Setup ends with a full app restart, and
+// the assistant never asks for a second new task.
+const finishAt = setup.indexOf("## 4. Finish");
+const finish = finishAt < 0 ? "" : setup.slice(finishAt);
+const quitAt = finish.search(/quit the app completely and reopen it/i);
+const newTaskAt = finish.indexOf("new Work task");
+if (quitAt < 0 || newTaskAt < 0 || quitAt > newTaskAt) {
+  fail("docs/setup.md step 4 must tell the client to quit the app completely and reopen it before the new Work task.");
+}
+if (!guide.includes("Beende die App ganz (⌘Q) und öffne sie wieder.") || !guide.includes("neue Work-Aufgabe")) {
+  fail("The guide must restart the app completely before the new Work task.");
+}
+if (!/Never ask for a\s+new task twice\./.test(skill) || !skill.includes("quit the app completely")) {
+  fail("The skill must ask for a full app restart instead of a second new task.");
+}
+const disprovedRestartRule = [
+  /mounted when a\s+(new\s+)?task\s+is\s+(created|started)/i,
+  /restart[^.]*only (needed|a fallback)/i,
+  /only a fallback/i,
+  /normalerweise nicht beenden/i,
+  /Neustart der App ist nur nötig/i,
+  /reicht nach einer\s+Installation oder Anmeldung normalerweise/i,
+];
+for (const [name, text] of [
+  ["skill", skill],
+  ["README.md", read("README.md")],
+  ["AGENTS.md", read("AGENTS.md")],
+  ["German guide", guide],
+  ["docs/setup.md", setup],
+  ["docs/maintenance.md", read("docs/maintenance.md")],
+  ["Windows bootstrap", windowsSetup],
+]) {
+  const match = disprovedRestartRule.find((pattern) => pattern.test(text));
+  if (match) {
+    fail(`${name} must not say a new task alone loads new tools or that a restart is only a fallback (matched ${match}).`);
+  }
 }
 if (
   !guide.includes("get_project_context")
