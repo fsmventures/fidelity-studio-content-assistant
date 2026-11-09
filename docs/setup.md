@@ -97,5 +97,5 @@ Check the installed plugin version. Then tell the person, in their language:
    it and start one new Work task.
 
 In German, for example: «Starte jetzt eine neue Work-Aufgabe. Fehlen die
-Fidelity-Studio-Werkzeuge dort noch, beende die App ganz (⌘Q), öffne sie wieder
+Fidelity-Studio-Tools dort noch, beende die App ganz (⌘Q), öffne sie wieder
 und starte nochmals eine neue Work-Aufgabe.»

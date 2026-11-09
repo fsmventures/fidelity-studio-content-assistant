@@ -13,7 +13,7 @@ Set-StrictMode -Version Latest
 $MarketplaceName = "fidelity-studio-content-assistant"
 $MarketplaceSource = "fsmventures/fidelity-studio-content-assistant"
 $PluginSelector = "fidelity-studio-content-assistant@fidelity-studio-content-assistant"
-$ExpectedPluginVersion = "0.5.1"
+$ExpectedPluginVersion = "0.5.2"
 $StandaloneCodex = Join-Path $env:LOCALAPPDATA "Programs\OpenAI\Codex\bin\codex.exe"
 
 function Write-Step {
