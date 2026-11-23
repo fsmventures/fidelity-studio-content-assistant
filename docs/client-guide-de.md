@@ -31,12 +31,12 @@ dabei genau die E-Mail-Adresse, die für dich freigeschaltet wurde. Ob Resend f�
 dieses Projekt benötigt wird, entscheidet erst der authentifizierte
 Projektkontext im nächsten Schritt.
 
-Die Fidelity-Anmeldung zeigt dir verständlich alle angeforderten Rechte, zum
+Die Fidelity-Studio-Anmeldung zeigt dir verständlich alle angeforderten Rechte, zum
 Beispiel für Lesen, Entwürfe, Bilder und Änderungen. Live veröffentlicht der
 Assistent trotzdem nur, wenn du ihn im Chat ausdrücklich darum bittest.
 
 Klicke auf **Zugriff erlauben** nur einmal. Danach kehrt der Browser normalerweise
-automatisch zu ChatGPT/Codex zurück. Falls das nicht passiert, klicke auf der
+automatisch zu ChatGPT zurück. Falls das nicht passiert, klicke auf der
 Bestätigungsseite einmal auf **Zurück zu ChatGPT/Codex**. Starte den Login nicht
 erneut.
 
@@ -44,7 +44,7 @@ erneut.
 
 1. Starte nach der Einrichtung eine **neue Work-Aufgabe**. Wähle auch dort
    **On your computer**.
-2. Fehlen die Fidelity-Studio-Werkzeuge dort noch, beende die App ganz,
+2. Fehlen die Fidelity-Studio-Tools dort noch, beende die App ganz,
    öffne sie wieder und starte nochmals eine neue Work-Aufgabe. Ganz beenden
    heisst auf dem Mac ⌘Q. Unter Windows schliesst du das ChatGPT-Fenster;
    siehst du unten rechts in der Taskleiste ein ChatGPT-Symbol, klickst du es
@@ -56,9 +56,9 @@ erneut.
 Bitte prüfe meine Verbindungen, ohne etwas zu verändern:
 
 1. Lade meinen Fidelity-Studio-Projektkontext.
-2. Verwende die Lesewerkzeuge aus dem Projektkontext. Wenn `list_entries` angeboten wird, rufe es für die dort aufgeführte Sammlung `projects` oder eine andere dort aufgeführte Sammlung auf. Andernfalls prüfe Blogbeiträge mit `list_blog_posts` und Teammitglieder mit `list_team_members`, sofern die Werkzeuge angeboten werden. Nenne mir nur, welche Abfragen erfolgreich waren.
+2. Verwende die Lese-Tools aus dem Projektkontext. Wenn `list_entries` angeboten wird, rufe es für die dort aufgeführte Sammlung `projects` oder eine andere dort aufgeführte Sammlung auf. Andernfalls prüfe Blogbeiträge mit `list_blog_posts` und Teammitglieder mit `list_team_members`, sofern die Tools angeboten werden. Nenne mir nur, welche Abfragen erfolgreich waren.
 3. Prüfe im geladenen Projektkontext, ob Newsletter aktiviert sind und als Anbieter ausdrücklich Resend genannt wird.
-4. Nur falls beides zutrifft: Prüfe mit reinen Resend-Leseabfragen das verbundene Team sowie vorhandene Templates, Broadcasts und Zielgruppen. Falls die Resend-Werkzeuge fehlen oder noch nicht authentifiziert sind, starte genau einmal codex mcp login resend, warte auf den automatisch geöffneten Browser und sage mir danach, dass ich diese Prüfung in einer neuen Work-Aufgabe wiederholen soll. Fehlen die Werkzeuge dort noch, soll ich die App ganz beenden (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), wieder öffnen und nochmals eine neue Work-Aufgabe starten. Öffne kein zweites Browserfenster und starte keinen zweiten Login.
+4. Nur falls beides zutrifft: Prüfe mit reinen Resend-Leseabfragen das verbundene Team sowie vorhandene Templates, Broadcasts und Zielgruppen. Falls die Resend-Tools fehlen oder noch nicht authentifiziert sind, starte genau einmal die Resend-Anmeldung, warte auf den automatisch geöffneten Browser und sage mir danach, dass ich diese Prüfung in einer neuen Work-Aufgabe wiederholen soll. Fehlen die Tools dort noch, soll ich die App ganz beenden (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), wieder öffnen und nochmals eine neue Work-Aufgabe starten. Öffne kein zweites Browserfenster und starte keinen zweiten Login.
 5. Falls der Projektkontext Resend nicht ausdrücklich verlangt, starte keine Resend-Anmeldung und melde «Website-Funktionen einsatzbereit; Resend für dieses Projekt nicht erforderlich».
 6. Berichte Fidelity Studio und – nur falls erforderlich – Resend getrennt. Verlasse dich nicht allein auf auth_status, sondern auf die echten Leseabfragen.
 
@@ -68,7 +68,7 @@ Zeige keine Tokens oder Zugangsdaten an.
 Damit wird nicht nur geprüft, ob eine Anmeldung gespeichert ist, sondern ob die
 Funktionen wirklich erreichbar sind. Falls Resend benötigt und neu verbunden
 wurde, starte danach eine neue Work-Aufgabe und führe denselben Prüftext
-nochmals aus. Fehlen die Werkzeuge dort noch, beende die App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne
+nochmals aus. Fehlen die Tools dort noch, beende die App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne
 sie wieder und starte nochmals eine neue Work-Aufgabe. Bei Resend wählst du das Kunden-Team, das dir Fidelity
 Studio genannt hat. Resend kann dabei die vom Anbieter festgelegten, breiten
 Kontorechte verlangen; verwende keine eigenen Scopes. Wenn du die Anmeldung
@@ -161,13 +161,9 @@ darum bittest. Danach gibt er dir die geprüften Live-Links.
 ```text
 Bitte aktualisiere den Fidelity Studio Content Assistant auf die neueste Version. Führe die Aktualisierung selbst aus, bearbeite keine Projektdateien und prüfe danach die installierte Version.
 
-Wenn ich von einer Version vor 0.4.0 aktualisiere, starte danach genau einmal:
+Wenn ich von einer Version vor 0.4.0 aktualisiere, starte danach genau einmal die Anmeldung bei Fidelity Studio. Warte auf das automatisch geöffnete Browserfenster und öffne kein zweites. Diese einmalige neue Anmeldung wird benötigt, damit der Assistent Änderungen auf meinen Wunsch im Chat live veröffentlichen kann.
 
-codex mcp login fidelity-studio-content-assistant
-
-Warte auf das automatisch geöffnete Browserfenster und öffne kein zweites. Diese einmalige neue Anmeldung wird benötigt, damit der Assistent Änderungen auf meinen Wunsch im Chat live veröffentlichen kann.
-
-Sage mir anschliessend, dass ich eine neue Work-Aufgabe mit dem Plugin starten und den Verbindungstest ausführen soll. Fehlen die Werkzeuge dort noch, beende ich die App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals eine neue Work-Aufgabe.
+Sage mir anschliessend, dass ich eine neue Work-Aufgabe mit dem Plugin starten und den Verbindungstest ausführen soll. Fehlen die Tools dort noch, beende ich die App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals eine neue Work-Aufgabe.
 ```
 
 Projektregeln und Schreibvorgaben werden nach der Anmeldung live von Fidelity
@@ -175,23 +171,23 @@ Studio geladen. Änderungen an Farben, Sprachen, Website-Adressen oder Abläufen
 benötigen deshalb normalerweise keine Plugin-Aktualisierung.
 
 Starte nach dem Update eine neue Work-Aufgabe und verwende nochmals den
-Prüftext aus **Verbindung prüfen**. Fehlen die Werkzeuge dort noch, beende die
+Prüftext aus **Verbindung prüfen**. Fehlen die Tools dort noch, beende die
 App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals eine neue Work-Aufgabe. Prüfe im Projektkontext zusätzlich, ob die
 Produktionsveröffentlichung verfügbar ist. Die Versionsnummer allein beweist
 noch nicht, dass beide Verbindungen und die neue Berechtigung funktionieren.
 
 ## Wenn etwas nicht funktioniert
 
-Fehlen die Werkzeuge in einer bereits geöffneten Aufgabe, starte eine **neue
+Fehlen die Tools in einer bereits geöffneten Aufgabe, starte eine **neue
 Work-Aufgabe** und wähle das Plugin erneut. Fehlen sie auch dort, beende die
 App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals eine neue Work-Aufgabe.
 Starte nicht mehrere neue Aufgaben nacheinander.
 
-Falls die Werkzeuge auch nach dem Neustart fehlen, füge in dieser Aufgabe
+Falls die Tools auch nach dem Neustart fehlen, füge in dieser Aufgabe
 diesen Text ein:
 
 ```text
-Bitte prüfe meine Installation des Fidelity Studio Content Assistant und zuerst die Verbindung zu Fidelity Studio. Behebe alles, was du selbst beheben kannst. Unter Windows verwende das offizielle eigenständige Codex-Installationsskript, falls WindowsApps codex.exe blockiert, und prüfe Git vor dem repository-basierten Marketplace. Installiere Node.js oder npm nicht nur für Codex und ändere weder PowerShell-Ausführungsrichtlinie noch Sandbox-Modus als vermeintliche Reparatur für «Zugriff verweigert». Starte jeden Login höchstens einmal und führe mich bei Anmeldungen oder Genehmigungen Schritt für Schritt durch den Vorgang. Öffne keine doppelten Browserfenster. Ich habe die App bereits ganz beendet und wieder geöffnet. Bitte mich nur dann nochmals darum, wenn du danach etwas installiert oder mich angemeldet hast. Prüfe Fidelity anschliessend in einer neuen Work-Aufgabe mit echten, ungefährlichen Leseabfragen. Lade zuerst get_project_context und verbinde Resend nur dann, wenn der Projektkontext Newsletter mit Anbieter Resend ausdrücklich verlangt.
+Bitte prüfe meine Installation des Fidelity Studio Content Assistant und zuerst die Verbindung zu Fidelity Studio. Behebe alles, was du selbst beheben kannst. Unter Windows verwende das offizielle eigenständige Installationsskript aus der Einrichtung, falls die vorinstallierte Version aus WindowsApps blockiert ist, und prüfe Git vor dem repository-basierten Marketplace. Installiere dafür weder Node.js noch npm und ändere weder PowerShell-Ausführungsrichtlinie noch Sandbox-Modus als vermeintliche Reparatur für «Zugriff verweigert». Starte jeden Login höchstens einmal und führe mich bei Anmeldungen oder Genehmigungen Schritt für Schritt durch den Vorgang. Öffne keine doppelten Browserfenster. Ich habe die App bereits ganz beendet und wieder geöffnet. Bitte mich nur dann nochmals darum, wenn du danach etwas installiert oder mich angemeldet hast. Prüfe Fidelity Studio anschliessend in einer neuen Work-Aufgabe mit echten, ungefährlichen Leseabfragen. Lade zuerst get_project_context und verbinde Resend nur dann, wenn der Projektkontext Newsletter mit Anbieter Resend ausdrücklich verlangt.
 ```
 
 Falls der Zugriff verweigert wird, prüfe, ob du bei Fidelity Studio die

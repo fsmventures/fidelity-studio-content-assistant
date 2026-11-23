@@ -26,7 +26,7 @@ const marketplace = json(marketplacePath);
 const guide = read(guidePath);
 const windowsSetup = read(windowsSetupPath);
 const skill = read(skillPath);
-const expectedVersion = "0.5.1";
+const expectedVersion = "0.5.2";
 
 if (plugin.version !== expectedVersion) {
   fail(`Expected plugin version ${expectedVersion}, received ${plugin.version}.`);
@@ -139,7 +139,7 @@ if (newTaskAt < 0 || fallbackAt < 0 || newTaskAt > fallbackAt) {
 }
 const guideNewTaskAt = guide.indexOf("Starte nach der Einrichtung eine **neue Work-Aufgabe**.");
 const guideFallbackAt = guide.search(
-  /Fehlen die Fidelity-Studio-Werkzeuge dort noch, beende die App ganz,\s+öffne sie wieder und starte nochmals eine neue Work-Aufgabe\./,
+  /Fehlen die Fidelity-Studio-Tools dort noch, beende die App ganz,\s+öffne sie wieder und starte nochmals eine neue Work-Aufgabe\./,
 );
 if (guideNewTaskAt < 0 || guideFallbackAt < 0 || guideNewTaskAt > guideFallbackAt) {
   fail("The guide must start a new Work task first and restart the app only if the tools are still missing there.");
@@ -249,6 +249,33 @@ for (const [name, text] of [
 }
 if (skill.includes("deploy:production")) {
   fail("The skill must not name a deploy:production scope; the Fidelity Studio server defines the publishing capability.");
+}
+
+for (const [name, text] of [
+  ["docs/client-guide-de.md", guide],
+  ["docs/setup.md", setup],
+  ["docs/maintenance.md", read("docs/maintenance.md")],
+  ["README.md", read("README.md")],
+]) {
+  if (/werkzeug/i.test(text)) {
+    fail(`${name} must say «Tools» in German, never «Werkzeuge».`);
+  }
+}
+// Clients know ChatGPT and its Work mode, never Codex (Markus, 23 Nov 2026).
+// The commands stay in docs/setup.md and README.md for the agent.
+const guideCodexAllowlist = [
+  // Real button label on the sign-in page. Remove this entry once the
+  // sign-in page says «Zurück zu ChatGPT».
+  "**Zurück zu ChatGPT/Codex**",
+];
+let guideWithoutAllowed = guide;
+for (const allowed of guideCodexAllowlist) guideWithoutAllowed = guideWithoutAllowed.split(allowed).join("");
+const guideCodex = guideWithoutAllowed.match(/.{0,40}codex.{0,40}/i);
+if (guideCodex) {
+  fail(`docs/client-guide-de.md must not mention Codex to clients: «${guideCodex[0].trim()}».`);
+}
+if (!skill.includes("Never write «Werkzeuge»")) {
+  fail("The skill must tell the assistant to say «Tools» in German, never «Werkzeuge».");
 }
 
 console.log("Plugin validation passed.");

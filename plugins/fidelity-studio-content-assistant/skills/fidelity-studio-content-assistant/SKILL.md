@@ -9,6 +9,14 @@ Use this skill whenever the user mentions the Fidelity Studio Content Assistant
 plugin or asks to draft, inspect, test, send, translate, preview, publish, or
 update website projects, pages, blog posts, team profiles, newsletters, or their media.
 
+## German Wording
+
+In German, call the MCP tools «Tools»: «die Fidelity-Studio-Tools», «die
+Resend-Tools», «Lese-Tools». Never write «Werkzeuge», also not when you
+translate English text that says "tools". Fidelity Studio uses «Tools» in every
+German text (Markus, 9 Nov 2026), so clients see the same word in the guide,
+the setup and the chat.
+
 ## First Action: Authenticate And Load Context
 
 Before answering client-specific content questions or using any other source,
