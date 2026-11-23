@@ -24,6 +24,9 @@ only the stop message under «First», in their language, and end the task.
 - When an approval prompt or a browser sign-in appears, pause, say in one
   sentence what it allows, and tell them exactly what to click.
 - Start each sign-in at most once. Do not open a second browser window.
+- ChatGPT's web tool cannot open `mcp.fidelitystudio.ch`. Every later step runs
+  in the shell; if you need this guide again, open it at
+  https://github.com/fsmventures/fidelity-studio-content-assistant/blob/main/docs/setup.md.
 - Everything you tell the person names the ChatGPT desktop app, **Work** and
   **On your computer**. Never mention «Codex», «local folder» or «lokaler
   Ordner» to them: clients do not use Codex and never choose a folder. Your own
@@ -95,7 +98,7 @@ task. In German:
 >    Deutsch «Auf deinem Computer»), nicht **In the cloud**.
 > 4. Füge denselben Satz nochmals ein und sende ihn ab: Richte den Fidelity
 >    Studio Content Assistant auf meinem Computer ein und folge dazu der
->    Anleitung https://mcp.fidelitystudio.ch/setup.md
+>    Anleitung https://github.com/fsmventures/fidelity-studio-content-assistant/blob/main/docs/setup.md
 
 ## 1. Install or update the plugin
 

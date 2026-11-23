@@ -53,9 +53,17 @@ for (const key of ["composerIcon", "logo", "logoDark"]) {
 
 const setupPath = "docs/setup.md";
 const setup = read(setupPath);
-const setupUrl = "https://mcp.fidelitystudio.ch/setup.md";
-if (!guide.includes(setupUrl) || !read("README.md").includes(setupUrl)) {
-  fail(`The guide and README must give clients the short setup sentence with ${setupUrl}.`);
+// 23 Nov 2026: ChatGPT's web tool answers «not accessible via this tool» for
+// every mcp.fidelitystudio.ch URL but opens the guide on GitHub, so the client
+// sentence links GitHub. mcp.fidelitystudio.ch/setup.md keeps serving the same
+// file for older links.
+const setupUrl = "https://github.com/fsmventures/fidelity-studio-content-assistant/blob/main/docs/setup.md";
+const setupSentence = `Richte den Fidelity Studio Content Assistant auf meinem Computer ein und folge dazu der Anleitung ${setupUrl}`;
+if (!guide.includes(setupSentence) || !read("README.md").includes(setupSentence)) {
+  fail(`The guide and README must give clients the setup sentence «${setupSentence}».`);
+}
+if (/(lies|Anleitung) https:\/\/mcp\.fidelitystudio\.ch\/setup\.md/.test(guide + read("README.md") + setup)) {
+  fail("Client sentences must link the guide on GitHub, not mcp.fidelitystudio.ch (ChatGPT's web tool cannot open it).");
 }
 if (setup.includes("ß")) fail("docs/setup.md must not contain ß.");
 for (const phrase of [
@@ -86,7 +94,7 @@ for (const phrase of [
   "On your computer",
   "In the cloud",
   "nicht ChatGPT im Browser",
-  "https://mcp.fidelitystudio.ch/setup.md",
+  setupUrl,
 ]) {
   if (!localCheck.includes(phrase)) {
     fail(`docs/setup.md must check where the task runs before step 1 and include "${phrase}".`);
