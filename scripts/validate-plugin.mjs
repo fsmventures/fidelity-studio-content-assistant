@@ -74,7 +74,8 @@ for (const phrase of [
   "codex mcp list --json",
   "codex mcp login fidelity-studio-content-assistant",
   "get_project_context",
-  "new Work task",
+  "https://mcp.fidelitystudio.ch/start",
+  "https://mcp.fidelitystudio.ch/chat",
 ]) {
   if (!setup.includes(phrase)) fail(`docs/setup.md is missing "${phrase}".`);
 }
@@ -91,23 +92,32 @@ for (const phrase of [
   "approval to run it outside the sandbox",
   "Do not point `CODEX_HOME` at another folder",
   "do not install into a temporary folder",
-  "On your computer",
-  "In the cloud",
-  "nicht ChatGPT im Browser",
-  setupUrl,
+  "https://mcp.fidelitystudio.ch/start",
+  "In ChatGPT öffnen",
+  "chatgpt.com/download",
+  "ChatGPT im Browser genügt nicht",
 ]) {
   if (!localCheck.includes(phrase)) {
     fail(`docs/setup.md must check where the task runs before step 1 and include "${phrase}".`);
   }
 }
-if (!/\*\*On your computer\*\*/.test(guide) || !guide.includes("nicht ChatGPT im Browser")) {
-  fail("The German guide must tell clients to start the setup task On your computer in the desktop app.");
+// 23 Nov 2026: since the 21 Nov desktop app, a Work chat under the «ChatGPT»
+// menu runs in the cloud; local chats sit under the second menu entry. The
+// start link opens one with the sentence in the input; the fallback shows that
+// menu as a picture so client text never names it.
+if (!guide.includes("https://mcp.fidelitystudio.ch/start") || !guide.includes("https://mcp.fidelitystudio.ch/chat")
+  || !guide.includes("](images/chatgpt-menu.png)") || !guide.includes("nicht\nChatGPT im Browser")) {
+  fail("The German guide must start the setup with the start link, show the menu fallback picture and name the chat link.");
+}
+if (!existsSync(new URL("../docs/images/chatgpt-menu.png", import.meta.url))) fail("docs/images/chatgpt-menu.png is missing.");
+if (/On your computer|In the cloud|Work-Aufgabe/.test(guide) || /On your computer\*\*|new Work task/.test(setup)) {
+  fail("Client steps must use the start and chat links, not «On your computer» or Work tasks (gone since the 21 Nov 2026 app).");
 }
 // 23 Nov 2026: ChatGPT in the browser read "ChatGPT Work (or Codex)" and told
 // a client to open Codex with a local folder. Clients only use the ChatGPT
 // desktop app, Work and On your computer; nothing shown to them names Codex or
 // a local folder. The agent's own commands may still name Codex.
-if (!/Never mention «Codex», «local folder» or «lokaler\s+Ordner» to them/.test(setup)) {
+if (!/Never mention «Codex», «On\s+your computer», «local folder» or «lokaler\s+Ordner» to them/.test(setup)) {
   fail("docs/setup.md must have the ground rule that client messages never mention Codex or a local folder.");
 }
 if (/\(or Codex\)/i.test(setup)) fail("docs/setup.md must not offer Codex as the place to run the setup.");
@@ -147,17 +157,17 @@ if (/\bmarkus[^\s@]*@[^\s]+/i.test(guide)) {
 // new task at most once (the old skill looped in a Mac mini test).
 const finishAt = setup.indexOf("## 4. Finish");
 const finish = finishAt < 0 ? "" : setup.slice(finishAt);
-const newTaskAt = finish.indexOf("new Work task");
-const fallbackAt = finish.search(/still missing in that new task, quit the\s+app completely/i);
+const newTaskAt = finish.indexOf("https://mcp.fidelitystudio.ch/chat");
+const fallbackAt = finish.search(/still missing in that new chat, quit the\s+app completely/i);
 if (newTaskAt < 0 || fallbackAt < 0 || newTaskAt > fallbackAt) {
-  fail("docs/setup.md step 4 must start a new Work task first and quit and reopen the app only if the tools are still missing there.");
+  fail("docs/setup.md step 4 must start a new chat with the chat link first and quit and reopen the app only if the tools are still missing there.");
 }
-const guideNewTaskAt = guide.indexOf("Starte nach der Einrichtung eine **neue Work-Aufgabe**.");
+const guideNewTaskAt = guide.indexOf("Starte nach der Einrichtung einen **neuen Chat** über diesen Link.");
 const guideFallbackAt = guide.search(
-  /Fehlen die Fidelity-Studio-Tools dort noch, beende die App ganz,\s+öffne sie wieder und starte nochmals eine neue Work-Aufgabe\./,
+  /Fehlen die Fidelity-Studio-Tools dort noch, beende die App ganz,\s+öffne sie wieder und starte nochmals einen neuen Chat\./,
 );
 if (guideNewTaskAt < 0 || guideFallbackAt < 0 || guideNewTaskAt > guideFallbackAt) {
-  fail("The guide must start a new Work task first and restart the app only if the tools are still missing there.");
+  fail("The guide must start a new chat first and restart the app only if the tools are still missing there.");
 }
 if (
   !/Never ask for a\s+new task twice\./.test(skill)

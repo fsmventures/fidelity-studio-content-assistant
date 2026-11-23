@@ -20,20 +20,29 @@ server returns the authorized project and its current guidance.
 ## Install
 
 Clients should follow the
-[German client quick start](docs/client-guide-de.md): open ChatGPT Work in the
-desktop app, start a new task **On your computer** (not **In the cloud**, the
-app's default) and send one sentence:
+[German client quick start](docs/client-guide-de.md): open
+https://mcp.fidelitystudio.ch/start and click **In ChatGPT öffnen**. That
+opens a new chat in the ChatGPT desktop app that runs on their own computer,
+with this sentence already in the input field; they only send it:
 
 ```text
 Richte den Fidelity Studio Content Assistant auf meinem Computer ein und folge dazu der Anleitung https://github.com/fsmventures/fidelity-studio-content-assistant/blob/main/docs/setup.md
 ```
+
+Why a start link: since the 21 Nov 2026 desktop app, a Work chat under the
+app's «ChatGPT» menu runs in OpenAI's cloud and cannot install anything on the
+client's computer; local chats live under the second menu entry. The start
+page (served by `fs-content-assistant`, `lib/content-assistant/start-page.ts`)
+uses the app's own link `codex://threads/new?mode=codex&prompt=…`, which only
+fills the input, so clients never look for that menu.
+https://mcp.fidelitystudio.ch/chat opens an empty local chat for daily work.
 
 That link opens [`docs/setup.md`](docs/setup.md), the single agent-facing
 setup guide. It points at GitHub because ChatGPT's web tool refuses
 `mcp.fidelitystudio.ch` («not accessible via this tool», 23 Nov 2026); older
 links to `https://mcp.fidelitystudio.ch/setup.md` still serve the same file. It first checks that the task runs on the
 client's computer and can write the Codex settings there; a cloud or browser
-task stops at once with short steps to start a local task. Work installs the
+task stops at once and sends the client to the start link. The chat installs the
 plugin, signs the client in once and verifies the setup; the client approves
 the clearly described steps. Clients do not need to open Terminal, have a GitHub account, or understand the
 repository commands.
