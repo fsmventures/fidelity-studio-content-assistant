@@ -19,6 +19,9 @@
 - The assistant never starts a nested Codex session (`codex exec`) to work
   around a missing sign-in; it asks for one new chat instead.
 - `docs/setup.md` names the consent page's real button, «Zugriff erlauben».
+- The skill says what the person does («they only need to sign in in the
+  browser window that opens»), never what to keep from them; the validator
+  rejects «never mention» wording in the skill.
 
 ## 0.5.3 - 2026-11-23
 

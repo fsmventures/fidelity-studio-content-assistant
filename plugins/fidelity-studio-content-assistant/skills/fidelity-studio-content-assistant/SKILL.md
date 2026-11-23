@@ -95,8 +95,9 @@ step below that fits. Never ask for a new chat twice.
    for example: «Die Verbindung zur Website ist noch nicht da. Bitte melde dich
    bei Fidelity Studio, damit wir die Installation prüfen.» Share what
    `codex plugin list --marketplace fidelity-studio-content-assistant --json`
-   and `codex mcp list --json` show for this plugin, without tokens. No
-   commands and no app-internal names in what you say to the person.
+   and `codex mcp list --json` show for this plugin, without tokens. Tell
+   the person in plain everyday words what they can do: get in touch with
+   Fidelity Studio.
 
 Run this exact command once from the shell to start the sign-in, with network
 access outside the sandbox: request approval for it, the person only approves.
@@ -105,10 +106,10 @@ access outside the sandbox: request approval for it, the person only approves.
 codex mcp login fidelity-studio-content-assistant
 ```
 
-Before it runs, tell the person only this, in their language. In German:
+Before it runs, tell the person this, in their language. In German:
 «Im Browser öffnet sich die Anmeldung, wähle deine Websites und klicke
-«Zugriff erlauben». Öffne danach einmal einen neuen Chat.» Never name the
-command, a terminal or the app you run in to them.
+«Zugriff erlauben». Öffne danach einmal einen neuen Chat.» They only need to
+sign in in the browser window that opens; do not ask them to type anything.
 
 The login opens the authorization page itself. Do not run `open`, launch a
 second browser window, repeat the login command, or start another MCP login

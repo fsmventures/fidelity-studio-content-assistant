@@ -176,6 +176,13 @@ if (
 // 23 Nov 2026, the 13:10 journey: the open chat never got its tools, and the
 // model improvised a nested `codex -a never exec …` that ran website writes
 // without per-tool approval. The skill forbids it and asks for a new chat.
+// 23 Nov 2026, OpenAI app guidelines 2.1 and 3.3b: say what the person does,
+// never what to keep from them.
+const concealing = skill.match(/never (mention|name)\b[^.]*|do not mention[^.]*|don't mention[^.]*|no app-internal names/i);
+if (concealing) fail(`The skill must say what the person does, not what to keep from them: «${concealing[0]}».`);
+if (!/They only need to\s+sign in in the browser window that opens; do not ask them to type anything\./.test(skill)) {
+  fail("The skill's sign-in step must say the person only signs in in the browser window that opens.");
+}
 if (!/Never start a nested Codex session/.test(skill) || !skill.includes("`codex exec`")) {
   fail("The skill must forbid a nested Codex session (`codex exec`) as a workaround for a missing sign-in.");
 }
