@@ -13,17 +13,23 @@ Terminal noch GitHub öffnen.
 
 ## 1. Den Assistenten einrichten
 
-1. Öffne die ChatGPT Desktop-App, nicht ChatGPT im Browser.
-2. Wähle **ChatGPT** und wechsle zu **Work**.
-3. Starte eine neue Aufgabe.
-4. Wähle beim Eingabefeld, wo die Aufgabe läuft: **On your computer** (auf
-   Deutsch «Auf deinem Computer»), nicht **In the cloud**. Nur so kann ChatGPT
-   den Assistenten auf deinem Computer einrichten.
-5. Füge diesen Satz ein und sende ihn ab:
+1. Öffne auf deinem Computer diesen Link: https://mcp.fidelitystudio.ch/start
+2. Klicke auf **In ChatGPT öffnen**. Fragt der Browser, ob er ChatGPT öffnen
+   darf, erlaube es.
+3. In der ChatGPT-Desktop-App öffnet sich ein neuer Chat. Dieser Satz steht
+   schon im Eingabefeld; sende ihn ab:
 
 ```text
-Richte den Fidelity Studio Content Assistant für mich ein: lies https://mcp.fidelitystudio.ch/setup.md
+Richte den Fidelity Studio Content Assistant auf meinem Computer ein und folge dazu der Anleitung https://mcp.fidelitystudio.ch/setup.md
 ```
+
+Öffnet sich kein neuer Chat, öffne die ChatGPT-Desktop-App selbst, nicht
+ChatGPT im Browser. Klicke oben links auf das Menü, in dem «ChatGPT» steht, und
+wähle den unteren Eintrag, wie hier mit dem Häkchen:
+
+![Das Menü oben links in der ChatGPT-App, der untere Eintrag ist ausgewählt](images/chatgpt-menu.png)
+
+Füge dann den Satz oben ins Eingabefeld ein und sende ihn ab.
 
 ChatGPT erledigt die technische Einrichtung. Bestätige nur die beschriebenen
 Installationsschritte und führe die Fidelity-Studio-Anmeldung durch. Verwende
@@ -42,10 +48,13 @@ erneut.
 
 ## 2. Verbindung prüfen
 
-1. Starte nach der Einrichtung eine **neue Work-Aufgabe**. Wähle auch dort
-   **On your computer**.
+Einen neuen Chat mit dem Assistenten startest du immer mit diesem Link:
+https://mcp.fidelitystudio.ch/chat (Knopf **Neuen Chat öffnen**). Setz am besten
+ein Lesezeichen.
+
+1. Starte nach der Einrichtung einen **neuen Chat** über diesen Link.
 2. Fehlen die Fidelity-Studio-Tools dort noch, beende die App ganz,
-   öffne sie wieder und starte nochmals eine neue Work-Aufgabe. Ganz beenden
+   öffne sie wieder und starte nochmals einen neuen Chat. Ganz beenden
    heisst auf dem Mac ⌘Q. Unter Windows schliesst du das ChatGPT-Fenster;
    siehst du unten rechts in der Taskleiste ein ChatGPT-Symbol, klickst du es
    mit der rechten Maustaste an und wählst «Beenden».
@@ -58,7 +67,7 @@ Bitte prüfe meine Verbindungen, ohne etwas zu verändern:
 1. Lade meinen Fidelity-Studio-Projektkontext.
 2. Verwende die Lese-Tools aus dem Projektkontext. Wenn `list_entries` angeboten wird, rufe es für die dort aufgeführte Sammlung `projects` oder eine andere dort aufgeführte Sammlung auf. Andernfalls prüfe Blogbeiträge mit `list_blog_posts` und Teammitglieder mit `list_team_members`, sofern die Tools angeboten werden. Nenne mir nur, welche Abfragen erfolgreich waren.
 3. Prüfe im geladenen Projektkontext, ob Newsletter aktiviert sind und als Anbieter ausdrücklich Resend genannt wird.
-4. Nur falls beides zutrifft: Prüfe mit reinen Resend-Leseabfragen das verbundene Team sowie vorhandene Templates, Broadcasts und Zielgruppen. Falls die Resend-Tools fehlen oder noch nicht authentifiziert sind, starte genau einmal die Resend-Anmeldung, warte auf den automatisch geöffneten Browser und sage mir danach, dass ich diese Prüfung in einer neuen Work-Aufgabe wiederholen soll. Fehlen die Tools dort noch, soll ich die App ganz beenden (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), wieder öffnen und nochmals eine neue Work-Aufgabe starten. Öffne kein zweites Browserfenster und starte keinen zweiten Login.
+4. Nur falls beides zutrifft: Prüfe mit reinen Resend-Leseabfragen das verbundene Team sowie vorhandene Templates, Broadcasts und Zielgruppen. Falls die Resend-Tools fehlen oder noch nicht authentifiziert sind, starte genau einmal die Resend-Anmeldung, warte auf den automatisch geöffneten Browser und sage mir danach, dass ich diese Prüfung in einem neuen Chat wiederholen soll. Fehlen die Tools dort noch, soll ich die App ganz beenden (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), wieder öffnen und nochmals einen neuen Chat starten. Öffne kein zweites Browserfenster und starte keinen zweiten Login.
 5. Falls der Projektkontext Resend nicht ausdrücklich verlangt, starte keine Resend-Anmeldung und melde «Website-Funktionen einsatzbereit; Resend für dieses Projekt nicht erforderlich».
 6. Berichte Fidelity Studio und – nur falls erforderlich – Resend getrennt. Verlasse dich nicht allein auf auth_status, sondern auf die echten Leseabfragen.
 
@@ -67,16 +76,16 @@ Zeige keine Tokens oder Zugangsdaten an.
 
 Damit wird nicht nur geprüft, ob eine Anmeldung gespeichert ist, sondern ob die
 Funktionen wirklich erreichbar sind. Falls Resend benötigt und neu verbunden
-wurde, starte danach eine neue Work-Aufgabe und führe denselben Prüftext
+wurde, starte danach einen neuen Chat und führe denselben Prüftext
 nochmals aus. Fehlen die Tools dort noch, beende die App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne
-sie wieder und starte nochmals eine neue Work-Aufgabe. Bei Resend wählst du das Kunden-Team, das dir Fidelity
+sie wieder und starte nochmals einen neuen Chat. Bei Resend wählst du das Kunden-Team, das dir Fidelity
 Studio genannt hat. Resend kann dabei die vom Anbieter festgelegten, breiten
 Kontorechte verlangen; verwende keine eigenen Scopes. Wenn du die Anmeldung
 ablehnst, bleiben die Website-Funktionen verfügbar.
 
 ## Newsletter erstellen
 
-Du kannst eine E-Mail, einen Text und Bilder direkt in die Aufgabe einfügen oder
+Du kannst eine E-Mail, einen Text und Bilder direkt in den Chat einfügen oder
 anhängen:
 
 ```text
@@ -101,13 +110,13 @@ Resend-Dashboard.
 
 ## Projekte und Bilder
 
-Wenn dein Projekt diese Funktionen anbietet, kannst du Bilder in der Work-Aufgabe anhängen. Zum Beispiel:
+Wenn dein Projekt diese Funktionen anbietet, kannst du Bilder im Chat anhängen. Zum Beispiel:
 
 ```text
 Lege ein neues Projekt als Entwurf an. Verwende Bild 1 für «Vorher» und Bild 2 für «Nachher». Zeige die übrigen Bilder in der Reihenfolge meiner Anhänge. Zeig mir anschliessend den Entwurf zur Prüfung.
 ```
 
-Ein lokales Foto kannst du direkt in der Work-Aufgabe auswählen und beschreiben. Der Assistent prüft zuerst, für welche Website du angemeldet bist. Einzelne Fotos können bis zu 50 MiB gross sein und bis zu 80 Megapixel haben. Grössere JPEG-, PNG- und WebP-Fotos werden vor der Übertragung auf deinem Gerät für die Website verkleinert. Auf dem Mac kann der Assistent auch einzelne iPhone-Fotos im HEIC-Format verarbeiten. Dein Original bleibt erhalten. Die gespeicherte Webfassung enthält keine ursprünglichen EXIF-Daten wie den Aufnahmeort. Unter Windows hängt HEIC vom vorhandenen Bilddecoder ab. Falls das Format oder deine Installation diese Funktion noch nicht unterstützt, öffne den Entwurf in Pages CMS. Lade das Foto im Bildfeld oder in der Galerie hoch, wähle es aus und speichere den Entwurf. Der Assistent kann danach die gespeicherten Bilder lesen und ihre Reihenfolge anpassen.
+Ein lokales Foto kannst du direkt im Chat auswählen und beschreiben. Der Assistent prüft zuerst, für welche Website du angemeldet bist. Einzelne Fotos können bis zu 50 MiB gross sein und bis zu 80 Megapixel haben. Grössere JPEG-, PNG- und WebP-Fotos werden vor der Übertragung auf deinem Gerät für die Website verkleinert. Auf dem Mac kann der Assistent auch einzelne iPhone-Fotos im HEIC-Format verarbeiten. Dein Original bleibt erhalten. Die gespeicherte Webfassung enthält keine ursprünglichen EXIF-Daten wie den Aufnahmeort. Unter Windows hängt HEIC vom vorhandenen Bilddecoder ab. Falls das Format oder deine Installation diese Funktion noch nicht unterstützt, öffne den Entwurf in Pages CMS. Lade das Foto im Bildfeld oder in der Galerie hoch, wähle es aus und speichere den Entwurf. Der Assistent kann danach die gespeicherten Bilder lesen und ihre Reihenfolge anpassen.
 
 Der Assistent verwendet den Veröffentlichungsablauf aus deinem Projektkontext. Er nennt dir einen Vorschau-Link, sobald er die Vorschau geprüft hat.
 
@@ -156,44 +165,45 @@ darum bittest. Danach gibt er dir die geprüften Live-Links.
 
 ## Plugin aktualisieren
 
-Öffne eine neue **Work-Aufgabe** und füge diesen Text ein:
+Öffne einen **neuen Chat** und füge diesen Text ein:
 
 ```text
 Bitte aktualisiere den Fidelity Studio Content Assistant auf die neueste Version. Führe die Aktualisierung selbst aus, bearbeite keine Projektdateien und prüfe danach die installierte Version.
 
 Wenn ich von einer Version vor 0.4.0 aktualisiere, starte danach genau einmal die Anmeldung bei Fidelity Studio. Warte auf das automatisch geöffnete Browserfenster und öffne kein zweites. Diese einmalige neue Anmeldung wird benötigt, damit der Assistent Änderungen auf meinen Wunsch im Chat live veröffentlichen kann.
 
-Sage mir anschliessend, dass ich eine neue Work-Aufgabe mit dem Plugin starten und den Verbindungstest ausführen soll. Fehlen die Tools dort noch, beende ich die App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals eine neue Work-Aufgabe.
+Sage mir anschliessend, dass ich einen neuen Chat mit dem Plugin starten und den Verbindungstest ausführen soll. Fehlen die Tools dort noch, beende ich die App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals einen neuen Chat.
 ```
 
 Projektregeln und Schreibvorgaben werden nach der Anmeldung live von Fidelity
 Studio geladen. Änderungen an Farben, Sprachen, Website-Adressen oder Abläufen
 benötigen deshalb normalerweise keine Plugin-Aktualisierung.
 
-Starte nach dem Update eine neue Work-Aufgabe und verwende nochmals den
+Starte nach dem Update einen neuen Chat und verwende nochmals den
 Prüftext aus **Verbindung prüfen**. Fehlen die Tools dort noch, beende die
-App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals eine neue Work-Aufgabe. Prüfe im Projektkontext zusätzlich, ob die
+App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals einen neuen Chat. Prüfe im Projektkontext zusätzlich, ob die
 Produktionsveröffentlichung verfügbar ist. Die Versionsnummer allein beweist
 noch nicht, dass beide Verbindungen und die neue Berechtigung funktionieren.
 
 ## Wenn etwas nicht funktioniert
 
-Fehlen die Tools in einer bereits geöffneten Aufgabe, starte eine **neue
-Work-Aufgabe** und wähle das Plugin erneut. Fehlen sie auch dort, beende die
-App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals eine neue Work-Aufgabe.
-Starte nicht mehrere neue Aufgaben nacheinander.
+Fehlen die Tools in einem bereits geöffneten Chat, starte über
+https://mcp.fidelitystudio.ch/chat einen **neuen Chat** und wähle das Plugin
+erneut. Fehlen sie auch dort, beende die
+App ganz (Mac: ⌘Q; Windows: Fenster schliessen und das ChatGPT-Symbol unten rechts in der Taskleiste per Rechtsklick beenden), öffne sie wieder und starte nochmals einen neuen Chat.
+Starte nicht mehrere neue Chats nacheinander.
 
-Falls die Tools auch nach dem Neustart fehlen, füge in dieser Aufgabe
+Falls die Tools auch nach dem Neustart fehlen, füge in diesem Chat
 diesen Text ein:
 
 ```text
-Bitte prüfe meine Installation des Fidelity Studio Content Assistant und zuerst die Verbindung zu Fidelity Studio. Behebe alles, was du selbst beheben kannst. Unter Windows verwende das offizielle eigenständige Installationsskript aus der Einrichtung, falls die vorinstallierte Version aus WindowsApps blockiert ist, und prüfe Git vor dem repository-basierten Marketplace. Installiere dafür weder Node.js noch npm und ändere weder PowerShell-Ausführungsrichtlinie noch Sandbox-Modus als vermeintliche Reparatur für «Zugriff verweigert». Starte jeden Login höchstens einmal und führe mich bei Anmeldungen oder Genehmigungen Schritt für Schritt durch den Vorgang. Öffne keine doppelten Browserfenster. Ich habe die App bereits ganz beendet und wieder geöffnet. Bitte mich nur dann nochmals darum, wenn du danach etwas installiert oder mich angemeldet hast. Prüfe Fidelity Studio anschliessend in einer neuen Work-Aufgabe mit echten, ungefährlichen Leseabfragen. Lade zuerst get_project_context und verbinde Resend nur dann, wenn der Projektkontext Newsletter mit Anbieter Resend ausdrücklich verlangt.
+Bitte prüfe meine Installation des Fidelity Studio Content Assistant und zuerst die Verbindung zu Fidelity Studio. Behebe alles, was du selbst beheben kannst. Unter Windows verwende das offizielle eigenständige Installationsskript aus der Einrichtung, falls die vorinstallierte Version aus WindowsApps blockiert ist, und prüfe Git vor dem repository-basierten Marketplace. Installiere dafür weder Node.js noch npm und ändere weder PowerShell-Ausführungsrichtlinie noch Sandbox-Modus als vermeintliche Reparatur für «Zugriff verweigert». Starte jeden Login höchstens einmal und führe mich bei Anmeldungen oder Genehmigungen Schritt für Schritt durch den Vorgang. Öffne keine doppelten Browserfenster. Ich habe die App bereits ganz beendet und wieder geöffnet. Bitte mich nur dann nochmals darum, wenn du danach etwas installiert oder mich angemeldet hast. Prüfe Fidelity Studio anschliessend in einem neuen Chat mit echten, ungefährlichen Leseabfragen. Lade zuerst get_project_context und verbinde Resend nur dann, wenn der Projektkontext Newsletter mit Anbieter Resend ausdrücklich verlangt.
 ```
 
 Falls der Zugriff verweigert wird, prüfe, ob du bei Fidelity Studio die
 freigeschaltete E-Mail-Adresse und bei Resend das von Fidelity Studio genannte
 Kunden-Team verwendest.
 
-Falls **Work** oder **Plugins** in der App nicht angezeigt wird, aktualisiere
+Öffnet der Link keinen neuen Chat oder fehlt **Plugins** in der App, aktualisiere
 zuerst die ChatGPT Desktop-App. In einer verwalteten ChatGPT-Umgebung muss die
 zuständige Person das Plugin möglicherweise freigeben.
