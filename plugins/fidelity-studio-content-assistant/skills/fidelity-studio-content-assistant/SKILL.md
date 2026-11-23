@@ -56,9 +56,29 @@ the tools are still missing there.
 
 If the Fidelity Studio Content Assistant MCP tools are not exposed in the
 current Codex task, do not search Craft, the web, GitHub, local files, or the
-current workspace as a substitute. Check the saved sign-in once with
-`codex mcp list --json` (skip step 1 if that check cannot run), then take the
-first step that fits. Never ask for a new task twice.
+current workspace as a substitute.
+
+The tools often arrive late. Codex loads plugin MCP tools in the background
+(«Tool availability can change between calls»), and a sign-in that covers
+several sites can take up to 40 seconds. A missing tool in the first seconds
+is not a reason to send the person to restart. So first check the saved
+sign-in with `codex mcp list --json`, then:
+
+- `fidelity-studio-content-assistant` is enabled and its `auth_status` is
+  `o_auth`: the tools are loading. Say nothing about a restart or a new task
+  yet. Look again for tools named `mcp__fidelity_studio_content_assistant__*`
+  every 5 seconds, for up to 60 seconds. If you say anything while waiting,
+  say one short neutral line in the person's language, for example «Einen
+  Moment, die Verbindung zur Website lädt noch.» As soon as the tools are
+  there, carry on with the request.
+- `auth_status` is `unknown`, or the check fails inside the sandbox: that is
+  no answer. Run the same check again, with approval to run it outside the
+  sandbox if that is offered, and meanwhile keep looking for the tools as
+  above. Never read `unknown` as signed in or as signed out.
+- `not_logged_in`: no waiting, go to step 1.
+
+Only when the tools are still missing after those 60 seconds, take the first
+step below that fits. Never ask for a new task twice.
 
 1. `fidelity-studio-content-assistant` reports `not_logged_in`: run the login
    below once, then follow its instruction for after the login.
@@ -73,10 +93,12 @@ first step that fits. Never ask for a new task twice.
    and `codex mcp list --json` show for this plugin, without tokens.
 4. Otherwise this task is already the new task (the user's first message
    invokes this plugin, or they say they just started one): do not ask for
-   another new task. Tell the user to quit the app completely (Mac: ⌘Q;
+   another new task. Tell the person to quit the app completely (Mac: ⌘Q;
    Windows: quit it fully, including from the system tray), reopen it and
-   start one new Work task. Ask them to say in that task if the tools are
-   still missing after the restart.
+   start a new task there, and to say in that task if the website is still
+   not reachable. In German, for example: «Die Verbindung zur Website ist
+   noch nicht da. Bitte beende die ChatGPT-App ganz (Mac: ⌘Q), öffne sie
+   wieder und starte eine neue Aufgabe.» No commands, no app-internal names.
 
 Run this exact command once from the shell to start Codex's MCP OAuth login:
 
