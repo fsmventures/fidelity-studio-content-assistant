@@ -26,9 +26,12 @@ only the stop message under «First», in their language, and end the task.
 - When an approval prompt or a browser sign-in appears, pause, say in one
   sentence what it allows, and tell them exactly what to click.
 - Start each sign-in at most once. Do not open a second browser window.
-- ChatGPT's web tool cannot open `mcp.fidelitystudio.ch`. Every later step runs
-  in the shell; if you need this guide again, open it at
-  https://github.com/fsmventures/fidelity-studio-content-assistant/blob/main/docs/setup.md.
+- Read this guide in the shell, not with a web or browser tool: ChatGPT's web
+  tool refuses `mcp.fidelitystudio.ch`. macOS:
+  `curl -fsSL https://mcp.fidelitystudio.ch/setup.md`; Windows PowerShell:
+  `irm https://mcp.fidelitystudio.ch/setup.md`. When the sandbox blocks the
+  network, ask for approval to run that command once. Load it the same way
+  whenever you need it again.
 - Everything you tell the person names the ChatGPT desktop app and, when they
   need a new chat, the links https://mcp.fidelitystudio.ch/start (setup) and
   https://mcp.fidelitystudio.ch/chat (daily work). Never mention «Codex», «On

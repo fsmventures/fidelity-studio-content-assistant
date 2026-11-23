@@ -20,7 +20,7 @@ Terminal noch GitHub öffnen.
    schon im Eingabefeld; sende ihn ab:
 
 ```text
-Richte den Fidelity Studio Content Assistant auf meinem Computer ein und folge dazu der Anleitung https://github.com/fsmventures/fidelity-studio-content-assistant/blob/main/docs/setup.md
+Richte den Fidelity Studio Content Assistant auf meinem Computer ein und folge dazu der Anleitung https://mcp.fidelitystudio.ch/setup.md
 ```
 
 Öffnet sich kein neuer Chat, öffne die ChatGPT-Desktop-App selbst, nicht
