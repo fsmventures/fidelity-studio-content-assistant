@@ -18,6 +18,70 @@ They do not want to open a terminal and do not need GitHub.
   sentence what it allows, and tell them exactly what to click.
 - Start each sign-in at most once. Do not open a second browser window.
 
+## First: check that this task runs on the person's computer
+
+The setup writes the plugin into the Codex settings on the computer it runs on:
+`config.toml` and the plugin cache in the Codex home folder (`$CODEX_HOME`,
+otherwise `~/.codex`). That only lasts when this task runs on the person's own
+computer: a local Work task in the ChatGPT desktop app, where the person chose
+**On your computer** as the place to run. A task in the cloud or in a browser
+cannot install anything their app will see. Check this before you install,
+download or test anything:
+
+1. If your environment says you run in the cloud, in a browser, on a remote
+   computer or in a container, stop now and send the stop message below.
+2. If your shell reports Linux and the person has not said they use Linux,
+   stop as well. The ChatGPT desktop app runs on Mac and Windows; cloud tasks
+   run on Linux.
+3. Otherwise run this write test. It creates one empty file in the Codex home
+   folder and removes it again; nothing else changes.
+
+   macOS:
+
+   ```bash
+   codex_home="${CODEX_HOME:-$HOME/.codex}"
+   mkdir -p "$codex_home" && : > "$codex_home/.fidelity-studio-write-test" && rm "$codex_home/.fidelity-studio-write-test" && echo "write test ok"
+   ```
+
+   Windows PowerShell:
+
+   ```powershell
+   $codexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
+   $probe = Join-Path $codexHome ".fidelity-studio-write-test"
+   New-Item -ItemType Directory -Force -Path $codexHome | Out-Null
+   New-Item -ItemType File -Force -Path $probe | Out-Null
+   Remove-Item -LiteralPath $probe
+   "write test ok"
+   ```
+
+4. In a local task the sandbox normally blocks this first write ("Operation not
+   permitted", "access denied"). The install needs the same permission, so
+   ask for approval to run it outside the sandbox, once. When it prints
+   `write test ok`, continue with step 1.
+5. Stop when the write still fails after approval ("Permission denied",
+   "Read-only file system", "access denied"), or when you cannot ask for
+   approval.
+
+Never work around a failed check. Do not point `CODEX_HOME` at another folder,
+do not install into a temporary folder as a test, and do not go on with the
+next steps: such an install disappears and the person's app never sees it.
+
+When you stop, send only this message, in the person's language, and end the
+task. In German:
+
+> Hier kann ich den Fidelity Studio Content Assistant leider nicht einrichten:
+> Diese Aufgabe läuft nicht auf deinem Computer. So klappt es:
+>
+> 1. Öffne die ChatGPT-App auf deinem Computer, nicht ChatGPT im Browser.
+>    Windows: Startmenü, «ChatGPT». Mac: Ordner «Programme», «ChatGPT». Fehlt
+>    die App, lade sie unter https://chatgpt.com/download/ herunter.
+> 2. Wechsle zu **Work** und starte eine neue Aufgabe.
+> 3. Wähle beim Eingabefeld, wo die Aufgabe läuft: **On your computer** (auf
+>    Deutsch «Auf deinem Computer»), nicht **In the cloud**.
+> 4. Füge denselben Satz nochmals ein und sende ihn ab: Richte den Fidelity
+>    Studio Content Assistant für mich ein: lies
+>    https://mcp.fidelitystudio.ch/setup.md
+
 ## 1. Install or update the plugin
 
 Check the operating system first.
@@ -90,12 +154,14 @@ there, once.
 Check the installed plugin version. Then tell the person, in their language:
 
 1. Setup is done.
-2. Start a new Work task, type `@`, choose **Fidelity Studio Content
-   Assistant** and ask it to check the connection without changing anything.
+2. Start a new Work task, again **On your computer**, type `@`, choose
+   **Fidelity Studio Content Assistant** and ask it to check the connection
+   without changing anything.
 3. If the Fidelity Studio tools are still missing in that new task, quit the
    app completely (Mac: ⌘Q; Windows: also quit it in the system tray), reopen
    it and start one new Work task.
 
-In German, for example: «Starte jetzt eine neue Work-Aufgabe. Fehlen die
+In German, for example: «Starte jetzt eine neue Work-Aufgabe, wieder auf
+deinem Computer (On your computer). Fehlen die
 Fidelity-Studio-Werkzeuge dort noch, beende die App ganz (⌘Q), öffne sie wieder
 und starte nochmals eine neue Work-Aufgabe.»

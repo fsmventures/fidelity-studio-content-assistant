@@ -21,16 +21,19 @@ server returns the authorized project and its current guidance.
 
 Clients should follow the
 [German client quick start](docs/client-guide-de.md): open ChatGPT Work in the
-desktop app and send one sentence:
+desktop app, start a new task **On your computer** (not **In the cloud**, the
+app's default) and send one sentence:
 
 ```text
 Richte den Fidelity Studio Content Assistant für mich ein: lies https://mcp.fidelitystudio.ch/setup.md
 ```
 
 That URL serves [`docs/setup.md`](docs/setup.md) from this repository, the
-single agent-facing setup guide. Work installs the plugin, signs the client in
-once and verifies the setup; the client approves the clearly described steps. Clients
-do not need to open Terminal, have a GitHub account, or understand the
+single agent-facing setup guide. It first checks that the task runs on the
+client's computer and can write the Codex settings there; a cloud or browser
+task stops at once with short steps to start a local task. Work installs the
+plugin, signs the client in once and verifies the setup; the client approves
+the clearly described steps. Clients do not need to open Terminal, have a GitHub account, or understand the
 repository commands.
 
 On Windows, the setup first runs the reusable
