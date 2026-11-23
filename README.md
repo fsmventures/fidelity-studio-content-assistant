@@ -8,6 +8,24 @@ The plugin is generic. It contains no client content, private repository
 details, style guides, tokens, or secrets. After sign-in, Fidelity Studio's MCP
 server returns the authorized project and its current guidance.
 
+## ChatGPT Plugin Directory (1.0)
+
+`directory/fidelity-studio-content-assistant/` is the 1.0 package for OpenAI's
+plugin directory. Once it is listed, clients install it from the directory,
+choose «Connect» and sign in with the email address Fidelity Studio invited.
+ChatGPT runs the OAuth sign-in; there is no terminal step. It holds only the
+Fidelity Studio MCP server; newsletters run through Resend's own plugin.
+
+Build the upload ZIP and check it:
+
+```bash
+node scripts/validate-plugin.mjs
+node scripts/build-directory-zip.mjs
+```
+
+The ZIP lands in `dist/` (not committed). The 0.5.x Codex package below stays
+in place for clients set up through the setup sentence until they have moved.
+
 ## What It Installs
 
 - Fidelity Studio MCP for scoped blog posts, team members, media, previews, and

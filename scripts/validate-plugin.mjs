@@ -278,4 +278,124 @@ if (!skill.includes("Never write «Werkzeuge»")) {
   fail("The skill must tell the assistant to say «Tools» in German, never «Werkzeuge».");
 }
 
+// Directory package 1.0 (ChatGPT plugin directory). It lives next to the
+// 0.5.x Codex package until every client has moved: ChatGPT only, our MCP
+// server only, OAuth on install, no terminal steps and no local helper.
+const directoryRoot = "directory/fidelity-studio-content-assistant";
+const directoryVersion = "1.0.0";
+const dirPlugin = json(`${directoryRoot}/plugin.json`);
+const dirMcp = json(`${directoryRoot}/mcp.json`);
+const dirSkillPath = `${directoryRoot}/skills/fidelity-studio-content-assistant/SKILL.md`;
+const dirSkill = read(dirSkillPath);
+const openai = dirPlugin.extensions?.["com.openai"] ?? {};
+const ui = openai.interface ?? {};
+const review = openai.review ?? {};
+const publication = openai.publication ?? {};
+
+if (dirPlugin.$schema !== "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json") {
+  fail("The directory plugin.json must use the agent-plugins 1.0.0 schema.");
+}
+if (dirPlugin.name !== "fidelity-studio-content-assistant") fail("The directory plugin keeps the name fidelity-studio-content-assistant.");
+if (dirPlugin.version !== directoryVersion) fail(`Expected directory plugin version ${directoryVersion}, received ${dirPlugin.version}.`);
+if (!read("CHANGELOG.md").includes(`## ${directoryVersion} - `)) fail(`CHANGELOG.md must have an entry for ${directoryVersion}.`);
+
+const servers = Object.entries(dirMcp.mcpServers ?? {});
+if (servers.length !== 1) fail("The directory package must declare exactly one MCP server.");
+const [serverName, server] = servers[0];
+if (serverName !== "fidelity-studio-content-assistant") fail("The directory MCP server must be fidelity-studio-content-assistant.");
+if (server.type !== "streamable-http" || server.url !== "https://mcp.fidelitystudio.ch/mcp") {
+  fail("The directory MCP server must be streamable-http at https://mcp.fidelitystudio.ch/mcp.");
+}
+const auth = server.extensions?.["com.openai"]?.auth;
+if (auth?.type !== "oauth" || auth?.client?.mode !== "dcr") fail("The directory MCP server must declare OAuth with dynamic client registration.");
+if (/resend/i.test(read(`${directoryRoot}/mcp.json`))) fail("The directory package must not bundle Resend; clients add Resend's own plugin.");
+
+const limits = { displayName: 30, shortDescription: 30, longDescription: 4000 };
+for (const [key, max] of Object.entries(limits)) {
+  if (typeof ui[key] !== "string" || !ui[key].trim()) fail(`interface.${key} is required.`);
+  if (ui[key].length > max) fail(`interface.${key} is ${ui[key].length} characters; the limit is ${max}.`);
+}
+for (const key of ["websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL"]) {
+  if (typeof ui[key] !== "string" || !ui[key].startsWith("https://")) fail(`interface.${key} must be an https URL.`);
+}
+if (!Array.isArray(ui.defaultPrompt) || ui.defaultPrompt.length < 1 || ui.defaultPrompt.length > 3
+  || ui.defaultPrompt.some((prompt) => typeof prompt !== "string" || prompt.length > 128)) {
+  fail("interface.defaultPrompt needs one to three prompts of at most 128 characters.");
+}
+for (const key of ["composerIcon", "logo"]) {
+  if (typeof ui[key] !== "string" || !existsSync(resolve(root, directoryRoot, ui[key]))) {
+    fail(`interface.${key} must point to an existing file in the directory package.`);
+  }
+}
+if (!existsSync(resolve(root, directoryRoot, openai.onboardingSkill ?? ""))) fail("onboardingSkill must point to the bundled skill.");
+
+const positive = review.test_cases?.positive ?? [];
+const negative = review.test_cases?.negative ?? [];
+if (positive.length !== 5) fail(`The review needs exactly 5 positive test cases, found ${positive.length}.`);
+if (negative.length !== 3) fail(`The review needs exactly 3 negative test cases, found ${negative.length}.`);
+for (const testCase of positive) {
+  for (const key of ["description", "prompt", "tools_triggered", "expected_behavior"]) {
+    if (typeof testCase[key] !== "string" || !testCase[key].trim()) fail(`A positive test case is missing ${key}.`);
+  }
+  if (!testCase.tools_triggered.includes("get_project_context")) fail(`Positive test case «${testCase.description}» must load the project context first.`);
+}
+for (const testCase of negative) {
+  for (const key of ["description", "prompt"]) {
+    if (typeof testCase[key] !== "string" || !testCase[key].trim()) fail(`A negative test case is missing ${key}.`);
+  }
+}
+if (review.commerce !== false) fail("review.commerce must be false.");
+for (const key of ["test_credentials", "reviewer_instructions"]) {
+  if (key in review) fail(`review.${key} is not accepted in an uploaded package; enter it in the submission form.`);
+}
+if (!Array.isArray(publication.countries) || publication.countries.some((code) => !/^[A-Z]{2}$/.test(code))) {
+  fail("publication.countries must list uppercase two-letter country codes.");
+}
+for (const [locale, translation] of Object.entries(publication.translations ?? {})) {
+  if ((translation.subtitle ?? "").length > 30) fail(`publication.translations.${locale}.subtitle is longer than 30 characters.`);
+  if ((translation.description ?? "").includes("ß")) fail(`publication.translations.${locale}.description must not contain ß.`);
+}
+
+for (const forbidden of [".app.json", "hooks", "hooks.json", ".mcp.json", ".codex-plugin", "scripts"]) {
+  if (existsSync(resolve(root, directoryRoot, forbidden))) fail(`The directory package must not contain ${forbidden}.`);
+}
+const directoryTexts = [
+  ["directory skill", dirSkill],
+  ["directory plugin.json", read(`${directoryRoot}/plugin.json`)],
+  ["directory mcp.json", read(`${directoryRoot}/mcp.json`)],
+];
+const terminalSteps = [
+  /codex/i,
+  /terminal/i,
+  /\bshell\b/i,
+  /work[\s-]task/i,
+  /work-aufgabe/i,
+  /mcp login/i,
+  /upload-local-photo/i,
+  /local (photo|file|path)/i,
+  /load_workspace_dependencies/i,
+  /cms\.fidelitystudio\.ch/i,
+  /approval[\s-]+(url|page|link|request)/i,
+  /\bfreigabe/i,
+];
+for (const [name, text] of directoryTexts) {
+  const match = terminalSteps.find((pattern) => pattern.test(text));
+  if (match) fail(`${name} must work in ChatGPT without a terminal or Codex step (matched ${match}).`);
+}
+// The skill itself names «Werkzeuge» once, in the rule that forbids it.
+if (/werkzeug/i.test(read(`${directoryRoot}/plugin.json`))) fail("The directory listing must say «Tools» in German, never «Werkzeuge».");
+for (const phrase of [
+  "get_project_context",
+  "deploy_project_to_production",
+  "REQUEST_PRODUCTION_APPROVAL",
+  "idempotency key",
+  "ready=true",
+  "Publishing happens entirely in this chat.",
+  "Never write «Werkzeuge»",
+  "Resend's own",
+  "`file` parameter",
+]) {
+  if (!dirSkill.includes(phrase)) fail(`The directory skill is missing "${phrase}".`);
+}
+
 console.log("Plugin validation passed.");

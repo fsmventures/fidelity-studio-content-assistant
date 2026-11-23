@@ -62,6 +62,18 @@ When changing this repo:
 The CMS/MCP backend is responsible for OAuth, access checks, tool behavior, and
 project-specific assistant guidance.
 
+## Two Packages Side By Side (23 Nov 2026)
+
+- `directory/fidelity-studio-content-assistant/` is version 1.0, the package
+  for the ChatGPT plugin directory. Clients install it from the directory and
+  connect with OAuth. It holds only our MCP server, no Resend, no terminal or
+  Codex step and no local helper. Build the upload with
+  `node scripts/build-directory-zip.mjs`.
+- `plugins/fidelity-studio-content-assistant/` stays the 0.5.x Codex package
+  behind the repo marketplace, for clients already set up through the setup
+  sentence. Change it only for fixes until every client has moved to 1.0.
+- `node scripts/validate-plugin.mjs` checks both packages.
+
 ## Publishing From The Chat (Fidelity Studio Decision, 5 Nov 2026)
 
 Clients publish website changes live by telling ChatGPT: after their explicit

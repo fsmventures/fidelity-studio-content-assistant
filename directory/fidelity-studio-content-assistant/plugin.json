@@ -1,0 +1,115 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fidelity-studio-content-assistant",
+  "version": "1.0.0",
+  "description": "Change the website Fidelity Studio built for you by chatting: texts, entries and photos, checked on a preview, published live when you ask.",
+  "author": {
+    "name": "Fidelity Studio",
+    "email": "hello@fidelitystudio.ch",
+    "url": "https://fidelitystudio.ch"
+  },
+  "homepage": "https://fidelitystudio.ch",
+  "repository": "https://github.com/fsmventures/fidelity-studio-content-assistant",
+  "license": "MIT",
+  "keywords": [
+    "website",
+    "content",
+    "cms",
+    "fidelity-studio"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Fidelity Studio",
+        "shortDescription": "Update your website in chat",
+        "longDescription": "Fidelity Studio builds and looks after websites for small businesses. This plugin lets the people who run those websites change them by chatting: read what is on the site, update texts, add or edit blog posts, team members and other entries their website offers, add photos they attach in the chat, check every change on a preview, and publish it live when they ask for it.\n\nWho it is for: clients of Fidelity Studio. You sign in with the email address Fidelity Studio has invited, and you only see the websites assigned to you. Without an invitation the plugin has nothing to show.\n\nHow it works: every change is saved to the website's preview first. It goes live only when you ask for it in the conversation, and the assistant reports it live only after the live site has been checked. What you can change follows each website's own content setup.\n\nLimits: new designs, new sections or new features are built by Fidelity Studio, not in the chat. The plugin does not send newsletters; if your newsletters run on Resend, add Resend's own plugin.",
+        "developerName": "Fidelity Studio",
+        "category": "Productivity",
+        "capabilities": [
+          "Read website content",
+          "Edit website content",
+          "Add photos",
+          "Preview changes",
+          "Publish changes live"
+        ],
+        "websiteURL": "https://fidelitystudio.ch",
+        "supportURL": "https://fidelitystudio.ch/en/policies/content-assistant/support/",
+        "privacyPolicyURL": "https://fidelitystudio.ch/en/policies/content-assistant/privacy/",
+        "termsOfServiceURL": "https://fidelitystudio.ch/en/policies/content-assistant/terms/",
+        "defaultPrompt": [
+          "Show me what I can change on my website.",
+          "Update a text on my website and show me the preview.",
+          "Add this photo to my team page."
+        ],
+        "brandColor": "#2F9B73",
+        "composerIcon": "./assets/fidelity-studio-icon.png",
+        "logo": "./assets/fidelity-studio-icon.png"
+      },
+      "onboardingSkill": "./skills/fidelity-studio-content-assistant/SKILL.md",
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Load the connected website and what can be edited on it.",
+              "prompt": "Show me what I can change on my website.",
+              "tools_triggered": "get_project_context, list_entries",
+              "expected_behavior": "Names the connected test website (TEST · Content Assistant canary), lists its editable content area «Canary checks» with the entry «Content Assistant canary», and gives the preview link. It does not invent other websites or areas."
+            },
+            {
+              "description": "Read one entry exactly as it is stored.",
+              "prompt": "What does the canary check entry say right now?",
+              "tools_triggered": "get_project_context, get_entry",
+              "expected_behavior": "Returns the entry's title and message as stored on the website, in German as written, without changing anything."
+            },
+            {
+              "description": "Edit a text and confirm it on the preview.",
+              "prompt": "Change the message of the canary check to «Geprüft im App-Review» and show me the preview.",
+              "tools_triggered": "get_project_context, get_entry, update_entry, get_project_deployment_status",
+              "expected_behavior": "Reads the entry, saves only the message with the new text, waits until the preview build has the change, then reports it with the preview link. It says the change is on the preview, not live."
+            },
+            {
+              "description": "Report whether the last change is on the preview.",
+              "prompt": "Is my last change on the preview yet? Give me the link.",
+              "tools_triggered": "get_project_context, get_project_deployment_status",
+              "expected_behavior": "Reports whether the preview shows the latest saved change, with the preview link. If the build is still running, it says so instead of claiming it is done."
+            },
+            {
+              "description": "Restore the previous text.",
+              "prompt": "Put the canary message back to what it was before my change.",
+              "tools_triggered": "get_project_context, get_entry, update_entry, get_project_deployment_status",
+              "expected_behavior": "Restores the earlier message text, saves it to the preview, confirms the preview shows it and gives the link."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unrelated request: no website tool should run.",
+              "prompt": "What's the weather in Zurich tomorrow?"
+            },
+            {
+              "description": "A website the signed-in account is not assigned to: the plugin must not read or change it and should say the account has no access.",
+              "prompt": "Change the opening hours on pilates-zuerich.ch to 8 to 20."
+            },
+            {
+              "description": "An action the website's content setup does not allow (this area allows no deleting): the plugin must not delete anything and should say it cannot.",
+              "prompt": "Delete the canary check entry from my website."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "The plugin edits website content. It does not sell products or process payments."
+      },
+      "publication": {
+        "countries": [
+          "CH"
+        ],
+        "release_notes": "First directory release. Connect your Fidelity Studio website in ChatGPT: read and edit its content, add photos from the chat, check changes on the preview and publish them live when you ask.",
+        "translations": {
+          "de-DE": {
+            "subtitle": "Website im Chat aktualisieren",
+            "description": "Fidelity Studio baut und betreut Websites für kleine Unternehmen. Mit diesem Plugin ändern die Menschen, die diese Websites führen, sie im Chat: lesen, was auf der Website steht, Texte anpassen, Blogbeiträge, Teammitglieder und andere Einträge ihrer Website bearbeiten, im Chat angehängte Fotos einsetzen, jede Änderung zuerst in der Vorschau prüfen und sie live schalten, wenn sie darum bitten.\n\nFür wen: Kundinnen und Kunden von Fidelity Studio. Du meldest dich mit der E-Mail-Adresse an, die Fidelity Studio eingeladen hat, und siehst nur die Websites, die dir zugewiesen sind.\n\nSo funktioniert es: Jede Änderung landet zuerst in der Vorschau. Live geht sie erst, wenn du im Gespräch darum bittest, und als live gemeldet wird sie erst, wenn die Live-Website geprüft ist.\n\nGrenzen: Neue Designs, Bereiche oder Funktionen baut Fidelity Studio, nicht der Chat. Newsletter verschickt das Plugin nicht; laufen deine Newsletter über Resend, füge das Plugin von Resend hinzu."
+          }
+        }
+      }
+    }
+  }
+}

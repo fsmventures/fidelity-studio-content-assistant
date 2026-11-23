@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.0 - 2026-11-23
+
+- New package for the ChatGPT plugin directory in
+  `directory/fidelity-studio-content-assistant/`: install it from the
+  directory, choose «Connect», sign in with the invited email address. No
+  terminal, no setup sentence, works in ChatGPT on every plan.
+- Only the Fidelity Studio MCP server, with OAuth (dynamic client
+  registration) declared for install. Resend is no longer bundled: the skill
+  tells users to add Resend's own plugin for newsletters.
+- The skill drops every Codex and terminal step (`codex mcp login`, new Work
+  task, app restarts, Windows bootstrap) and the local photo helper. Photos come
+  from a chat attachment through `upload_image`'s `file` parameter. Missing
+  tools or an expired sign-in: reconnect the plugin in ChatGPT.
+- The listing (`plugin.json`) carries the directory texts in English and
+  German, 5 positive and 3 negative review test cases on the Fidelity Studio
+  test website, release notes and the countries. `scripts/build-directory-zip.mjs`
+  builds the upload ZIP; the validator checks the package.
+- The 0.5.x Codex package in `plugins/` and its marketplace stay unchanged
+  until every client has moved.
+
 ## 0.5.2 - 2026-11-09
 
 - German texts say «Tools» instead of «Werkzeuge»: the German guide, the setup
