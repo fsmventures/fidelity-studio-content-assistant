@@ -103,6 +103,13 @@ if (!/Never mention «Codex», «local folder» or «lokaler\s+Ordner» to them/
   fail("docs/setup.md must have the ground rule that client messages never mention Codex or a local folder.");
 }
 if (/\(or Codex\)/i.test(setup)) fail("docs/setup.md must not offer Codex as the place to run the setup.");
+// 23 Nov 2026: a cloud Work task's browser loaded setup.md three times (200,
+// 200, 304), yet the agent said it could not fetch the guide and asked for the
+// text in the chat. The page opened with «You are an agent …», which reads like
+// a prompt injection. The opening describes the steps instead of ordering an agent.
+if (/you are an? (ai )?(agent|assistant)/i.test(setup.split("\n## ")[0])) {
+  fail("docs/setup.md must open by describing the setup, not with «You are an agent …».");
+}
 const setupClientGerman = [
   setup.split("\n").filter((line) => line.startsWith(">")).join("\n"),
   ...(setup.match(/In German, for example:[\s\S]*?(?=\n\n|$)/g) ?? []),

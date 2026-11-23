@@ -1,11 +1,18 @@
-# Set up the Fidelity Studio Content Assistant
+# Fidelity Studio Content Assistant: setup steps
 
-You are an agent in a Work task of the ChatGPT desktop app. The person who
-sent you here is a Fidelity Studio client. They want the Fidelity Studio Content Assistant
-installed so they can change their website and newsletter content in chat.
+Fidelity Studio publishes these steps for its clients. A client who wants to
+change their website and newsletter content in chat asks ChatGPT, in a Work
+task of the ChatGPT desktop app, to carry them out on their own computer:
+they paste one sentence that names this page. The steps install the Fidelity
+Studio plugin and sign the client in to Fidelity Studio once. They ask for no
+password, code or key, and they change nothing on the website.
 
-Do the setup for them. Run every command yourself in the shared workspace.
-They do not want to open a terminal and do not need GitHub.
+The client does not want to open a terminal and does not need GitHub, so
+ChatGPT runs the commands below for them in that task.
+
+If this task cannot run commands on the client's own computer (a task in the
+cloud, ChatGPT in the browser), the setup cannot work here: send the client
+only the stop message under «First», in their language, and end the task.
 
 ## Ground rules
 
