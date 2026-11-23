@@ -5,6 +5,11 @@
 - German texts say «Tools» instead of «Werkzeuge»: the German guide, the setup
   prompts and the assistant's own replies. The skill names the rule and the
   validator rejects «Werkzeug» in the guides.
+- The German client guide no longer says «Codex»: its paste-in prompts name
+  the step in plain words («die Resend-Anmeldung», «die Anmeldung bei
+  Fidelity Studio»), and the commands stay in docs/setup.md and README.md for
+  the assistant. The validator rejects «codex» in the guide; the only
+  exception is the sign-in page's button «Zurück zu ChatGPT/Codex».
 
 ## 0.5.1 - 2026-11-09
 
