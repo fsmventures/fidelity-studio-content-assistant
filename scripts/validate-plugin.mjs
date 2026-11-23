@@ -26,7 +26,7 @@ const marketplace = json(marketplacePath);
 const guide = read(guidePath);
 const windowsSetup = read(windowsSetupPath);
 const skill = read(skillPath);
-const expectedVersion = "0.5.3";
+const expectedVersion = "0.5.4";
 
 if (plugin.version !== expectedVersion) {
   fail(`Expected plugin version ${expectedVersion}, received ${plugin.version}.`);
@@ -150,6 +150,19 @@ const guideFallbackAt = guide.search(
 );
 if (guideNewTaskAt < 0 || guideFallbackAt < 0 || guideNewTaskAt > guideFallbackAt) {
   fail("The guide must start a new Work task first and restart the app only if the tools are still missing there.");
+}
+// 23 Nov 2026: a client was told to do something «in Codex». Clients never use
+// Codex; nothing the assistant says names it. The skill's own commands may.
+if (/\bin Codex\b|Codex task/i.test(skill)) fail("The skill must not say «in Codex» or «Codex task»: the assistant repeats it to clients.");
+for (const quote of skill.match(/«[^»]*»/g) ?? []) {
+  if (/codex|terminal|mcp login/i.test(quote)) fail(`A sentence the skill gives the assistant to say names Codex or a command: ${quote}`);
+}
+// The sign-in sentences match the server's signIn answer: the chat runs the
+// login, the person approves «Zugriff erlauben» and opens one new chat after
+// it (a running task stays signed out, tested 23 Nov 2026); the app's own path
+// («Authentifizieren») only when the chat cannot run the login.
+for (const phrase of ["Öffne danach einmal einen neuen Chat.", "Öffne jetzt einmal einen neuen Chat", "«In MCP-Einstellungen einrichten»", "«Authentifizieren»"]) {
+  if (!skill.replace(/\s+/g, " ").includes(phrase)) fail(`The skill's sign-in step is missing "${phrase}".`);
 }
 if (
   !/Never ask for a\s+new task twice\./.test(skill)

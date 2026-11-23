@@ -150,8 +150,8 @@ command and do not repeat the login while the first one runs. Only if Codex
 says it could not open the browser, show the person the link to open.
 
 Tell the person to sign in with the email address Fidelity Studio activated
-for them, to click **Allow access** once, and to return to ChatGPT if the
-browser does not switch back by itself. The sign-in page lists what the
+for them, to choose their websites and click «Zugriff erlauben» once, and to
+return to ChatGPT if the browser does not switch back by itself. The sign-in page lists what the
 assistant may do, such as reading, drafts, images and changes. It still
 publishes live only when they ask for it in the chat.
 

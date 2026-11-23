@@ -45,7 +45,7 @@ Verify website access with an operational read in the authenticated context:
 An empty successful inventory verifies read access. During setup, report what
 was checked without reproducing private record details or attempting a write.
 
-## If MCP Tools Are Missing In Codex
+## If The Website Tools Are Missing
 
 After an install, update or sign-in, the user starts a new Work task. A new
 task usually loads the new tools, but not always: an install or sign-in made
@@ -55,7 +55,7 @@ reopens it. So the order is one new Work task first, and a full restart only if
 the tools are still missing there.
 
 If the Fidelity Studio Content Assistant MCP tools are not exposed in the
-current Codex task, do not search Craft, the web, GitHub, local files, or the
+current task, do not search Craft, the web, GitHub, local files, or the
 current workspace as a substitute.
 
 The tools often arrive late. Codex loads plugin MCP tools in the background
@@ -100,22 +100,36 @@ step below that fits. Never ask for a new task twice.
    noch nicht da. Bitte beende die ChatGPT-App ganz (Mac: ⌘Q), öffne sie
    wieder und starte eine neue Aufgabe.» No commands, no app-internal names.
 
-Run this exact command once from the shell to start Codex's MCP OAuth login:
+Run this exact command once from the shell to start the sign-in, with network
+access outside the sandbox: request approval for it, the person only approves.
 
 ```bash
 codex mcp login fidelity-studio-content-assistant
 ```
 
-Codex normally opens the authorization page automatically. Wait for that page
-and tell the user what to approve. Do not run `open`, launch a second browser
-window, repeat the login command, or start another MCP login while the callback
-listener is active. Offer the printed URL for manual opening only if Codex
-explicitly reports that browser launch failed.
+Before it runs, tell the person only this, in their language. In German:
+«Im Browser öffnet sich die Anmeldung, wähle deine Websites und klicke
+«Zugriff erlauben». Öffne danach einmal einen neuen Chat.» Never name the
+command, a terminal or the app you run in to them.
 
-If the command reports success, tell the user to start a new Work task and
-invoke the plugin again. The login runs outside the open app, so tell them
-too: if the tools are still missing in that new task, quit the app completely,
-reopen it and start one new Work task.
+The login opens the authorization page itself. Do not run `open`, launch a
+second browser window, repeat the login command, or start another MCP login
+while the callback listener is active. Offer the printed URL for manual opening
+only if the login explicitly reports that the browser launch failed.
+
+If the command reports success, tell the person, in German: «Du bist
+angemeldet. Öffne jetzt einmal einen neuen Chat und schreib dort, was du
+ändern möchtest.» Do not wait for the tools in this task: a task that was
+already running stays signed out after the login, and a new one is signed in
+(tested 23 Nov 2026). If the tools are still missing in that new chat, they
+quit the app completely, reopen it and start one new chat.
+
+Only if you cannot run the command (approval refused, or this task does not
+run on their computer), tell them instead, in German: «Öffne in der App unter
+«Plugins» den Fidelity Studio Content Assistant, klicke neben dem Server auf
+das Zahnrad «In MCP-Einstellungen einrichten» und dann auf
+«Authentifizieren». Im Browser wählst du deine Websites und klickst «Zugriff
+erlauben». Öffne danach einmal einen neuen Chat.»
 
 Do not claim the client content is unavailable until this login step has been
 tried or the user declines it.

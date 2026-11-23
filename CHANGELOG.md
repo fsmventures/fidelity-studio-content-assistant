@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.4 - 2026-11-23
+
+- The assistant runs the Fidelity Studio sign-in itself again and tells the
+  person one sentence: «Im Browser öffnet sich die Anmeldung, wähle deine
+  Websites und klicke «Zugriff erlauben». Öffne danach einmal einen neuen
+  Chat.» After the login it asks for one new chat: a task that was already
+  running stays signed out, a new one is signed in (tested 23 Nov 2026).
+  Only when it cannot run the login does it name the app's own path, the gear
+  «In MCP-Einstellungen einrichten» and «Authentifizieren».
+- Nothing the assistant says names Codex: the skill no longer says «in
+  Codex», and the validator rejects «in Codex» and any sentence for the
+  person that names Codex, a terminal or the login command.
+
 ## 0.5.3 - 2026-11-23
 
 - The assistant waits for the Fidelity Studio tools before it asks for a
