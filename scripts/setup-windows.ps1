@@ -13,7 +13,7 @@ Set-StrictMode -Version Latest
 $MarketplaceName = "fidelity-studio-content-assistant"
 $MarketplaceSource = "fsmventures/fidelity-studio-content-assistant"
 $PluginSelector = "fidelity-studio-content-assistant@fidelity-studio-content-assistant"
-$ExpectedPluginVersion = "0.5.3"
+$ExpectedPluginVersion = "0.5.4"
 $StandaloneCodex = Join-Path $env:LOCALAPPDATA "Programs\OpenAI\Codex\bin\codex.exe"
 
 function Write-Step {
@@ -210,5 +210,4 @@ Write-Host "Codex CLI: $resolvedCodex"
 Write-Host "Start exactly one Fidelity Studio login next:"
 Write-Host "  `"$resolvedCodex`" mcp login fidelity-studio-content-assistant"
 Write-Host "Wait for its browser callback to finish. Do not start Resend login yet."
-Write-Host "After Fidelity succeeds, start a new ChatGPT Work task, load get_project_context, and only connect Resend if that context explicitly declares newsletter provider Resend."
-Write-Host "If the Fidelity Studio tools are still missing in that new task, quit ChatGPT completely (also in the system tray), reopen it and start one new Work task."
+Write-Host "After Fidelity succeeds, open one new chat in ChatGPT, load get_project_context, and only connect Resend if that context explicitly declares newsletter provider Resend."

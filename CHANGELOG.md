@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.5.4 - 2026-11-23
+
+- The assistant runs the Fidelity Studio sign-in itself again and tells the
+  person one sentence: «Im Browser öffnet sich die Anmeldung, wähle deine
+  Websites und klicke «Zugriff erlauben». Öffne danach einmal einen neuen
+  Chat.» After the login it asks for one new chat: a task that was already
+  running stays signed out, a new one is signed in (tested 23 Nov 2026).
+  Only when it cannot run the login does it name the app's own path, the gear
+  «In MCP-Einstellungen einrichten» and «Authentifizieren».
+- Nothing the assistant says names Codex: the skill no longer says «in
+  Codex», and the validator rejects «in Codex» and any sentence for the
+  person that names Codex, a terminal or the login command.
+- After a setup, update or sign-in the person opens one new chat, and that
+  is all: the quit-the-app and ⌘Q steps are gone everywhere, and the «Work
+  task» / «Work-Aufgabe» template now says «neuer Chat». The validator rejects
+  both.
+- The assistant never starts a nested Codex session (`codex exec`) to work
+  around a missing sign-in; it asks for one new chat instead.
+- `docs/setup.md` names the consent page's real button, «Zugriff erlauben».
+- The skill says what the person does («they only need to sign in in the
+  browser window that opens»), never what to keep from them; the validator
+  rejects «never mention» wording in the skill.
+
 ## 0.5.3 - 2026-11-23
 
 - The assistant waits for the Fidelity Studio tools before it asks for a

@@ -30,16 +30,16 @@ codex plugin marketplace upgrade fidelity-studio-content-assistant
 codex plugin list --marketplace fidelity-studio-content-assistant
 ```
 
-6. Start a new ChatGPT desktop Work task (quit and reopen the app if the tools
-   are still missing there) and verify Fidelity Studio first. Verify Resend
+6. Open one new chat in the ChatGPT desktop app and verify Fidelity Studio
+   first. Verify Resend
    only when the authenticated project context declares newsletter
    provider Resend.
 
 The Git marketplace makes Fidelity Studio the update publisher. Clients do not
 install from a copied folder, and Fidelity Studio does not need to send a new
 package for every release. Git pushes do not silently replace every installed
-cache; the client still needs to refresh the marketplace and start a new task,
-and quit and reopen the app if the tools are still missing there.
+cache; the client still needs to refresh the marketplace and open one new
+chat.
 
 If the installed version remains stale after the marketplace refresh, reinstall
 the cached copy:
@@ -69,7 +69,7 @@ Each client needs two baseline pieces and one context-dependent integration:
 3. Only when `get_project_context` explicitly enables newsletters with provider
    Resend: membership in the correct Resend team or account.
 
-Authenticate Fidelity Studio first, start a new Work task, and load the project
+Authenticate Fidelity Studio first, open one new chat, and load the project
 context before deciding whether to request Resend authentication. This keeps the public package client-agnostic
 while avoiding unnecessary provider access for website-only clients.
 
@@ -95,14 +95,14 @@ For every release:
   Node/npm or changes PowerShell execution policy
 - verify the Fidelity Studio icon in the Plugins directory, Installed row, and
   `@` composer menu in light and dark appearance
-- authenticate Fidelity Studio first and start a new Work task
-- when the tools are missing in a task that is already the new one, verify
-  that the assistant asks for a full app restart and never for a second new
-  task
+- authenticate Fidelity Studio first and open one new chat
+- when the tools are missing in a chat that is already the new one, verify
+  that the assistant asks neither for a second new chat nor for a restart of
+  the app, and never starts a nested Codex session
 - verify project context before deciding whether Resend applies
 - verify an advertised collection with `list_entries`, or use the advertised `list_blog_posts` and `list_team_members` inventories for blog/team projects
-- for a Resend-enabled test project, authenticate Resend separately, start
-  another new Work task, and verify newsletter reads and draft-only behavior
+- for a Resend-enabled test project, authenticate Resend separately, open
+  one new chat, and verify newsletter reads and draft-only behavior
 - for a website-only test project, verify that setup does not request Resend
 - verify preview status against a known commit and harmless page paths
 - verify that a preview-only request never calls `deploy_project_to_production`

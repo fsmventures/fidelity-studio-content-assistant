@@ -21,7 +21,7 @@ server returns the authorized project and its current guidance.
 
 Clients should follow the
 [German client quick start](docs/client-guide-de.md): open ChatGPT Work in the
-desktop app, start a new task **On your computer** (not **In the cloud**, the
+desktop app, open a new chat **On your computer** (not **In the cloud**, the
 app's default) and send one sentence:
 
 ```text
@@ -51,12 +51,10 @@ codex plugin marketplace add fsmventures/fidelity-studio-content-assistant --ref
 codex plugin add fidelity-studio-content-assistant@fidelity-studio-content-assistant
 ```
 
-Choose Work, start a new task, open Plugins, and select Fidelity Studio Content
+Choose Work, open a new chat, open Plugins, and select Fidelity Studio Content
 Assistant. Plugins are not available in ordinary Chat mode, mobile, or the IDE
-extension. If the tools are still missing in that new task, quit the app
-completely (Mac: ⌘Q; Windows: also quit it in the system tray), reopen it and
-start one new task: an install or sign-in made from the shell sometimes loads
-only after a restart.
+extension. A chat that was already running does not get an install or sign-in
+made from the shell; one new chat does, no restart of the app needed.
 
 If Codex asks for marketplace details instead, use:
 
@@ -83,7 +81,7 @@ codex mcp login fidelity-studio-content-assistant
 For Fidelity Studio, use the email address invited to the CMS. Clients do not
 need GitHub access.
 
-After that login finishes, start a new Work task, load
+After that login finishes, open one new chat, load
 `get_project_context`, and verify the website tools operationally. Only if the
 authenticated project context explicitly declares newsletters with provider
 Resend should the assistant start this second login:
@@ -109,10 +107,10 @@ reports that automatic browser opening failed. A project without an explicit
 Resend newsletter declaration is ready for website work after Fidelity Studio
 verification; do not request Resend access for it.
 
-After Fidelity succeeds, start a new Work task and write:
+After Fidelity succeeds, open one new chat and write:
 
 ```text
-Call get_project_context and verify website access with a read my project offers. If list_entries is available, list the declared projects collection or another declared collection. Otherwise, call list_blog_posts and list_team_members when offered. Check whether the authenticated context explicitly enables newsletters with provider Resend. Only then, use harmless Resend reads to verify the connected team, templates, broadcasts, and audiences; if Resend is not yet authenticated, start exactly one login and tell me to repeat this verification in a new Work task, and to quit and reopen the app if the tools are still missing there. If the context does not require Resend, report website-only readiness without starting its login. Change nothing and report each required service separately.
+Call get_project_context and verify website access with a read my project offers. If list_entries is available, list the declared projects collection or another declared collection. Otherwise, call list_blog_posts and list_team_members when offered. Check whether the authenticated context explicitly enables newsletters with provider Resend. Only then, use harmless Resend reads to verify the connected team, templates, broadcasts, and audiences; if Resend is not yet authenticated, start exactly one login and tell me to repeat this verification once in a new chat. If the context does not require Resend, report website-only readiness without starting its login. Change nothing and report each required service separately.
 ```
 
 Do not trust an `auth_status` value or successful login command as operational
@@ -160,13 +158,12 @@ codex plugin marketplace upgrade fidelity-studio-content-assistant
 codex plugin list --marketplace fidelity-studio-content-assistant
 ```
 
-Start a new Work task after updating. If the tools are still missing there,
-quit the app completely, reopen it and start one new task. Client-specific workflow and writing guidance
+Open one new chat after updating. Client-specific workflow and writing guidance
 is loaded live from Fidelity Studio, so those rules can change without a plugin
 reinstall.
 
 When upgrading from a version before `0.4.0`, run the Fidelity login once again
-to grant the live publishing capability, then start another new Work task:
+to grant the live publishing capability, then open one new chat:
 
 ```bash
 codex mcp login fidelity-studio-content-assistant
@@ -198,10 +195,10 @@ See [maintenance and releases](docs/maintenance.md) for the release model.
 - Fidelity access denied: use the exact email address invited by Fidelity
   Studio.
 - Resend data missing: reconnect and select the intended client team.
-- Tools missing or version stale: start a new task first; if needed, run the
-  update commands above. If a new task still lacks the tools, quit the app
-  completely, reopen it and start one new task. Do not keep starting new
-  tasks.
+- Tools missing or version stale: open one new chat first; if needed, run the
+  update commands above. If the new chat still lacks the tools, do not keep
+  opening chats or restart the app: check the installation with the commands
+  above.
 
 ## Architecture Boundary
 
