@@ -13,10 +13,13 @@ Terminal noch GitHub öffnen.
 
 ## 1. Den Assistenten einrichten
 
-1. Öffne die ChatGPT Desktop-App.
+1. Öffne die ChatGPT Desktop-App, nicht ChatGPT im Browser.
 2. Wähle **ChatGPT** und wechsle zu **Work**.
 3. Starte eine neue Aufgabe.
-4. Füge diesen Satz ein und sende ihn ab:
+4. Wähle beim Eingabefeld, wo die Aufgabe läuft: **On your computer** (auf
+   Deutsch «Auf deinem Computer»), nicht **In the cloud**. Nur so kann ChatGPT
+   den Assistenten auf deinem Computer einrichten.
+5. Füge diesen Satz ein und sende ihn ab:
 
 ```text
 Richte den Fidelity Studio Content Assistant für mich ein: lies https://mcp.fidelitystudio.ch/setup.md
@@ -39,7 +42,8 @@ erneut.
 
 ## 2. Verbindung prüfen
 
-1. Starte nach der Einrichtung eine **neue Work-Aufgabe**.
+1. Starte nach der Einrichtung eine **neue Work-Aufgabe**. Wähle auch dort
+   **On your computer**.
 2. Fehlen die Fidelity-Studio-Werkzeuge dort noch, beende die App ganz (⌘Q),
    öffne sie wieder und starte nochmals eine neue Work-Aufgabe. Unter Windows
    beendest du die App auch im Infobereich der Taskleiste.

@@ -70,6 +70,31 @@ for (const phrase of [
 ]) {
   if (!setup.includes(phrase)) fail(`docs/setup.md is missing "${phrase}".`);
 }
+// 23 Nov 2026: a setup started in a cloud or browser task ran for a while,
+// found the Codex settings read-only and then tried a throwaway install. The
+// guide must check where it runs and write the Codex home folder before any
+// install, stop with plain client steps otherwise, and never work around it.
+const localCheckAt = setup.indexOf("## First: check that this task runs on the person's computer");
+const installAt = setup.indexOf("## 1. Install or update the plugin");
+const localCheck = localCheckAt < 0 || installAt < localCheckAt ? "" : setup.slice(localCheckAt, installAt);
+for (const phrase of [
+  ".fidelity-studio-write-test",
+  "CODEX_HOME",
+  "approval to run it outside the sandbox",
+  "Do not point `CODEX_HOME` at another folder",
+  "do not install into a temporary folder",
+  "On your computer",
+  "In the cloud",
+  "nicht ChatGPT im Browser",
+  "https://mcp.fidelitystudio.ch/setup.md",
+]) {
+  if (!localCheck.includes(phrase)) {
+    fail(`docs/setup.md must check where the task runs before step 1 and include "${phrase}".`);
+  }
+}
+if (!/\*\*On your computer\*\*/.test(guide) || !guide.includes("nicht ChatGPT im Browser")) {
+  fail("The German guide must tell clients to start the setup task On your computer in the desktop app.");
+}
 if (guide.includes("ß")) fail("The Swiss German guide must not contain ß.");
 if (/\b(fuer|ueber|oeffnen|pruefen|zurueck|vollstaendig)\b/i.test(guide)) {
   fail("The German guide contains an avoidable umlaut transliteration.");
