@@ -95,6 +95,30 @@ for (const phrase of [
 if (!/\*\*On your computer\*\*/.test(guide) || !guide.includes("nicht ChatGPT im Browser")) {
   fail("The German guide must tell clients to start the setup task On your computer in the desktop app.");
 }
+// 23 Nov 2026: ChatGPT in the browser read "ChatGPT Work (or Codex)" and told
+// a client to open Codex with a local folder. Clients only use the ChatGPT
+// desktop app, Work and On your computer; nothing shown to them names Codex or
+// a local folder. The agent's own commands may still name Codex.
+if (!/Never mention «Codex», «local folder» or «lokaler\s+Ordner» to them/.test(setup)) {
+  fail("docs/setup.md must have the ground rule that client messages never mention Codex or a local folder.");
+}
+if (/\(or Codex\)/i.test(setup)) fail("docs/setup.md must not offer Codex as the place to run the setup.");
+const setupClientGerman = [
+  setup.split("\n").filter((line) => line.startsWith(">")).join("\n"),
+  ...(setup.match(/In German, for example:[\s\S]*?(?=\n\n|$)/g) ?? []),
+];
+if (!setupClientGerman[0].includes("ChatGPT-Desktop-App") || setupClientGerman.length < 2) {
+  fail("docs/setup.md must keep the German stop message and the German finish example.");
+}
+for (const text of setupClientGerman) {
+  const match = text.match(/codex|lokale[nr]\s+ordner/i);
+  if (match) fail(`A client-facing German text in docs/setup.md must not say "${match[0]}".`);
+}
+// Markus, 23 Nov 2026: quitting the app completely must work on Windows too.
+if (!/Unter Windows schliesst du das ChatGPT-Fenster[\s\S]{0,160}rechten Maustaste/.test(guide)
+  || /\(⌘Q\)/.test(guide) || /\(⌘Q\)|system tray/.test(setup)) {
+  fail("The guide and setup must say how to quit the app on Windows wherever they say ⌘Q.");
+}
 if (guide.includes("ß")) fail("The Swiss German guide must not contain ß.");
 if (/\b(fuer|ueber|oeffnen|pruefen|zurueck|vollstaendig)\b/i.test(guide)) {
   fail("The German guide contains an avoidable umlaut transliteration.");
@@ -115,7 +139,7 @@ if (newTaskAt < 0 || fallbackAt < 0 || newTaskAt > fallbackAt) {
 }
 const guideNewTaskAt = guide.indexOf("Starte nach der Einrichtung eine **neue Work-Aufgabe**.");
 const guideFallbackAt = guide.search(
-  /Fehlen die Fidelity-Studio-Werkzeuge dort noch, beende die App ganz \(⌘Q\),\s+öffne sie wieder und starte nochmals eine neue Work-Aufgabe\./,
+  /Fehlen die Fidelity-Studio-Werkzeuge dort noch, beende die App ganz,\s+öffne sie wieder und starte nochmals eine neue Work-Aufgabe\./,
 );
 if (guideNewTaskAt < 0 || guideFallbackAt < 0 || guideNewTaskAt > guideFallbackAt) {
   fail("The guide must start a new Work task first and restart the app only if the tools are still missing there.");
