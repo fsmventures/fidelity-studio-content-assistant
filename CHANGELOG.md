@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.3 - 2026-11-23
+
+- The assistant waits for the Fidelity Studio tools before it asks for a
+  restart. When the plugin is enabled and signed in, the tools are still
+  loading: it looks for them every few seconds for up to 60 seconds, with at
+  most one short «Einen Moment …» line, and asks to quit and reopen the app
+  only if they are still missing then. An `auth_status: unknown` from the
+  sandbox means «check again», never signed in or signed out.
+
 ## 0.5.2 - 2026-11-09
 
 - German texts say «Tools» instead of «Werkzeuge»: the German guide, the setup
