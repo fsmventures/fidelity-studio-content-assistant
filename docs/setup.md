@@ -24,8 +24,9 @@ only the stop message under «First», in their language, and end the task.
 - When an approval prompt or a browser sign-in appears, pause, say in one
   sentence what it allows, and tell them exactly what to click.
 - Start each sign-in at most once. Do not open a second browser window.
-- Everything you tell the person names the ChatGPT desktop app, **Work** and
-  **On your computer**. Never mention «Codex», «local folder» or «lokaler
+- Everything you tell the person names the ChatGPT desktop app and its own
+  labels: **On your computer** for where this setup runs, and one new chat
+  once it is done. Never mention «Codex», «local folder» or «lokaler
   Ordner» to them: clients do not use Codex and never choose a folder. Your own
   technical steps (config paths, commands) may name Codex, but nothing you tell
   the person may. If you run in ChatGPT in the browser and cannot run commands,
@@ -36,8 +37,8 @@ only the stop message under «First», in their language, and end the task.
 The setup writes the plugin into the Codex settings on the computer it runs on:
 `config.toml` and the plugin cache in the Codex home folder (`$CODEX_HOME`,
 otherwise `~/.codex`). That only lasts when this task runs on the person's own
-computer: a local Work task in the ChatGPT desktop app, where the person chose
-**On your computer** as the place to run. A task in the cloud or in a browser
+computer: a chat in the ChatGPT desktop app that runs **On your computer**,
+the place the person chose for it. A task in the cloud or in a browser
 cannot install anything their app will see. Check this before you install,
 download or test anything:
 
@@ -83,13 +84,13 @@ When you stop, send only this message, in the person's language, and end the
 task. In German:
 
 > Hier kann ich den Fidelity Studio Content Assistant leider nicht einrichten:
-> Diese Aufgabe läuft nicht auf deinem Computer. So klappt es:
+> Dieser Chat läuft nicht auf deinem Computer. So klappt es:
 >
 > 1. Öffne die ChatGPT-Desktop-App auf deinem Computer, nicht ChatGPT im Browser.
 >    Windows: Startmenü, «ChatGPT». Mac: Ordner «Programme», «ChatGPT». Fehlt
 >    die App, lade sie unter https://chatgpt.com/download/ herunter.
-> 2. Wechsle in der App zu **Work** und starte eine neue Aufgabe.
-> 3. Wähle beim Eingabefeld, wo die Aufgabe läuft: **On your computer** (auf
+> 2. Wechsle in der App zu **Work** und öffne einen neuen Chat.
+> 3. Wähle beim Eingabefeld, wo der Chat läuft: **On your computer** (auf
 >    Deutsch «Auf deinem Computer»), nicht **In the cloud**.
 > 4. Füge denselben Satz nochmals ein und sende ihn ab: Richte den Fidelity
 >    Studio Content Assistant für mich ein: lies
@@ -157,7 +158,7 @@ publishes live only when they ask for it in the chat.
 
 ## 3. Leave Resend for later
 
-Do not start a Resend sign-in now. The next Work task first loads the
+Do not start a Resend sign-in now. The next chat first loads the
 authenticated project context with `get_project_context`. Only if that context
 declares newsletters with the provider Resend does the assistant connect Resend
 there, once.
@@ -167,18 +168,11 @@ there, once.
 Check the installed plugin version. Then tell the person, in their language:
 
 1. Setup is done.
-2. Start a new Work task in the ChatGPT desktop app, again **On your
-   computer**, type `@`, choose
+2. Open one new chat in the ChatGPT desktop app, type `@`, choose
    **Fidelity Studio Content Assistant** and ask it to check the connection
-   without changing anything.
-3. If the Fidelity Studio tools are still missing in that new task, quit the
-   app completely, reopen it and start one new Work task. Mac: ⌘Q. Windows:
-   close the ChatGPT window; if a ChatGPT icon shows at the bottom right of the
-   taskbar, right-click it and choose «Beenden» (Quit).
+   without changing anything. A chat that was already running does not get the
+   new tools; a new chat does. Never ask them to quit or restart the app.
 
-In German, for example: «Starte jetzt in der ChatGPT-Desktop-App eine neue
-Work-Aufgabe, wieder auf deinem Computer (On your computer). Fehlen die
-Fidelity-Studio-Tools dort noch, beende die App ganz: Mac: ⌘Q. Windows:
-Schliesse das ChatGPT-Fenster; siehst du unten rechts in der Taskleiste ein
-ChatGPT-Symbol, klicke es mit der rechten Maustaste an und wähle «Beenden».
-Öffne die App dann wieder und starte nochmals eine neue Work-Aufgabe.»
+In German, for example: «Die Einrichtung ist fertig. Öffne jetzt einmal einen
+neuen Chat, tippe @, wähle Fidelity Studio Content Assistant und bitte ihn, die
+Verbindung zu prüfen, ohne etwas zu ändern.»

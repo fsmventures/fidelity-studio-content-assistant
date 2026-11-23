@@ -12,6 +12,13 @@
 - Nothing the assistant says names Codex: the skill no longer says «in
   Codex», and the validator rejects «in Codex» and any sentence for the
   person that names Codex, a terminal or the login command.
+- After a setup, update or sign-in the person opens one new chat, and that
+  is all: the quit-the-app and ⌘Q steps are gone everywhere, and the «Work
+  task» / «Work-Aufgabe» template now says «neuer Chat». The validator rejects
+  both.
+- The assistant never starts a nested Codex session (`codex exec`) to work
+  around a missing sign-in; it asks for one new chat instead.
+- `docs/setup.md` names the consent page's real button, «Zugriff erlauben».
 
 ## 0.5.3 - 2026-11-23
 

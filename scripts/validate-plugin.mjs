@@ -66,7 +66,7 @@ for (const phrase of [
   "codex mcp list --json",
   "codex mcp login fidelity-studio-content-assistant",
   "get_project_context",
-  "new Work task",
+  "Open one new chat",
 ]) {
   if (!setup.includes(phrase)) fail(`docs/setup.md is missing "${phrase}".`);
 }
@@ -121,11 +121,6 @@ for (const text of setupClientGerman) {
   const match = text.match(/codex|lokale[nr]\s+ordner/i);
   if (match) fail(`A client-facing German text in docs/setup.md must not say "${match[0]}".`);
 }
-// Markus, 23 Nov 2026: quitting the app completely must work on Windows too.
-if (!/Unter Windows schliesst du das ChatGPT-Fenster[\s\S]{0,160}rechten Maustaste/.test(guide)
-  || /\(⌘Q\)/.test(guide) || /\(⌘Q\)|system tray/.test(setup)) {
-  fail("The guide and setup must say how to quit the app on Windows wherever they say ⌘Q.");
-}
 if (guide.includes("ß")) fail("The Swiss German guide must not contain ß.");
 if (/\b(fuer|ueber|oeffnen|pruefen|zurueck|vollstaendig)\b/i.test(guide)) {
   fail("The German guide contains an avoidable umlaut transliteration.");
@@ -133,23 +128,31 @@ if (/\b(fuer|ueber|oeffnen|pruefen|zurueck|vollstaendig)\b/i.test(guide)) {
 if (/\bmarkus[^\s@]*@[^\s]+/i.test(guide)) {
   fail("The public guide must not contain a maintainer email address.");
 }
-// Markus, 9 Nov 2026: after setup, an update or a new login, start a new Work
-// task first. Only if the tools are still missing there, quit the app
-// completely, reopen it and start one new Work task. The assistant asks for a
-// new task at most once (the old skill looped in a Mac mini test).
+// After setup, an update or a sign-in, the person opens one new chat: a chat
+// that was already running stays without the new tools, a new chat has them
+// (PR 63 proof, 23 Nov 2026). No quit-the-app or ⌘Q step anywhere, and no
+// «Work task» template: the 13:10 journey copied «neue Work-Aufgabe … ⌘Q» word
+// for word (Markus, 23 Nov 2026). The assistant asks for a new chat at most once.
 const finishAt = setup.indexOf("## 4. Finish");
 const finish = finishAt < 0 ? "" : setup.slice(finishAt);
-const newTaskAt = finish.indexOf("new Work task");
-const fallbackAt = finish.search(/still missing in that new task, quit the\s+app completely/i);
-if (newTaskAt < 0 || fallbackAt < 0 || newTaskAt > fallbackAt) {
-  fail("docs/setup.md step 4 must start a new Work task first and quit and reopen the app only if the tools are still missing there.");
+if (!finish.includes("Open one new chat") || !/Öffne jetzt einmal einen\s+neuen Chat/.test(finish)) {
+  fail("docs/setup.md step 4 must ask for one new chat, in English and in the German example.");
 }
-const guideNewTaskAt = guide.indexOf("Starte nach der Einrichtung eine **neue Work-Aufgabe**.");
-const guideFallbackAt = guide.search(
-  /Fehlen die Fidelity-Studio-Tools dort noch, beende die App ganz,\s+öffne sie wieder und starte nochmals eine neue Work-Aufgabe\./,
-);
-if (guideNewTaskAt < 0 || guideFallbackAt < 0 || guideNewTaskAt > guideFallbackAt) {
-  fail("The guide must start a new Work task first and restart the app only if the tools are still missing there.");
+if (!guide.includes("Öffne nach der Einrichtung einmal einen **neuen Chat**.")) {
+  fail("The guide must ask for one new chat after the setup.");
+}
+const quitStep = /⌘Q|Work task|Work-Aufgabe|beende die (ChatGPT-)?App|quits? the app|quit ChatGPT|ganz beendet/i;
+for (const [name, text] of [
+  ["skill", skill],
+  ["README.md", read("README.md")],
+  ["AGENTS.md", read("AGENTS.md")],
+  ["German guide", guide],
+  ["docs/setup.md", setup],
+  ["docs/maintenance.md", read("docs/maintenance.md")],
+  ["Windows bootstrap", windowsSetup],
+]) {
+  const match = text.match(quitStep);
+  if (match) fail(`${name} must ask for one new chat, never a «Work task» or quitting the app (found «${match[0]}»).`);
 }
 // 23 Nov 2026: a client was told to do something «in Codex». Clients never use
 // Codex; nothing the assistant says names it. The skill's own commands may.
@@ -165,11 +168,16 @@ for (const phrase of ["Öffne danach einmal einen neuen Chat.", "Öffne jetzt ei
   if (!skill.replace(/\s+/g, " ").includes(phrase)) fail(`The skill's sign-in step is missing "${phrase}".`);
 }
 if (
-  !/Never ask for a\s+new task twice\./.test(skill)
-  || !/already the new task[\s\S]{0,200}do not ask for\s+another new task/.test(skill)
-  || !skill.includes("quit the app completely")
+  !/Never ask for a\s+new chat twice\./.test(skill)
+  || !/already the new one[\s\S]{0,200}do not ask for another new chat and never for a restart of the app/.test(skill.replace(/\s+/g, " "))
 ) {
-  fail("The skill must ask for a new task at most once and ask for a full app restart when the current task is already the new one.");
+  fail("The skill must ask for a new chat at most once and never for a restart of the app.");
+}
+// 23 Nov 2026, the 13:10 journey: the open chat never got its tools, and the
+// model improvised a nested `codex -a never exec …` that ran website writes
+// without per-tool approval. The skill forbids it and asks for a new chat.
+if (!/Never start a nested Codex session/.test(skill) || !skill.includes("`codex exec`")) {
+  fail("The skill must forbid a nested Codex session (`codex exec`) as a workaround for a missing sign-in.");
 }
 const wrongRestartRule = [
   /mounted when a\s+(new\s+)?task\s+is\s+(created|started)/i,
