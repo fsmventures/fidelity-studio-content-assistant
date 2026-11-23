@@ -37,7 +37,7 @@ Assistent trotzdem nur, wenn du ihn im Chat ausdrücklich darum bittest.
 
 Klicke auf **Zugriff erlauben** nur einmal. Danach kehrt der Browser normalerweise
 automatisch zu ChatGPT zurück. Falls das nicht passiert, klicke auf der
-Bestätigungsseite einmal auf **Zurück zu ChatGPT/Codex**. Starte den Login nicht
+Bestätigungsseite einmal auf **Zurück zu ChatGPT**. Starte den Login nicht
 erneut.
 
 ## 2. Verbindung prüfen
