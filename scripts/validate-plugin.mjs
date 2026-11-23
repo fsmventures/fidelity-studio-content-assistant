@@ -270,14 +270,7 @@ for (const [name, text] of [
 }
 // Clients know ChatGPT and its Work mode, never Codex (Markus, 23 Nov 2026).
 // The commands stay in docs/setup.md and README.md for the agent.
-const guideCodexAllowlist = [
-  // Real button label on the sign-in page. Remove this entry once the
-  // sign-in page says «Zurück zu ChatGPT».
-  "**Zurück zu ChatGPT/Codex**",
-];
-let guideWithoutAllowed = guide;
-for (const allowed of guideCodexAllowlist) guideWithoutAllowed = guideWithoutAllowed.split(allowed).join("");
-const guideCodex = guideWithoutAllowed.match(/.{0,40}codex.{0,40}/i);
+const guideCodex = guide.match(/.{0,40}codex.{0,40}/i);
 if (guideCodex) {
   fail(`docs/client-guide-de.md must not mention Codex to clients: «${guideCodex[0].trim()}».`);
 }
