@@ -22,7 +22,7 @@ Terminal noch GitHub öffnen.
 5. Füge diesen Satz ein und sende ihn ab:
 
 ```text
-Richte den Fidelity Studio Content Assistant für mich ein: lies https://mcp.fidelitystudio.ch/setup.md
+Richte den Fidelity Studio Content Assistant auf meinem Computer ein und folge dazu der Anleitung https://mcp.fidelitystudio.ch/setup.md
 ```
 
 ChatGPT erledigt die technische Einrichtung. Bestätige nur die beschriebenen

@@ -42,7 +42,9 @@ cannot install anything their app will see. Check this before you install,
 download or test anything:
 
 1. If your environment says you run in the cloud, in a browser, on a remote
-   computer or in a container, stop now and send the stop message below.
+   computer or in a container, stop now and send the stop message below. A
+   Work chat that runs in the cloud runs its commands on a cloud computer, not
+   on theirs, even when its browser can open this page.
 2. If your shell reports Linux and the person has not said they use Linux,
    stop as well. The ChatGPT desktop app runs on Mac and Windows; cloud tasks
    run on Linux.
@@ -92,8 +94,8 @@ task. In German:
 > 3. Wähle beim Eingabefeld, wo die Aufgabe läuft: **On your computer** (auf
 >    Deutsch «Auf deinem Computer»), nicht **In the cloud**.
 > 4. Füge denselben Satz nochmals ein und sende ihn ab: Richte den Fidelity
->    Studio Content Assistant für mich ein: lies
->    https://mcp.fidelitystudio.ch/setup.md
+>    Studio Content Assistant auf meinem Computer ein und folge dazu der
+>    Anleitung https://mcp.fidelitystudio.ch/setup.md
 
 ## 1. Install or update the plugin
 

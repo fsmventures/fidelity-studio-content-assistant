@@ -25,7 +25,7 @@ desktop app, start a new task **On your computer** (not **In the cloud**, the
 app's default) and send one sentence:
 
 ```text
-Richte den Fidelity Studio Content Assistant für mich ein: lies https://mcp.fidelitystudio.ch/setup.md
+Richte den Fidelity Studio Content Assistant auf meinem Computer ein und folge dazu der Anleitung https://mcp.fidelitystudio.ch/setup.md
 ```
 
 That URL serves [`docs/setup.md`](docs/setup.md) from this repository, the
